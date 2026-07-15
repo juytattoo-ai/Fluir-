@@ -1,26 +1,66 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Cream / Off-White background */
+  --background: #FDFBF7;
+  /* Dark text */
+  --foreground: #2A2F2A;
+  
+  /* Primary - Light Green matching the leaf */
+  --primary: #7BB369;
+  --primary-foreground: #FFFFFF;
+  
+  /* Primary Soft - Creamy green for backgrounds */
+  --primary-soft: #E8F0E4;
+  
+  /* Secondary - Soft Yellow/Gold from the gradient */
+  --secondary: #E3CE74;
+  --secondary-foreground: #2A2F2A;
+  
+  /* Accent - Purple from the gradient */
+  --accent: #A45C94;
+  
+  /* Muted - Creamy beige */
+  --muted: #F3EFE6;
+  --muted-foreground: #6B7268;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  
+  --color-accent: var(--accent);
+  
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+}
+
+/* Custom utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm rounded-2xl;
+  }
 }
