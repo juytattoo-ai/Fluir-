@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MessageCircle, Leaf } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -9,21 +9,14 @@ export default function Footer() {
           
           <div className="md:col-span-1 space-y-6">
             <div className="flex items-center gap-2">
-              <Leaf className="h-10 w-10 text-primary" strokeWidth={1.5} />
+              <img src="/aaa.png" alt="Logo Fluir+" className="h-8 w-auto" />
+              <span className="font-serif font-bold text-2xl text-primary tracking-tight">FLUIR+</span>
             </div>
-            <p className="text-sm leading-6 text-foreground/80">
-              Pesquisa, desenvolvimento acadêmico e comunidade para mulheres que desejam transformar conhecimento em impacto.
-            </p>
-            <div className="flex gap-x-6">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <span className="sr-only">Redes Sociais</span>
+            <div className="flex flex-col gap-y-4">
+              <a href="https://www.instagram.com/tese.que.flui?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors inline-block">
                 <span className="text-xs font-semibold">Instagram</span>
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <span className="sr-only">Redes Sociais</span>
-                <span className="text-xs font-semibold">LinkedIn</span>
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1">
+              <a href="https://wa.me/5571988172711" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
                 <span className="text-xs font-semibold">WhatsApp</span>
               </a>
@@ -34,8 +27,13 @@ export default function Footer() {
             <h3 className="text-sm font-semibold leading-6 text-primary tracking-wider uppercase">Plataforma</h3>
             <ul role="list" className="mt-6 space-y-4">
               <li>
-                <Link href="/cursos" className="text-sm leading-6 text-foreground/80 hover:text-primary transition-colors">
-                  Cursos e Oficinas
+                <Link href="/quem-somos" className="text-sm leading-6 text-foreground/80 hover:text-primary transition-colors">
+                  Quem Somos
+                </Link>
+              </li>
+              <li>
+                <Link href="/defesas-publicacoes" className="text-sm leading-6 text-foreground/80 hover:text-primary transition-colors">
+                  Defesas e Publicações
                 </Link>
               </li>
             </ul>
@@ -50,6 +48,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/cursos" className="text-sm leading-6 text-foreground/80 hover:text-primary transition-colors">
+                  Cursos e Oficinas
+                </Link>
+              </li>
+              <li>
                 <Link href="/egregora" className="text-sm leading-6 text-foreground/80 hover:text-primary transition-colors flex items-center gap-2">
                   Comunidade Fluir+ <span className="inline-flex items-center rounded-full bg-accent/20 px-2 py-0.5 text-xs font-medium text-accent border border-accent/20">Restrito</span>
                 </Link>
@@ -58,16 +61,16 @@ export default function Footer() {
           </div>
 
           <div className="md:col-span-1">
-            <h3 className="text-sm font-semibold leading-6 text-primary tracking-wider uppercase">Contato</h3>
+            <h3 className="text-sm font-semibold leading-6 text-primary tracking-wider uppercase">Fale Conosco</h3>
             <ul role="list" className="mt-6 space-y-4">
               <li>
-                <Link href="/contato" className="text-sm leading-6 text-foreground/80 hover:text-primary transition-colors">
-                  Fale Conosco
-                </Link>
+                <a href="https://wa.me/5571988172711" target="_blank" rel="noopener noreferrer" className="text-sm leading-6 text-foreground/80 hover:text-primary transition-colors">
+                  WhatsApp: (71) 98817-2711
+                </a>
               </li>
               <li>
                 <a href="mailto:contato@fluirmais.com.br" className="text-sm leading-6 text-foreground/80 hover:text-primary transition-colors">
-                  contato@fluirmais.com.br
+                  E-mail: contato@fluirmais.com.br
                 </a>
               </li>
             </ul>

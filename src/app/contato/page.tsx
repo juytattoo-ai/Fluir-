@@ -22,12 +22,20 @@ export default function ContatoPage() {
             <p className="text-muted-foreground">contato@fluirmais.com.br</p>
           </div>
 
-          <div className="glass-card p-10 flex flex-col items-center">
+          <div className="glass-card p-10 flex flex-col items-center justify-center">
             <div className="bg-primary/20 p-4 rounded-full mb-6">
               <Phone className="h-8 w-8 text-primary" />
             </div>
-            <h3 className="text-xl font-bold mb-2">WhatsApp</h3>
-            <p className="text-muted-foreground">(11) 99999-9999</p>
+            <h3 className="text-xl font-bold mb-2">WhatsApp da Evelyn</h3>
+            <a 
+              href="https://wa.me/5571988172711" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex items-center gap-2 rounded-full bg-green-600 px-6 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-green-700 transition-colors"
+            >
+              Chamar no WhatsApp
+            </a>
+            <p className="mt-3 text-muted-foreground text-sm">(71) 98817-2711</p>
           </div>
         </div>
       </div>

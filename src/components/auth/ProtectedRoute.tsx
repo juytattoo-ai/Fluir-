@@ -4,25 +4,39 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
-export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  allowedRoles?: ("aluno" | "mentorada" | "admin")[];
+}
+
+export default function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
+  const { user, userProfile, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !user) {
-      router.push("/login");
+    if (!loading) {
+      if (!user) {
+        router.push("/login");
+      } else if (allowedRoles && userProfile?.role && !allowedRoles.includes(userProfile.role)) {
+        // Se estiver logado mas não tiver a permissão correta
+        router.push(userProfile.role === "aluno" ? "/aluno" : "/");
+      }
     }
-  }, [user, loading, router]);
+  }, [user, userProfile, loading, router, allowedRoles]);
 
   if (loading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+          <p className="text-sm text-primary font-medium">Carregando perfil...</p>
+        </div>
       </div>
     );
   }
 
-  if (!user) {
+  // Prevent rendering if not authenticated or not authorized
+  if (!user || (allowedRoles && userProfile?.role && !allowedRoles.includes(userProfile.role))) {
     return null;
   }
 

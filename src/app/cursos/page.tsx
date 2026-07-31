@@ -1,4 +1,4 @@
-import { Wrench } from "lucide-react";
+import CursosList from "./CursosList";
 
 export const metadata = {
   title: "Cursos, Oficinas e Palestras | FLUIR+",
@@ -6,18 +6,16 @@ export const metadata = {
 
 export default function CursosPage() {
   return (
-    <div className="bg-background min-h-[80vh] flex flex-col items-center justify-center py-24 sm:py-32 px-6 lg:px-8">
-      <div className="glass-card p-12 text-center max-w-2xl mx-auto flex flex-col items-center">
-        <div className="bg-primary/20 p-6 rounded-full mb-8 animate-pulse">
-          <Wrench className="h-16 w-16 text-primary" />
+    <div className="bg-background min-h-screen py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <h1 className="text-4xl font-serif font-bold tracking-normal [font-variant-ligatures:none] text-foreground sm:text-5xl">Cursos e Oficinas</h1>
+          <p className="mt-4 text-lg leading-8 text-muted-foreground">
+            Formação de excelência para impulsionar a sua carreira acadêmica e científica.
+          </p>
         </div>
-        <h1 className="text-4xl font-serif font-bold tracking-tight text-foreground sm:text-5xl mb-6">
-          Página em Construção
-        </h1>
-        <p className="text-lg leading-8 text-muted-foreground">
-          Estamos preparando conteúdos incríveis de excelência para impulsionar a sua carreira acadêmica e científica.
-          Fique de olho, em breve teremos novidades!
-        </p>
+        
+        <CursosList />
       </div>
     </div>
   );

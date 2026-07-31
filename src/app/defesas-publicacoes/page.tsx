@@ -1,78 +1,62 @@
-import { BookOpen, Award, FileText } from "lucide-react";
+import { GraduationCap, BookOpen, Link as LinkIcon } from "lucide-react";
+
+export const metadata = {
+  title: "Defesas e Publicações | FLUIR+",
+};
+
+const sections = [
+  {
+    id: "defesas",
+    title: "Defesas",
+    description: "Acompanhe e celebre as defesas de dissertações e teses da nossa egrégora.",
+    icon: GraduationCap,
+  },
+  {
+    id: "publicacoes",
+    title: "Publicações",
+    description: "Artigos científicos, livros e capítulos publicados pelas nossas pesquisadoras.",
+    icon: BookOpen,
+  },
+  {
+    id: "lattes",
+    title: "Lattes",
+    description: "Acesso aos currículos Lattes das integrantes da rede FLUIR+.",
+    icon: LinkIcon,
+  }
+];
 
 export default function DefesasPublicacoesPage() {
-  const destaques = [
-    {
-      tipo: "Artigo Publicado",
-      titulo: "O impacto da mentoria no desenvolvimento de jovens pesquisadoras",
-      autora: "Ana Carolina Santos",
-      revista: "Revista Brasileira de Educação Superior",
-      ano: "2026"
-    },
-    {
-      tipo: "Defesa de Mestrado",
-      titulo: "Estratégias de Inovação em Ecossistemas Tecnológicos",
-      autora: "Beatriz Oliveira",
-      revista: "Universidade Estadual de Campinas",
-      ano: "2026"
-    },
-    {
-      tipo: "Capítulo de Livro",
-      titulo: "Acolhimento e Excelência na Pós-Graduação",
-      autora: "Comunidade Fluir+",
-      revista: "Editora Ciência Moderna",
-      ano: "2025"
-    }
-  ];
-
   return (
-    <main className="min-h-screen py-20 px-6 lg:px-8">
-      <div className="mx-auto max-w-4xl text-center mb-16">
-        <h1 className="text-4xl font-serif font-bold text-foreground mb-6">Defesas e Publicações</h1>
-        <p className="text-lg text-muted-foreground">
-          Celebramos o rigor acadêmico e as conquistas de nossa comunidade. Conheça as pesquisas, defesas e os artigos publicados pelas nossas mentoradas.
-        </p>
-      </div>
-
-      <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {destaques.map((item, index) => (
-          <div key={index} className="glass-card p-8 flex flex-col relative overflow-hidden group hover:shadow-xl transition-all">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              {item.tipo.includes("Defesa") ? (
-                <Award className="h-24 w-24 text-primary" />
-              ) : item.tipo.includes("Artigo") ? (
-                <FileText className="h-24 w-24 text-primary" />
-              ) : (
-                <BookOpen className="h-24 w-24 text-primary" />
-              )}
-            </div>
-            
-            <div className="text-xs font-bold uppercase tracking-wider text-primary mb-4">
-              {item.tipo}
-            </div>
-            <h3 className="text-lg font-bold mb-4 flex-1 line-clamp-3 leading-snug">
-              {item.titulo}
-            </h3>
-            
-            <div className="mt-auto pt-4 border-t border-foreground/10">
-              <p className="font-semibold text-sm">{item.autora}</p>
-              <p className="text-xs text-muted-foreground mt-1">
-                {item.revista} • {item.ano}
+    <div className="bg-background min-h-[80vh] py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <h1 className="text-4xl font-serif font-bold tracking-tight text-foreground sm:text-5xl">Defesas e Publicações</h1>
+          <p className="mt-4 text-lg leading-8 text-muted-foreground">
+            O espaço dedicado a celebrar e divulgar as conquistas acadêmicas da nossa comunidade.
+          </p>
+        </div>
+        
+        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
+          {sections.map((item) => (
+            <div key={item.id} className="flex flex-col glass-card p-10 group hover:border-primary/50 transition-colors text-center items-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 group-hover:bg-primary transition-colors mb-6">
+                <item.icon className="h-8 w-8 text-primary group-hover:text-primary-foreground transition-colors" />
+              </div>
+              <h3 className="text-2xl font-serif font-semibold text-foreground group-hover:text-primary transition-colors">
+                {item.title}
+              </h3>
+              <p className="mt-4 text-base leading-7 text-muted-foreground">
+                {item.description}
               </p>
+              <div className="mt-8">
+                <button className="inline-flex rounded-full bg-primary/10 px-6 py-2 text-sm font-semibold text-primary shadow-sm hover:bg-primary hover:text-primary-foreground transition-colors items-center gap-2">
+                  Ver {item.title.toLowerCase()}
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-
-      <div className="mt-16 mx-auto max-w-3xl text-center p-8 bg-primary/5 rounded-2xl border border-primary/20">
-        <h3 className="text-2xl font-bold mb-4">Tem uma conquista para compartilhar?</h3>
-        <p className="text-muted-foreground mb-6">
-          Se você é aluna ou fez parte das Mentorias Fluir+, envie sua defesa ou publicação para integrar nosso banco de talentos.
-        </p>
-        <button className="px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-full hover:bg-primary/90 transition-colors shadow-sm">
-          Enviar Publicação
-        </button>
-      </div>
-    </main>
+    </div>
   );
 }

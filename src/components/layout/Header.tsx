@@ -3,29 +3,31 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Leaf } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navigation = [
-  { name: "Quem somos", href: "/quem-somos" },
-  { name: "Missão", href: "/missao" },
-  { name: "Congressos", href: "/congressos" },
+  { name: "Início", href: "/" },
+  { name: "Mentoria", href: "/mentorias" },
   { name: "Cursos e Oficinas", href: "/cursos" },
-  { name: "Mentorias", href: "/mentorias" },
   { name: "Defesas e Publicações", href: "/defesas-publicacoes" },
+  { name: "Quem somos", href: "/quem-somos" },
   { name: "Contato", href: "/contato" },
 ];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { user, userProfile } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full glass-card border-x-0 border-t-0 rounded-none bg-background/90">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8 gap-x-6" aria-label="Global">
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2 group">
-            <Leaf className="h-8 w-8 text-primary group-hover:scale-110 transition-transform" strokeWidth={1.5} />
+            <img src="/aaa.png" alt="Logo Fluir+" className="h-8 w-auto" />
+            <span className="font-serif font-bold text-2xl text-primary tracking-tight">FLUIR+</span>
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -38,7 +40,7 @@ export default function Header() {
             <Menu className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="hidden xl:flex xl:items-center xl:gap-x-2">
+        <div className="hidden lg:flex lg:items-center lg:gap-x-2">
           {navigation.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -58,12 +60,28 @@ export default function Header() {
           })}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-6 ml-auto">
-          <Link
-            href="/login"
-            className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all duration-300 transform hover:-translate-y-0.5 whitespace-nowrap"
-          >
-            Comunidade Fluir+
-          </Link>
+          {user ? (
+            <Link
+              href={userProfile?.role === "admin" ? "/admin" : userProfile?.role === "mentorada" ? "/egregora" : "/aluno"}
+              className="flex items-center gap-3 rounded-full bg-primary/10 pl-3 pr-4 py-1.5 text-sm font-semibold text-primary shadow-sm hover:bg-primary/20 transition-all duration-300"
+            >
+              {user.photoURL ? (
+                <img src={user.photoURL} alt="Perfil" className="h-8 w-8 rounded-full border border-primary/20 object-cover" />
+              ) : (
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold">
+                  {user.displayName?.charAt(0) || user.email?.charAt(0) || "U"}
+                </div>
+              )}
+              <span>Minha Conta</span>
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all duration-300 transform hover:-translate-y-0.5 whitespace-nowrap"
+            >
+              Comunidade Fluir+
+            </Link>
+          )}
         </div>
       </nav>
       {/* Mobile menu */}
@@ -71,7 +89,8 @@ export default function Header() {
         <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-foreground/10">
           <div className="flex items-center justify-between">
             <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
-              <img src="/logo.png" alt="FLUIR+" className="h-10 w-auto" />
+              <img src="/aaa.png" alt="Logo Fluir+" className="h-8 w-auto" />
+              <span className="font-serif font-bold text-2xl text-primary tracking-tight">FLUIR+</span>
             </Link>
             <button
               type="button"

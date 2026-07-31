@@ -1,26 +1,27 @@
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import Sidebar from "@/components/layout/Sidebar";
+import AdminSidebar from "./Sidebar";
 
 export const metadata = {
-  title: "Egrégora | FLUIR+",
+  title: "Administração | FLUIR+",
 };
 
-export default function EgregoraLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <ProtectedRoute allowedRoles={["mentorada", "admin"]}>
+    <ProtectedRoute allowedRoles={["admin"]}>
       <div className="flex h-[calc(100vh-64px)] overflow-hidden bg-zinc-50/50">
         <div className="hidden lg:flex lg:w-72 lg:flex-col">
-          <Sidebar />
+          <AdminSidebar />
         </div>
-        <div className="flex flex-1 flex-col overflow-y-auto">
-          <main className="flex-1 p-6 lg:p-8">
+        
+        <main className="flex-1 overflow-y-auto">
+          <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             {children}
-          </main>
-        </div>
+          </div>
+        </main>
       </div>
     </ProtectedRoute>
   );

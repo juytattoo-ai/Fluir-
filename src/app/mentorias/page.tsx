@@ -1,28 +1,33 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, User, Users } from "lucide-react";
-
-export const metadata = {
-  title: "Mentorias | FLUIR+",
-};
-
-const mentorias = [
-  {
-    id: "individual",
-    title: "Mentoria Individual",
-    description: "Um acompanhamento personalizado e exclusivo para suas necessidades acadêmicas. Ideal para quem busca direcionamento focado em seu próprio projeto de pesquisa.",
-    icon: User,
-    link: "#"
-  },
-  {
-    id: "grupo",
-    title: "Mentoria em Grupo",
-    description: "Apoio colaborativo em pequenos grupos de mulheres pesquisadoras. Compartilhe experiências, tire dúvidas e construa networking em um ambiente acolhedor.",
-    icon: Users,
-    link: "#"
-  }
-];
+import { ArrowUpRight, Users } from "lucide-react";
+import { getPaymentLinks } from "@/services/paymentService";
 
 export default function MentoriasPage() {
+  const [mentoriaUrl, setMentoriaUrl] = useState<string>("#");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      const data = await getPaymentLinks();
+      setMentoriaUrl(data.mentoriaUrl);
+      setLoading(false);
+    }
+    load();
+  }, []);
+
+  const mentorias = [
+    {
+      id: "grupo",
+      title: "Mentoria em grupo feminino",
+      description: "Apoio colaborativo em pequenos grupos de mulheres pesquisadoras. Compartilhe experiências, tire dúvidas e construa networking em um ambiente acolhedor.",
+      icon: Users,
+      link: mentoriaUrl
+    }
+  ];
+
   return (
     <div className="bg-background min-h-[80vh] py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -45,15 +50,32 @@ export default function MentoriasPage() {
               <p className="mt-4 text-base leading-7 text-muted-foreground flex-1">
                 {item.description}
               </p>
-              <div className="mt-8">
+              <div className="mt-8 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 w-full">
+                <div className="flex flex-wrap items-center gap-3">
+                  <Link 
+                    href={`/mentorias/${item.id}-feminino`} 
+                    className="inline-flex rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors items-center justify-center text-center"
+                  >
+                    Saiba mais
+                  </Link>
+                  <a 
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSdAAw9-maEFX4oFeaKY8-OYWvDaPY8LooPjQOMOhJFW-HVl_A/viewform" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors items-center justify-center text-center"
+                  >
+                    Diagnóstico
+                  </a>
+                </div>
                 <a
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors items-center gap-2"
+                  className="inline-flex w-full xl:w-auto rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors items-center justify-center text-center gap-2 disabled:opacity-50"
+                  aria-disabled={loading}
                 >
-                  Saber mais
-                  <ArrowUpRight className="h-4 w-4" />
+                  {loading ? "Carregando..." : "Quero participar"}
+                  {!loading && <ArrowUpRight className="h-4 w-4" />}
                 </a>
               </div>
             </div>
