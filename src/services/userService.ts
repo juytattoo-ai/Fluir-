@@ -149,10 +149,15 @@ import { storage } from "@/lib/firebase";
 
 export async function uploadProfilePicture(uid: string, file: File): Promise<string | null> {
   try {
-    const fileExtension = file.name.split('.').pop();
-    const storageRef = ref(storage, `avatars/${uid}.${fileExtension}`);
+    // Ao usar um nome fixo sem extensão, forçamos o Firebase a deletar e sobrescrever 
+    // a foto antiga toda vez, economizando armazenamento a longo prazo.
+    const storageRef = ref(storage, `avatars/${uid}/profile_image`);
     
-    await uploadBytes(storageRef, file);
+    const metadata = {
+      contentType: file.type, // Garante que o navegador saiba que é uma imagem
+    };
+    
+    await uploadBytes(storageRef, file, metadata);
     const downloadURL = await getDownloadURL(storageRef);
     
     // Also update the firestore document with the new photoURL

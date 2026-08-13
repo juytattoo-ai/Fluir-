@@ -24,12 +24,13 @@ const egregoraNavigation = [
   { name: "Jornada Acadêmica", href: "/egregora/jornada", icon: BookOpen },
   { name: "Rodas de Conversa", href: "/egregora/rodas", icon: MessageSquare },
   { name: "Parcerias", href: "/egregora/parcerias", icon: Handshake },
+  { name: "Suas Ofertas", href: "/egregora/ofertas", icon: Target },
   { name: "Missão da Pesquisa", href: "/egregora/missao", icon: Target },
   { name: "SOS Situações Delicadas", href: "/egregora/sos", icon: LifeBuoy },
 ];
 
 const alunoNavigation = [
-  { name: "Meus Cursos e Aulas", href: "/aluno", icon: PlayCircle },
+  { name: "Cursos, oficinas, e aulas", href: "/aluno", icon: PlayCircle },
   { name: "Materiais", href: "/aluno/materiais", icon: FolderOpen },
   { name: "Certificados", href: "/aluno/certificados", icon: GraduationCap },
   { name: "Minha Conta", href: "/aluno/conta", icon: User },
@@ -113,7 +114,7 @@ export default function Sidebar() {
               "text-xs font-semibold leading-6 text-muted-foreground uppercase tracking-wider mb-2",
               isMentorada && "mt-4"
             )}>
-              Área da Aluna
+              Área de aprimoramento
             </div>
             {renderNavGroup(alunoNavigation)}
           </div>

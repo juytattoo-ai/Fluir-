@@ -27,8 +27,8 @@ export default function Footer() {
             <h3 className="text-sm font-semibold leading-6 text-primary tracking-wider uppercase">Plataforma</h3>
             <ul role="list" className="mt-6 space-y-4">
               <li>
-                <Link href="/quem-somos" className="text-sm leading-6 text-foreground/80 hover:text-primary transition-colors">
-                  Quem Somos
+                <Link href="/quem-somos" className="text-sm leading-6 text-primary hover:text-primary/80 transition-colors">
+                  Sobre nós
                 </Link>
               </li>
               <li>
@@ -66,11 +66,6 @@ export default function Footer() {
               <li>
                 <a href="https://wa.me/5571988172711" target="_blank" rel="noopener noreferrer" className="text-sm leading-6 text-foreground/80 hover:text-primary transition-colors">
                   WhatsApp: (71) 98817-2711
-                </a>
-              </li>
-              <li>
-                <a href="mailto:contato@fluirmais.com.br" className="text-sm leading-6 text-foreground/80 hover:text-primary transition-colors">
-                  E-mail: contato@fluirmais.com.br
                 </a>
               </li>
             </ul>

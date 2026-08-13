@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail, sendEmailVerification, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -12,6 +12,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -22,10 +23,27 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
+      if (!isLogin && !agreedToTerms) {
+        setError("Você precisa concordar com os Termos de Uso e Política de Privacidade para criar uma conta.");
+        setLoading(false);
+        return;
+      }
+
       if (isLogin) {
-        await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        if (!userCredential.user.emailVerified) {
+          await signOut(auth);
+          setError("Verifique seu e-mail antes de acessar. Enviamos um link para sua caixa de entrada.");
+          setLoading(false);
+          return;
+        }
       } else {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await sendEmailVerification(userCredential.user);
+        await signOut(auth);
+        setError("Conta criada! Enviamos um link de verificação para o seu e-mail.");
+        setLoading(false);
+        return;
       }
       router.push("/egregora");
     } catch (err: any) {
@@ -47,10 +65,37 @@ export default function LoginPage() {
     const provider = new GoogleAuthProvider();
     
     try {
-      await signInWithPopup(auth, provider);
+      const userCredential = await signInWithPopup(auth, provider);
+      if (!userCredential.user.emailVerified) {
+        await signOut(auth);
+        setError("Sua conta do Google não tem um e-mail verificado.");
+        setLoading(false);
+        return;
+      }
       router.push("/egregora");
     } catch (err: any) {
       setError("Erro ao autenticar com o Google.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResetPassword = async () => {
+    if (!email) {
+      setError("Digite seu e-mail no campo acima para recuperar a senha.");
+      return;
+    }
+    setError("");
+    setLoading(true);
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setError("E-mail de recuperação enviado! Verifique sua caixa de entrada.");
+    } catch (err: any) {
+      if (err.code === "auth/user-not-found" || err.code === "auth/invalid-email") {
+        setError("E-mail inválido ou não encontrado.");
+      } else {
+        setError("Erro ao enviar e-mail de recuperação.");
+      }
     } finally {
       setLoading(false);
     }
@@ -94,9 +139,9 @@ export default function LoginPage() {
               </label>
               {isLogin && (
                 <div className="text-sm">
-                  <a href="#" className="font-semibold text-primary hover:text-primary/80">
+                  <button type="button" onClick={handleResetPassword} className="font-semibold text-primary hover:text-primary/80">
                     Esqueceu a senha?
-                  </a>
+                  </button>
                 </div>
               )}
             </div>
@@ -122,6 +167,31 @@ export default function LoginPage() {
           </div>
 
           {error && <p className="text-sm text-red-500 font-medium text-center">{error}</p>}
+
+          {!isLogin && (
+            <div className="flex items-start">
+              <div className="flex h-6 items-center">
+                <input
+                  id="terms"
+                  name="terms"
+                  type="checkbox"
+                  required
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                />
+              </div>
+              <div className="ml-3 text-sm leading-6">
+                <label htmlFor="terms" className="text-muted-foreground">
+                  Eu concordo com os{" "}
+                  <Link href="/privacidade" className="font-semibold text-primary hover:text-primary/80" target="_blank">
+                    Termos de Uso e Política de Privacidade
+                  </Link>
+                  .
+                </label>
+              </div>
+            </div>
+          )}
 
           <div>
             <button

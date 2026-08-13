@@ -5,20 +5,27 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-background pt-16 pb-32 sm:pt-24 sm:pb-40">
+      <section 
+        className="relative overflow-hidden bg-background pt-16 pb-32 sm:pt-24 sm:pb-40 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/gota.jpeg')" }}
+      >
+        <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px]"></div>
         <div className="absolute inset-x-0 top-0 h-96 bg-gradient-to-b from-primary-soft/40 to-transparent"></div>
         <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
           <div className="mx-auto max-w-3xl text-center">
             <div className="mb-8 flex justify-center">
-              <span className="rounded-full bg-primary-soft/50 px-4 py-1.5 text-sm font-medium text-primary ring-1 ring-inset ring-primary/20">
+              <span className="rounded-full bg-primary-soft/80 px-4 py-1.5 text-sm font-medium text-primary ring-1 ring-inset ring-primary/20 backdrop-blur-sm">
                 Lançamento da Área da Egrégora
               </span>
             </div>
-            <h1 className="text-4xl font-serif font-bold tracking-tight text-foreground sm:text-6xl text-balance">
-              Pesquisa, desenvolvimento acadêmico e comunidade para mulheres que desejam transformar conhecimento em impacto.
+            <h1 className="text-5xl font-serif font-bold tracking-tight text-primary sm:text-7xl text-balance drop-shadow-sm">
+              Instituto Fluir+
             </h1>
-            <p className="mt-6 text-lg leading-8 text-muted-foreground max-w-2xl mx-auto">
-              Uma plataforma que integra cursos, mentorias, produção científica e conexões entre pesquisadoras.
+            <p className="mt-4 text-2xl font-serif font-medium text-foreground drop-shadow-md sm:text-3xl max-w-3xl mx-auto text-balance">
+              Um espaço coletivo feminino de qualidade de vida na pesquisa e na ciência.
+            </p>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground drop-shadow-md max-w-2xl mx-auto font-medium">
+              Pesquisa, desenvolvimento acadêmico e comunidade para mulheres que desejam transformar conhecimento em legado. 
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
@@ -28,7 +35,7 @@ export default function Home() {
                 Conheça a Fluir+
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link href="/cursos" className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors flex items-center gap-2">
+              <Link href="/cursos" className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors flex items-center gap-2 font-medium bg-white/50 px-4 py-2 rounded-full">
                 Explorar Cursos <span aria-hidden="true">→</span>
               </Link>
             </div>

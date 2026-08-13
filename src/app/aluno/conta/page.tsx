@@ -4,7 +4,9 @@ import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { updateUserProfileData, uploadProfilePicture } from "@/services/userService";
 import { Camera, Mail, ShieldCheck, User as UserIcon, GraduationCap, Loader2, CheckCircle2 } from "lucide-react";
-import { updateProfile } from "firebase/auth";
+import { updateProfile, deleteUser } from "firebase/auth";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function MinhaContaPage() {
   const { user, userProfile } = useAuth();
@@ -15,6 +17,7 @@ export default function MinhaContaPage() {
   
   const [isSaving, setIsSaving] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -97,6 +100,35 @@ export default function MinhaContaPage() {
       setIsUploading(false);
       // Reset input so they can try again
       if (e.target) e.target.value = '';
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!user || !userProfile) return;
+    
+    const confirm = window.confirm("Tem certeza que deseja EXCLUIR permanentemente sua conta? Esta ação não pode ser desfeita.");
+    if (!confirm) return;
+    
+    setIsDeleting(true);
+    
+    try {
+      // 1. Apagar o perfil do Firestore
+      await deleteDoc(doc(db, "users", userProfile.uid));
+      
+      // 2. Apagar a conta de Autenticação
+      await deleteUser(user);
+      
+      alert("Conta excluída com sucesso.");
+      // O signOut e redirecionamento vão acontecer automaticamente pelo AuthContext
+    } catch (error: any) {
+      console.error("Erro ao excluir conta:", error);
+      if (error.code === "auth/requires-recent-login") {
+        alert("Por motivos de segurança, você precisa fazer o Login novamente antes de excluir sua conta. Saia e entre de novo.");
+      } else {
+        alert("Ocorreu um erro ao excluir sua conta. Tente novamente.");
+      }
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -240,6 +272,20 @@ export default function MinhaContaPage() {
             </div>
           </form>
           
+          {/* Danger Zone */}
+          <div className="mt-12 pt-8 border-t border-red-100">
+            <h3 className="text-lg font-semibold text-red-600 mb-2">Zona de Perigo (LGPD)</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Ao excluir sua conta, seu perfil, foto e informações de acesso serão permanentemente apagados do sistema. Suas mensagens na Egrégora serão mantidas anonimamente para não quebrar o contexto da discussão.
+            </p>
+            <button
+              onClick={handleDeleteAccount}
+              disabled={isDeleting}
+              className="inline-flex items-center gap-2 rounded-lg bg-red-50 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-100 focus:ring-2 focus:ring-red-500 disabled:opacity-50 transition-colors"
+            >
+              {isDeleting ? "Excluindo..." : "Excluir Minha Conta Permanentemente"}
+            </button>
+          </div>
         </div>
       </div>
     </div>

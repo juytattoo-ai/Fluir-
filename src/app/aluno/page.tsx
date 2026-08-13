@@ -12,6 +12,7 @@ export default function AlunoDashboard() {
   const [loading, setLoading] = useState(true);
 
   const hasMestradoCourse = userProfile?.enrolledCourses?.includes("mestrado");
+  const isMentorada = userProfile?.role === "mentorada" || userProfile?.role === "admin";
 
   useEffect(() => {
     async function load() {
@@ -51,7 +52,7 @@ export default function AlunoDashboard() {
         </p>
       </div>
 
-      {!hasMestradoCourse ? (
+      {(!hasMestradoCourse && !isMentorada) ? (
         <div className="glass-card p-12 text-center rounded-3xl border-dashed border-2 border-primary/20 bg-primary-soft/5">
           <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
             <Sparkles className="h-8 w-8 text-primary" />
@@ -70,7 +71,44 @@ export default function AlunoDashboard() {
           </Link>
         </div>
       ) : (
-        <div>
+        <div className="space-y-12">
+          {isMentorada && (
+            <div>
+              <h2 className="text-xl font-bold font-serif mb-6 flex items-center gap-2">
+                <Sparkles className="h-6 w-6 text-primary" />
+                Oficina Aulas de Yoga
+              </h2>
+              <div className="glass-card overflow-hidden">
+                <div className="bg-primary-soft/30 border-b border-primary/10 p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div>
+                    <span className="inline-block px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-bold uppercase tracking-wider mb-3">
+                      Gratuito para Egrégora
+                    </span>
+                    <h3 className="text-2xl font-serif font-bold text-foreground">
+                      Práticas Online Semanais
+                    </h3>
+                    <p className="text-muted-foreground mt-2 max-w-xl">
+                      Um espaço de pausa, presença e reconexão com Aiza Fortuna.
+                    </p>
+                  </div>
+                  <div className="shrink-0 flex flex-col gap-3 min-w-[240px]">
+                    <a 
+                      href="#"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full py-4 px-6 bg-primary text-primary-foreground font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 hover:scale-105 transition-all duration-300"
+                    >
+                      <Video className="h-5 w-5" />
+                      Acessar Sala de Yoga
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {hasMestradoCourse && (
+            <div>
           <h2 className="text-xl font-bold font-serif mb-6 flex items-center gap-2">
             <Video className="h-6 w-6 text-primary" />
             Aulas ao Vivo
@@ -158,6 +196,7 @@ export default function AlunoDashboard() {
               </div>
             </div>
           </div>
+          )}
         </div>
       )}
       

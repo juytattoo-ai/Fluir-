@@ -25,16 +25,36 @@ export default function RodasDeConversaPage() {
   // State to track which post is currently having a comment written
   const [activeCommentPostId, setActiveCommentPostId] = useState<string | null>(null);
   const [commentText, setCommentText] = useState("");
+  
+  // Pagination state
+  const [lastDoc, setLastDoc] = useState<any>(null);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    fetchPosts(activeTopic.id);
+    fetchPosts(activeTopic.id, true);
   }, [activeTopic]);
 
-  const fetchPosts = async (topicId: string) => {
-    setLoading(true);
-    const fetchedPosts = await getPosts(topicId);
-    setPosts(fetchedPosts);
-    setLoading(false);
+  const fetchPosts = async (topicId: string, reset = false) => {
+    if (reset) {
+      setLoading(true);
+      setPosts([]);
+      setLastDoc(null);
+      setHasMore(true);
+    }
+    
+    const docToStart = reset ? null : lastDoc;
+    const result = await getPosts(topicId, docToStart);
+    
+    if (reset) {
+      setPosts(result.posts);
+    } else {
+      setPosts((prev) => [...prev, ...result.posts]);
+    }
+    
+    setLastDoc(result.lastDoc);
+    setHasMore(result.posts.length === 20); // Limite é 20
+    
+    if (reset) setLoading(false);
   };
 
   const handleCreatePost = async () => {
@@ -176,6 +196,7 @@ export default function RodasDeConversaPage() {
               onChange={(e) => setNewPostText(e.target.value)}
               className="w-full rounded-md border-0 py-3 px-4 text-foreground shadow-sm ring-1 ring-inset ring-foreground/10 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-white/50 resize-none"
               rows={3}
+              maxLength={2000}
               placeholder="Escreva algo interessante..."
             />
             <div className="mt-4 flex justify-end">
@@ -275,6 +296,7 @@ export default function RodasDeConversaPage() {
                             onKeyDown={(e) => {
                               if (e.key === 'Enter') handleAddComment(post.id);
                             }}
+                            maxLength={500}
                             placeholder="Escreva um comentário..."
                             className="flex-1 rounded-full border-0 py-2 px-4 text-sm text-foreground shadow-sm ring-1 ring-inset ring-foreground/10 focus:ring-2 focus:ring-inset focus:ring-primary bg-white/80"
                           />
@@ -293,6 +315,17 @@ export default function RodasDeConversaPage() {
                   
                 </div>
               ))
+            )}
+            
+            {posts.length > 0 && hasMore && (
+              <div className="flex justify-center pt-4 pb-8">
+                <button
+                  onClick={() => fetchPosts(activeTopic.id, false)}
+                  className="rounded-full bg-white px-6 py-2 text-sm font-semibold text-primary shadow-sm ring-1 ring-inset ring-primary hover:bg-primary-soft transition-colors"
+                >
+                  Carregar mais postagens
+                </button>
+              </div>
             )}
           </div>
         </div>

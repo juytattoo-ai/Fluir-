@@ -1,4 +1,4 @@
-import { collection, doc, addDoc, getDocs, updateDoc, arrayUnion, arrayRemove, query, orderBy, serverTimestamp, getDoc } from "firebase/firestore";
+import { collection, doc, addDoc, getDocs, updateDoc, setDoc, deleteDoc, query, orderBy, serverTimestamp, getDoc, where, limit, startAfter } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 export interface Comment {
@@ -25,22 +25,64 @@ export interface Post {
 /**
  * Busca todas as publicações de uma sala específica, ordenadas da mais recente para a mais antiga.
  */
-export async function getPosts(topicId: string): Promise<Post[]> {
+export async function getPosts(topicId: string, lastDocParam?: any): Promise<{ posts: Post[], lastDoc: any }> {
   const posts: Post[] = [];
+  let newLastDoc = null;
   try {
-    const q = query(
-      collection(db, "posts"), 
-      // Firestore requires a composite index if we use 'where' and 'orderBy' on different fields. 
-      // For simplicity in development without forcing the user to create indexes, we'll fetch all and filter locally, 
-      // or we can just sort locally. Let's do local filtering & sorting for MVP safety against missing indexes.
+    let q = query(
+      collection(db, "posts"),
+      where("topicId", "==", topicId),
+      orderBy("createdAt", "desc"),
+      limit(20)
     );
+
+    if (lastDocParam) {
+      q = query(
+        collection(db, "posts"),
+        where("topicId", "==", topicId),
+        orderBy("createdAt", "desc"),
+        startAfter(lastDocParam),
+        limit(20)
+      );
+    }
+
     const querySnapshot = await getDocs(q);
+    
+    if (!querySnapshot.empty) {
+      newLastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+    }
+    
+    // Fetch all posts first
+    const rawPosts: any[] = [];
     querySnapshot.forEach((docSnap) => {
-      const data = docSnap.data();
-      if (data.topicId === topicId) {
-        posts.push({ id: docSnap.id, ...data } as Post);
-      }
+      rawPosts.push({ id: docSnap.id, ...docSnap.data() });
     });
+
+    // For each post, fetch its comments and likes subcollections
+    await Promise.all(
+      rawPosts.map(async (p) => {
+        const postData: Post = { ...p, likes: [], comments: [] } as Post;
+        
+        // Fetch likes
+        const likesSnapshot = await getDocs(collection(db, "posts", p.id, "likes"));
+        postData.likes = likesSnapshot.docs.map(d => d.id);
+        
+        // Fetch comments
+        const commentsSnapshot = await getDocs(collection(db, "posts", p.id, "comments"));
+        postData.comments = commentsSnapshot.docs.map(d => {
+          return { id: d.id, ...d.data() } as Comment;
+        });
+        
+        // Sort comments by createdAt locally (if string/iso)
+        postData.comments.sort((a, b) => {
+          const timeA = new Date(a.createdAt || 0).getTime();
+          const timeB = new Date(b.createdAt || 0).getTime();
+          return timeA - timeB;
+        });
+
+        posts.push(postData);
+      })
+    );
     
     // Sort descending by timestamp
     posts.sort((a, b) => {
@@ -52,7 +94,7 @@ export async function getPosts(topicId: string): Promise<Post[]> {
   } catch (error) {
     console.error("Error fetching posts:", error);
   }
-  return posts;
+  return { posts, lastDoc: newLastDoc };
 }
 
 /**
@@ -66,9 +108,7 @@ export async function createPost(topicId: string, authorId: string, authorName: 
       authorName,
       authorPhoto,
       text,
-      createdAt: serverTimestamp(),
-      likes: [],
-      comments: []
+      createdAt: serverTimestamp()
     };
     
     const docRef = await addDoc(collection(db, "posts"), newPostData);
@@ -77,7 +117,9 @@ export async function createPost(topicId: string, authorId: string, authorName: 
     return { 
       id: docRef.id, 
       ...newPostData, 
-      createdAt: { toDate: () => new Date() } // Mock for local instant display
+      createdAt: { toDate: () => new Date() }, // Mock for local instant display
+      likes: [],
+      comments: []
     } as unknown as Post;
   } catch (error) {
     console.error("Error creating post:", error);
@@ -90,10 +132,12 @@ export async function createPost(topicId: string, authorId: string, authorName: 
  */
 export async function toggleLike(postId: string, userId: string, isLiking: boolean): Promise<boolean> {
   try {
-    const postRef = doc(db, "posts", postId);
-    await updateDoc(postRef, {
-      likes: isLiking ? arrayUnion(userId) : arrayRemove(userId)
-    });
+    const likeRef = doc(db, "posts", postId, "likes", userId);
+    if (isLiking) {
+      await setDoc(likeRef, {}); // Creates the document with the user's ID
+    } else {
+      await deleteDoc(likeRef);
+    }
     return true;
   } catch (error) {
     console.error("Error toggling like:", error);
@@ -106,21 +150,20 @@ export async function toggleLike(postId: string, userId: string, isLiking: boole
  */
 export async function addComment(postId: string, authorId: string, authorName: string, authorPhoto: string | null, text: string): Promise<Comment | null> {
   try {
-    const postRef = doc(db, "posts", postId);
-    const newComment: Comment = {
-      id: crypto.randomUUID(), // Simple unique ID for the comment object
+    const commentData = {
       authorId,
       authorName,
       authorPhoto,
       text,
-      createdAt: new Date().toISOString() // We use ISO string for arrays as Firestore doesn't support arrayUnion with serverTimestamp() safely nested inside objects without quirks
+      createdAt: new Date().toISOString()
     };
     
-    await updateDoc(postRef, {
-      comments: arrayUnion(newComment)
-    });
+    const commentRef = await addDoc(collection(db, "posts", postId, "comments"), commentData);
     
-    return newComment;
+    return {
+      id: commentRef.id,
+      ...commentData
+    } as Comment;
   } catch (error) {
     console.error("Error adding comment:", error);
     return null;
