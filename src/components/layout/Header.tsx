@@ -16,18 +16,18 @@ type NavItem = {
 const navigation: NavItem[] = [
   { name: "Início", href: "/" },
   { 
-    name: "Suporte à Pesquisadora", 
+    name: "Apoio à Pesquisadora", 
     href: "/suporte",
     dropdown: [
-      { name: "Diagnóstico de pesquisa", href: "/suporte#diagnostico" },
-      { name: "Cursos e oficinas", href: "/suporte#cursos" },
+      { name: "Sobre a pesquisa", href: "/suporte#diagnostico" },
+      { name: "Cursos, Oficinas e Seminários", href: "/suporte#cursos" },
       { name: "Mentorias e Consultorias", href: "/suporte#mentorias" },
-      { name: "Seminário TESE QUE FLUI", href: "/suporte#seminario" },
       { name: "Autocuidado", href: "/suporte#autocuidado" },
     ]
   },
   { 
     name: "Defesas e Publicações", 
+    href: "/defesas-publicacoes",
     dropdown: [
       { name: "Defesas", href: "/defesas-publicacoes#defesas" },
       { name: "Publicações", href: "/defesas-publicacoes#publicacoes" },
@@ -42,11 +42,10 @@ const navigation: NavItem[] = [
       { name: "História", href: "/quem-somos#historia" },
       { name: "Conselho do Instituto", href: "/quem-somos#conselho" },
       { name: "Modelo de Governança", href: "/quem-somos#governanca" },
-      { name: "Participantes do Conselho", href: "/quem-somos#participantes" },
       { name: "Apresentação da Mentora", href: "/quem-somos#mentora" },
     ]
   },
-  { name: "Comentários", href: "/comentarios" },
+  { name: "Feedbacks", href: "/comentarios" },
   { name: "Contato", href: "/contato" },
 ];
 
@@ -57,18 +56,19 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full glass-card border-x-0 border-t-0 rounded-none bg-background/90">
+      <header className="sticky top-0 z-50 w-full border-x-0 border-t-0 rounded-none bg-[#165EA0] shadow-md">
         <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8 gap-x-6" aria-label="Global">
-          <div className="flex lg:flex-1">
-            <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2 group">
-              <img src="/aaa.png" alt="Logo Fluir+" className="h-8 w-auto" />
-              <span className="font-serif font-bold text-2xl text-primary tracking-tight">FLUIR+</span>
+          <div className="flex lg:flex-1 justify-center">
+            <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-3 group relative">
+              <div className="bg-white rounded-full p-1 border border-gray-200 shadow-sm relative z-10 flex items-center justify-center -my-7 h-[6rem] w-[6rem]">
+                <img src="/Instituto - LOGO nova.jpg" alt="Logo Fluir+" className="h-full w-auto object-contain rounded-full" />
+              </div>
             </Link>
           </div>
           <div className="flex lg:hidden">
             <button
               type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-foreground"
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
               onClick={() => setMobileMenuOpen(true)}
             >
               <span className="sr-only">Abrir menu principal</span>
@@ -87,8 +87,8 @@ export default function Header() {
                         className={cn(
                           "flex items-center gap-1 text-sm font-medium leading-6 whitespace-nowrap px-4 py-2 rounded-full transition-all duration-300",
                           isActive
-                            ? "bg-primary/20 text-primary"
-                            : "text-foreground hover:text-primary hover:bg-primary/5"
+                            ? "bg-white/20 text-white"
+                            : "text-white/90 hover:text-white hover:bg-white/10"
                         )}
                       >
                         {item.name}
@@ -99,8 +99,8 @@ export default function Header() {
                         className={cn(
                           "flex items-center gap-1 text-sm font-medium leading-6 whitespace-nowrap px-4 py-2 rounded-full transition-all duration-300",
                           isActive
-                            ? "bg-primary/20 text-primary"
-                            : "text-foreground hover:text-primary hover:bg-primary/5"
+                            ? "bg-white/20 text-white"
+                            : "text-white/90 hover:text-white hover:bg-white/10"
                         )}
                       >
                         {item.name}
@@ -113,8 +113,8 @@ export default function Header() {
                       className={cn(
                         "text-sm font-medium leading-6 whitespace-nowrap px-4 py-2 rounded-full transition-all duration-300",
                         isActive
-                          ? "bg-primary/20 text-primary"
-                          : "text-foreground hover:text-primary hover:bg-primary/5"
+                          ? "bg-white/20 text-white"
+                          : "text-white/90 hover:text-white hover:bg-white/10"
                       )}
                     >
                       {item.name}
@@ -144,12 +144,12 @@ export default function Header() {
             {user ? (
               <Link
                 href={userProfile?.role === "admin" ? "/admin" : userProfile?.role === "mentorada" ? "/egregora" : "/aluno"}
-                className="flex items-center gap-3 rounded-full bg-primary/10 pl-3 pr-4 py-1.5 text-sm font-semibold text-primary shadow-sm hover:bg-primary/20 transition-all duration-300"
+                className="flex items-center gap-3 rounded-full bg-white/10 pl-3 pr-4 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20 transition-all duration-300 border border-white/10"
               >
                 {user.photoURL ? (
-                  <img src={user.photoURL} alt="Perfil" className="h-8 w-8 rounded-full border border-primary/20 object-cover" />
+                  <img src={user.photoURL} alt="Perfil" className="h-8 w-8 rounded-full border border-white/20 object-cover" />
                 ) : (
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#165EA0] font-bold">
                     {user.displayName?.charAt(0) || user.email?.charAt(0) || "U"}
                   </div>
                 )}
@@ -158,7 +158,7 @@ export default function Header() {
             ) : (
               <Link
                 href="/login"
-                className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all duration-300 transform hover:-translate-y-0.5 whitespace-nowrap"
+                className="rounded-full bg-white/20 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/30 border border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all duration-300 transform hover:-translate-y-0.5 whitespace-nowrap"
               >
                 Área de Membros
               </Link>
@@ -175,7 +175,7 @@ export default function Header() {
         <div className="fixed inset-y-0 right-0 z-[101] w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-foreground/10 shadow-2xl h-[100dvh]">
           <div className="flex items-center justify-between">
             <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
-              <img src="/aaa.png" alt="Logo Fluir+" className="h-8 w-auto" />
+              <img src="/Instituto - LOGO nova.jpg" alt="Logo Fluir+" className="h-8 w-auto rounded-full" />
               <span className="font-serif font-bold text-2xl text-primary tracking-tight">FLUIR+</span>
             </Link>
             <button

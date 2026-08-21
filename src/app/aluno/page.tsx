@@ -64,7 +64,7 @@ export default function AlunoDashboard() {
             Para acessar salas de aula ao vivo e cronogramas, conheça nossos cursos e oficinas disponíveis na plataforma.
           </p>
           <Link 
-            href="/cursos"
+            href="/suporte#cursos"
             className="inline-flex rounded-full bg-primary px-8 py-3 text-sm font-bold text-primary-foreground shadow-sm hover:bg-primary/90 transition-transform hover:scale-105"
           >
             Explorar Cursos
@@ -196,6 +196,7 @@ export default function AlunoDashboard() {
               </div>
             </div>
           </div>
+            </div>
           )}
         </div>
       )}

@@ -49,13 +49,34 @@ export default function DefesasPublicacoesPage() {
                 {item.description}
               </p>
               <div className="mt-8">
-                <button className="inline-flex rounded-full bg-primary/10 px-6 py-2 text-sm font-semibold text-primary shadow-sm hover:bg-primary hover:text-primary-foreground transition-colors items-center gap-2">
+                <a href={`#${item.id}`} className="inline-flex rounded-full bg-primary/10 px-6 py-2 text-sm font-semibold text-primary shadow-sm hover:bg-primary hover:text-primary-foreground transition-colors items-center gap-2">
                   Ver {item.title.toLowerCase()}
-                </button>
+                </a>
               </div>
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 mt-32 space-y-32 pb-32">
+        {sections.map((item) => (
+          <div key={`${item.id}-section`} id={item.id} className="scroll-mt-32 pt-16 border-t border-border/40">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
+                <item.icon className="h-6 w-6 text-primary" />
+              </div>
+              <h2 className="text-3xl font-serif font-bold text-foreground">{item.title}</h2>
+            </div>
+            
+            <div className="glass-card p-16 flex flex-col items-center justify-center min-h-[400px] text-center border-dashed border-2 border-primary/20 bg-primary-soft/10">
+              <item.icon className="h-16 w-16 text-primary/30 mb-6" />
+              <h3 className="text-2xl font-semibold text-foreground mb-4">Página em Construção</h3>
+              <p className="text-lg text-muted-foreground max-w-xl">
+                Estamos preparando os conteúdos de <strong>{item.title.toLowerCase()}</strong>. Em breve você encontrará todas as informações aqui.
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { ChevronRight, Play } from "lucide-react";
 
 const submenus = [
   { name: "Diagnóstico de pesquisa", id: "diagnostico" },
+  { name: "Missão da pesquisa", id: "missao" },
   { name: "Cursos e oficinas", id: "cursos" },
   { name: "Mentorias e Consultorias", id: "mentorias" },
   { name: "Seminário TESE QUE FLUI", id: "seminario" },
@@ -18,40 +19,40 @@ export default function SuporteHeader() {
   return (
     <>
       <section 
-        className="flex-1 flex flex-col items-center justify-center py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-cover bg-center bg-no-repeat min-h-[60vh]"
-        style={{ backgroundImage: "url('/torredemarfim.jpeg')" }}
+        className="relative flex flex-col justify-center overflow-hidden bg-background pt-24 pb-32 sm:pt-32 sm:pb-48 min-h-[85vh] bg-cover bg-[80%_top] md:bg-[75%_top] bg-no-repeat"
+        style={{ backgroundImage: "url('/torre.jpg')" }}
       >
-        <div className="absolute inset-0 bg-white/80 backdrop-blur-[2px]"></div>
-        <div className="absolute inset-x-0 top-0 h-96 bg-gradient-to-b from-primary-soft/40 to-transparent"></div>
-        <div className="max-w-5xl w-full mx-auto space-y-8 text-center relative z-10">
-          <h1 className="text-5xl md:text-7xl font-serif font-bold text-primary mb-6 drop-shadow-sm">
-            Suporte à Pesquisadora
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground drop-shadow-md font-medium max-w-2xl mx-auto">
-            Apoio completo para você transformar seu conhecimento em um legado na pesquisa acadêmica e científica.
-          </p>
+        <div className="w-full px-6 md:px-12 lg:px-24 xl:px-32 relative z-10">
+          <div className="max-w-3xl text-left">
+            <h1 className="text-4xl font-serif font-bold tracking-tight text-primary sm:text-6xl mb-8 drop-shadow-sm">
+              Apoio à Pesquisadora
+            </h1>
+            <p className="text-xl md:text-2xl text-white font-medium drop-shadow-md">
+              Apoio completo para você transformar seu conhecimento em um legado na pesquisa acadêmica e científica.
+            </p>
           
-          <div className="pt-8">
-            <button 
-              onClick={() => setShowVideo(!showVideo)}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold shadow-lg hover:bg-primary/90 transition-all hover:scale-105"
-            >
-              <Play className="w-5 h-5 fill-current" />
-              Torre de marfim, o que é?
-            </button>
-          </div>
-
-          <div className="pt-12 flex flex-wrap justify-center gap-3">
-            {submenus.map((item) => (
-              <a 
-                key={item.id} 
-                href={`#${item.id}`}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-primary/30 bg-background/50 hover:bg-primary/10 text-sm font-medium transition-colors"
+            <div className="pt-8">
+              <button 
+                onClick={() => setShowVideo(!showVideo)}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold shadow-lg hover:bg-primary/90 transition-all hover:scale-105"
               >
-                {item.name}
-                <ChevronRight className="w-4 h-4 opacity-50" />
-              </a>
-            ))}
+                <Play className="w-5 h-5 fill-current" />
+                Torre de marfim, o que é?
+              </button>
+            </div>
+
+            <div className="pt-12 flex flex-wrap justify-start gap-3">
+              {submenus.map((item) => (
+                <a 
+                  key={item.id} 
+                  href={`#${item.id}`}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-primary/30 bg-white/60 hover:bg-white text-sm font-medium transition-colors backdrop-blur-sm"
+                >
+                  {item.name}
+                  <ChevronRight className="w-4 h-4 opacity-50" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </section>

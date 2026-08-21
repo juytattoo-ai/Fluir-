@@ -28,12 +28,12 @@ export default function QuemSomosPage() {
         <ConselhoPage />
       </div>
 
-      <div id="governanca" className="scroll-mt-20 border-t border-border/40">
-        <GovernancaPage />
-      </div>
-
       <div id="participantes" className="scroll-mt-20 border-t border-border/40">
         <ParticipantesPage />
+      </div>
+
+      <div id="governanca" className="scroll-mt-20 border-t border-border/40">
+        <GovernancaPage />
       </div>
 
       <div id="mentora" className="scroll-mt-20 border-t border-border/40 pb-24">
