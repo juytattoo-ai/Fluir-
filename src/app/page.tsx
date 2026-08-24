@@ -53,7 +53,7 @@ export default function Home() {
               Temos um sonho, venha estar junto!
             </p>
             <p className="mt-6 text-lg leading-8 text-foreground font-medium drop-shadow-md max-w-2xl sm:text-xl">
-              Bem-estar na pesquisa e na ciência. para todas as mulheres na pós-graduação. Visualizamos as nossas pesquisas serem impulsos para profundas transformações na sociedade. ....
+              Bem-estar na pesquisa e na ciência. para todas as mulheres na pós-graduação. Visualizamos as nossas pesquisas serem impulsos para profundas transformações na sociedade.
             </p>
             <div className="mt-10 flex items-center justify-start gap-x-6">
               <Link
