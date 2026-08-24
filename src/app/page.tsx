@@ -46,14 +46,14 @@ export default function Home() {
                 Lançamento da Área de membros!
               </span>
             </div>
-            <h1 className="text-4xl font-serif font-bold tracking-tight text-primary sm:text-6xl text-balance drop-shadow-sm">
+            <h1 className="text-4xl font-serif font-bold tracking-tight text-primary sm:text-6xl text-balance drop-shadow-sm uppercase">
               Instituto Fluir+
             </h1>
-            <p className="mt-8 text-2xl font-serif font-medium text-foreground drop-shadow-md sm:text-3xl max-w-3xl text-balance">
-              Venha fazer parte!
+            <p className="mt-8 text-2xl font-serif font-medium text-foreground drop-shadow-md sm:text-3xl max-w-3xl text-balance uppercase">
+              Temos um sonho, venha estar junto!
             </p>
             <p className="mt-6 text-lg leading-8 text-foreground font-medium drop-shadow-md max-w-2xl sm:text-xl">
-              Pesquisa, desenvolvimento acadêmico e comunidade para mulheres que desejam transformar conhecimento em legado.
+              Bem-estar na pesquisa e na ciência. para todas as mulheres na pós-graduação. Visualizamos as nossas pesquisas serem impulsos para profundas transformações na sociedade. ....
             </p>
             <div className="mt-10 flex items-center justify-start gap-x-6">
               <Link

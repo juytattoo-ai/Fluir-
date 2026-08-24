@@ -10,7 +10,11 @@ import { useAuth } from "@/contexts/AuthContext";
 type NavItem = {
   name: string;
   href?: string;
-  dropdown?: { name: string; href: string }[];
+  dropdown?: { 
+    name: string; 
+    href?: string;
+    subDropdown?: { name: string; href: string }[];
+  }[];
 };
 
 const navigation: NavItem[] = [
@@ -19,10 +23,26 @@ const navigation: NavItem[] = [
     name: "Apoio à Pesquisadora", 
     href: "/suporte",
     dropdown: [
-      { name: "Sobre a pesquisa", href: "/suporte#diagnostico" },
+      { 
+        name: "Sobre o pesquisar", 
+        href: "/suporte#pesquisar",
+        subDropdown: [
+          { name: "Diagnóstico da pesquisa", href: "/suporte#diagnostico" },
+          { name: "Missão da pesquisa", href: "/suporte#missao" }
+        ]
+      },
       { name: "Cursos, Oficinas e Seminários", href: "/suporte#cursos" },
       { name: "Mentorias e Consultorias", href: "/suporte#mentorias" },
-      { name: "Autocuidado", href: "/suporte#autocuidado" },
+      { name: "Qualidade de vida com metodologia de pesquisa", href: "/suporte#qualidade-vida" },
+      { name: "Roda de conversa", href: "https://chat.whatsapp.com/seu-link-aqui" },
+      { 
+        name: "Como contribuir",
+        href: "/suporte#contribuir",
+        subDropdown: [
+          { name: "Como contribuir com conhecimento (Lives, aulas, oficinas)", href: "/suporte#contribuir-conhecimento" },
+          { name: "Contribuição consciente", href: "https://link-de-pagamento.com" }
+        ]
+      },
     ]
   },
   { 
@@ -122,16 +142,42 @@ export default function Header() {
                   )}
 
                   {item.dropdown && (
-                    <div className="absolute left-0 top-full mt-2 w-64 rounded-xl bg-background border border-border shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden">
+                    <div className="absolute left-0 top-full mt-2 w-64 rounded-xl bg-background border border-border shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-visible">
                       <div className="py-2">
                         {item.dropdown.map((subItem) => (
-                          <Link
-                            key={subItem.name}
-                            href={subItem.href}
-                            className="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
-                          >
-                            {subItem.name}
-                          </Link>
+                          <div key={subItem.name} className="relative group/sub">
+                            {subItem.subDropdown ? (
+                              <>
+                                <Link
+                                  href={subItem.href || "#"}
+                                  className="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors flex justify-between items-center"
+                                >
+                                  {subItem.name}
+                                  <ChevronDown className="h-4 w-4 -rotate-90" />
+                                </Link>
+                                <div className="absolute left-full top-0 ml-1 w-64 rounded-xl bg-background border border-border shadow-lg opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-300 z-50 overflow-hidden">
+                                  <div className="py-2">
+                                    {subItem.subDropdown.map((nestedItem) => (
+                                      <Link
+                                        key={nestedItem.name}
+                                        href={nestedItem.href}
+                                        className="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                                      >
+                                        {nestedItem.name}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              </>
+                            ) : (
+                              <Link
+                                href={subItem.href || "#"}
+                                className="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                              >
+                                {subItem.name}
+                              </Link>
+                            )}
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -209,14 +255,31 @@ export default function Header() {
                           </Link>
                           <div className="pl-4 space-y-1">
                             {item.dropdown.map(subItem => (
-                              <Link
-                                key={subItem.name}
-                                href={subItem.href}
-                                className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-primary-soft hover:text-primary transition-all duration-300"
-                                onClick={() => setMobileMenuOpen(false)}
-                              >
-                                {subItem.name}
-                              </Link>
+                              <div key={subItem.name}>
+                                <Link
+                                  href={subItem.href || "#"}
+                                  className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-primary-soft hover:text-primary transition-all duration-300"
+                                  onClick={() => {
+                                    if (!subItem.subDropdown) setMobileMenuOpen(false);
+                                  }}
+                                >
+                                  {subItem.name}
+                                </Link>
+                                {subItem.subDropdown && (
+                                  <div className="pl-4 space-y-1 mt-1 border-l border-primary/20 ml-3">
+                                    {subItem.subDropdown.map((nestedItem) => (
+                                      <Link
+                                        key={nestedItem.name}
+                                        href={nestedItem.href}
+                                        className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-primary-soft hover:text-primary transition-all duration-300"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                      >
+                                        {nestedItem.name}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
                             ))}
                           </div>
                         </>
