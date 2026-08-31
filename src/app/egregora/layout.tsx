@@ -12,7 +12,7 @@ export default function EgregoraLayout({
 }) {
   return (
     <ProtectedRoute allowedRoles={["mentorada", "admin"]}>
-      <div className="flex h-[calc(100vh-64px)] overflow-hidden bg-zinc-50/50">
+      <div className="flex h-[calc(100vh-64px)] overflow-hidden bg-transparent">
         <div className="hidden lg:flex lg:w-72 lg:flex-col">
           <Sidebar />
         </div>

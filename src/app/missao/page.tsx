@@ -1,40 +1,26 @@
-import { Leaf, Target, Heart, Sparkles } from "lucide-react";
+import { Target } from "lucide-react";
 
 export default function MissaoPage() {
   return (
-    <main className="min-h-screen py-20 px-6 lg:px-8">
-      <div className="mx-auto max-w-4xl text-center">
-        <h1 className="text-4xl font-serif font-bold text-foreground mb-6">Nossa Missão</h1>
-        <p className="text-lg text-muted-foreground mb-12">
-          Acreditamos que o conhecimento transforma. Nossa missão é guiar, apoiar e fortalecer a jornada de estudantes, profissionais e pesquisadoras, criando um ambiente de crescimento mútuo e excelência.
+    <div className="flex flex-col py-24">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 relative text-center">
+        <div className="mb-6 flex justify-center">
+          <span className="rounded-full bg-white/60 px-4 py-1.5 text-sm font-medium text-slate-800 ring-1 ring-inset ring-white/50 flex items-center gap-2 backdrop-blur-sm shadow-sm">
+            <Target className="h-4 w-4 text-[#2EBFA5]" />
+            Missão da Pesquisa
+          </span>
+        </div>
+        <h2 className="text-3xl font-serif font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
+          Missão da Pesquisa
+        </h2>
+        <p className="text-lg text-slate-700 max-w-2xl mx-auto leading-relaxed mb-12">
+          Acompanhamento de metas, organização de etapas e cronogramas do seu projeto.
         </p>
-      </div>
-
-      <div className="mx-auto max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="glass-card p-8 flex flex-col items-center text-center">
-          <div className="bg-primary/20 p-4 rounded-full mb-6">
-            <Target className="h-8 w-8 text-primary" />
-          </div>
-          <h3 className="text-xl font-semibold mb-4">Propósito</h3>
-          <p className="text-muted-foreground">Democratizar o acesso a um acompanhamento de excelência, formando profissionais seguras e preparadas para os desafios de suas carreiras.</p>
-        </div>
         
-        <div className="glass-card p-8 flex flex-col items-center text-center">
-          <div className="bg-primary/20 p-4 rounded-full mb-6">
-            <Heart className="h-8 w-8 text-primary" />
-          </div>
-          <h3 className="text-xl font-semibold mb-4">Acolhimento</h3>
-          <p className="text-muted-foreground">Oferecer uma rede de apoio estruturada, onde cada mentoreada encontra espaço para ser ouvida, desenvolvida e respeitada.</p>
-        </div>
-
-        <div className="glass-card p-8 flex flex-col items-center text-center">
-          <div className="bg-primary/20 p-4 rounded-full mb-6">
-            <Sparkles className="h-8 w-8 text-primary" />
-          </div>
-          <h3 className="text-xl font-semibold mb-4">Excelência</h3>
-          <p className="text-muted-foreground">Incentivar a produção acadêmica e o rigor científico através de métodos práticos e orientações validadas pela experiência de grandes nomes.</p>
+        <div className="bg-white/70 backdrop-blur-md rounded-3xl p-12 border border-white/60 relative overflow-hidden max-w-4xl mx-auto flex items-center justify-center min-h-[300px] shadow-sm">
+          <p className="text-slate-600 text-lg">Quadro de metas e cronograma em desenvolvimento...</p>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

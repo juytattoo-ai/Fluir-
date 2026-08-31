@@ -77,7 +77,7 @@ export default function ComentariosPage() {
                   <div className="max-w-3xl mx-auto flex flex-col items-center">
                     <Quote className="h-10 w-10 text-primary/40 mb-6" />
                     <h2 className="text-2xl md:text-3xl font-serif italic text-foreground mb-6">
-                      "{comment.title}"
+                      &quot;{comment.title}&quot;
                     </h2>
                     <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8">
                       {comment.text}
@@ -108,15 +108,15 @@ export default function ComentariosPage() {
         </div>
       </section>
 
-      {/* Green Banner Section */}
-      <section className="w-full bg-[#4a9f76] py-14 px-4 text-center">
+      {/* Turquoise Banner Section */}
+      <section className="w-full bg-[#2EBFA5] py-14 px-4 text-center">
         <div className="max-w-4xl mx-auto flex flex-col items-center justify-center gap-6">
           <h2 className="text-2xl md:text-3xl font-serif text-white font-medium">
             Quer fazer parte também?
           </h2>
           <Link
             href="/contato"
-            className="mt-2 inline-flex items-center justify-center rounded-md bg-white px-8 py-3 text-sm font-semibold text-[#4a9f76] shadow-sm hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all duration-300 transform hover:-translate-y-0.5"
+            className="mt-2 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-bold text-[#2EBFA5] shadow-sm hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all duration-300 transform hover:-translate-y-0.5 hover:scale-105"
           >
             ENTRE EM CONTATO
           </Link>
@@ -129,7 +129,7 @@ export default function ComentariosPage() {
           {gridComments.map((comment) => (
             <div key={comment.id} className="flex flex-col text-center items-center">
               <h3 className="text-xl md:text-2xl font-serif italic text-foreground mb-4">
-                "{comment.title}"
+                &quot;{comment.title}&quot;
               </h3>
               <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
                 {comment.text}

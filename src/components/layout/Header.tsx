@@ -3,208 +3,299 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { 
+  Menu, 
+  X, 
+  ChevronDown, 
+  User, 
+  LogOut,
+  Sparkles,
+  BookOpen,
+  Users,
+  Compass,
+  GraduationCap
+} from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { auth } from "@/lib/firebase";
+import { cn } from "@/lib/utils";
 
-type NavItem = {
-  name: string;
-  href?: string;
-  dropdown?: { 
-    name: string; 
-    href?: string;
-    subDropdown?: { name: string; href: string }[];
-  }[];
-};
-
-const navigation: NavItem[] = [
+// Links principais da Fluir+ organizados
+const navigation = [
   { name: "Início", href: "/" },
-  { 
-    name: "Apoio à Pesquisadora", 
-    href: "/suporte",
-    dropdown: [
-      { 
-        name: "Sobre o pesquisar", 
-        href: "/suporte#pesquisar",
-        subDropdown: [
-          { name: "Diagnóstico da pesquisa", href: "/suporte#diagnostico" },
-          { name: "Missão da pesquisa", href: "/suporte#missao" }
-        ]
-      },
-      { name: "Cursos, Oficinas e Seminários", href: "/suporte#cursos" },
-      { name: "Mentorias e Consultorias", href: "/suporte#mentorias" },
-      { name: "Qualidade de vida com metodologia de pesquisa", href: "/suporte#qualidade-vida" },
-      { name: "Roda de conversa", href: "https://chat.whatsapp.com/seu-link-aqui" },
-      { 
-        name: "Como contribuir",
-        href: "/suporte#contribuir",
-        subDropdown: [
-          { name: "Como contribuir com conhecimento (Lives, aulas, oficinas)", href: "/suporte#contribuir-conhecimento" },
-          { name: "Contribuição consciente", href: "https://link-de-pagamento.com" }
-        ]
-      },
-    ]
-  },
-  { 
-    name: "Defesas e Publicações", 
-    href: "/defesas-publicacoes",
-    dropdown: [
-      { name: "Defesas", href: "/defesas-publicacoes#defesas" },
-      { name: "Publicações", href: "/defesas-publicacoes#publicacoes" },
-      { name: "Lattes", href: "/defesas-publicacoes#lattes" },
-    ]
-  },
-  { 
-    name: "Sobre nós", 
+  {
+    name: "Sobre nós",
     href: "/quem-somos",
     dropdown: [
       { name: "Organograma Funcional", href: "/quem-somos#organograma" },
       { name: "História", href: "/quem-somos#historia" },
       { name: "Conselho do Instituto", href: "/quem-somos#conselho" },
       { name: "Modelo de Governança", href: "/quem-somos#governanca" },
+      { name: "Participantes do Conselho", href: "/quem-somos#participantes" },
       { name: "Apresentação da Mentora", href: "/quem-somos#mentora" },
     ]
   },
-  { name: "Feedbacks", href: "/comentarios" },
+  {
+    name: "Apoio à Pesquisadora",
+    href: "/suporte",
+    dropdown: [
+      { name: "Diagnóstico de pesquisa", href: "/suporte#diagnostico" },
+      { name: "Missão da pesquisa", href: "/suporte#missao" },
+      { 
+        name: "Cursos e oficinas", 
+        href: "/suporte#cursos",
+        subDropdown: [
+          { name: "Preparatório para Mestrado", href: "/cursos/mestrado" },
+          { name: "Oficina Aulas de Yoga", href: "/suporte#cursos" },
+        ]
+      },
+      { 
+        name: "Mentorias e Consultorias", 
+        href: "/suporte#mentorias",
+        subDropdown: [
+          { name: "Mentoria em Grupo Feminino", href: "/mentorias/grupo-feminino" },
+        ]
+      },
+      { name: "Seminário TESE QUE FLUI", href: "/suporte#seminario" },
+      { 
+        name: "Autocuidado", 
+        href: "/suporte#autocuidado",
+        subDropdown: [
+          { name: "Meditações das fases lunares", href: "/suporte#autocuidado" },
+        ]
+      },
+    ]
+  },
+  { name: "Defesas e Publicações", href: "/defesas-publicacoes" },
+  { name: "Depoimentos", href: "/comentarios" },
   { name: "Contato", href: "/contato" },
 ];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [expandedMobileMenus, setExpandedMobileMenus] = useState<Record<string, boolean>>({});
+  const [expandedMobileSubMenus, setExpandedMobileSubMenus] = useState<Record<string, boolean>>({});
+
   const pathname = usePathname();
   const { user, userProfile } = useAuth();
 
+  const isMember = userProfile?.role === "mentorada" || userProfile?.role === "admin";
+  const isAdmin = userProfile?.role === "admin";
+
+  const allNavigation = [
+    ...navigation,
+    ...(isMember ? [{ name: "Comunidade Fluir+", href: "/egregora" }] : []),
+  ];
+
+  const allMobileNavigation = [
+    ...navigation,
+    ...(isMember ? [{ name: "Comunidade Fluir+", href: "/egregora" }] : []),
+  ];
+
+  const toggleMobileMenu = (name: string) => {
+    setExpandedMobileMenus(prev => ({
+      ...prev,
+      [name]: !prev[name]
+    }));
+  };
+
+  const toggleMobileSubMenu = (name: string) => {
+    setExpandedMobileSubMenus(prev => ({
+      ...prev,
+      [name]: !prev[name]
+    }));
+  };
+
+  const inicioLink = allNavigation.find(item => item.name === "Início");
+  const middleLinks = allNavigation.filter(item => item.name !== "Início");
+  const isInicioActive = pathname === "/";
+  const isMembrosActive = pathname.startsWith("/login") || pathname.startsWith("/aluno") || pathname.startsWith("/admin");
+
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-x-0 border-t-0 rounded-none bg-[#165EA0] shadow-md">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8 gap-x-6" aria-label="Global">
-          <div className="flex lg:flex-1 justify-center">
-            <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-3 group relative">
-              <div className="bg-white rounded-full p-1 border border-gray-200 shadow-sm relative z-10 flex items-center justify-center -my-7 h-[6rem] w-[6rem]">
-                <img src="/Instituto - LOGO nova.jpg" alt="Logo Fluir+" className="h-full w-auto object-contain rounded-full" />
-              </div>
-            </Link>
+      <header 
+        className="sticky top-0 z-50 w-full shadow-md bg-cover bg-center bg-no-repeat transition-all duration-300 min-h-[110px] lg:min-h-[120px] py-8 lg:py-9 flex items-center"
+        style={{ backgroundImage: "url('/menuflor.jpg')" }}
+      >
+        <nav className="w-full px-6 md:px-12 lg:px-16 flex items-center justify-between">
+          
+          {/* Extremo Esquerdo: Botão Início (estilo pill branca com 50% transparência) */}
+          <div className="flex items-center">
+            {inicioLink && (
+              <Link
+                href={inicioLink.href || "/"}
+                className={cn(
+                  "px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 border shadow-sm",
+                  isInicioActive 
+                    ? "bg-[#3fe2c5] text-slate-900 border-[#3fe2c5]" 
+                    : "bg-white hover:bg-[#3fe2c5]/30 text-slate-800 border-white"
+                )}
+              >
+                {inicioLink.name}
+              </Link>
+            )}
           </div>
+
+          {/* Botão Mobile Hamburger */}
           <div className="flex lg:hidden">
             <button
               type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-slate-900 bg-white border border-white shadow-sm"
               onClick={() => setMobileMenuOpen(true)}
             >
-              <span className="sr-only">Abrir menu principal</span>
+              <span className="sr-only">Abrir menu</span>
               <Menu className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
-          <div className="hidden lg:flex lg:items-center lg:gap-x-2">
-            {navigation.map((item) => {
-              const isActive = item.href ? pathname === item.href : false;
-              return (
-                <div key={item.name} className="relative group">
-                  {item.dropdown ? (
-                    item.href ? (
-                      <Link
-                        href={item.href}
-                        className={cn(
-                          "flex items-center gap-1 text-sm font-medium leading-6 whitespace-nowrap px-4 py-2 rounded-full transition-all duration-300",
-                          isActive
-                            ? "bg-white/20 text-white"
-                            : "text-white/90 hover:text-white hover:bg-white/10"
-                        )}
-                      >
-                        {item.name}
-                        <ChevronDown className="h-4 w-4" />
-                      </Link>
-                    ) : (
-                      <button
-                        className={cn(
-                          "flex items-center gap-1 text-sm font-medium leading-6 whitespace-nowrap px-4 py-2 rounded-full transition-all duration-300",
-                          isActive
-                            ? "bg-white/20 text-white"
-                            : "text-white/90 hover:text-white hover:bg-white/10"
-                        )}
-                      >
-                        {item.name}
-                        <ChevronDown className="h-4 w-4" />
-                      </button>
-                    )
-                  ) : (
+
+          {/* Centro: Menus Centrais Agrupados em Pills Brancas 50% */}
+          <div className="hidden lg:flex items-center justify-center gap-x-3">
+            {middleLinks.map((item) => {
+              const isActive = item.href ? (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) : false;
+
+              if (item.dropdown) {
+                return (
+                  <div 
+                    key={item.name} 
+                    className="relative"
+                    onMouseEnter={() => setActiveDropdown(item.name)}
+                    onMouseLeave={() => setActiveDropdown(null)}
+                  >
                     <Link
                       href={item.href || "#"}
                       className={cn(
-                        "text-sm font-medium leading-6 whitespace-nowrap px-4 py-2 rounded-full transition-all duration-300",
-                        isActive
-                          ? "bg-white/20 text-white"
-                          : "text-white/90 hover:text-white hover:bg-white/10"
+                        "flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border shadow-sm",
+                        isActive || activeDropdown === item.name
+                          ? "bg-[#3fe2c5] text-slate-900 border-[#3fe2c5] font-semibold"
+                          : "bg-white hover:bg-[#3fe2c5]/30 text-slate-800 border-white"
                       )}
                     >
                       {item.name}
+                      <ChevronDown className="h-4 w-4 opacity-70" />
                     </Link>
-                  )}
 
-                  {item.dropdown && (
-                    <div className="absolute left-0 top-full mt-2 w-64 rounded-xl bg-background border border-border shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-visible">
-                      <div className="py-2">
-                        {item.dropdown.map((subItem) => (
-                          <div key={subItem.name} className="relative group/sub">
-                            {subItem.subDropdown ? (
-                              <>
-                                <Link
-                                  href={subItem.href || "#"}
-                                  className="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors flex justify-between items-center"
-                                >
-                                  {subItem.name}
-                                  <ChevronDown className="h-4 w-4 -rotate-90" />
-                                </Link>
-                                <div className="absolute left-full top-0 ml-1 w-64 rounded-xl bg-background border border-border shadow-lg opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-300 z-50 overflow-hidden">
-                                  <div className="py-2">
+                    {/* Dropdown Menu */}
+                    {activeDropdown === item.name && (
+                      <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-72 z-50">
+                        <div className="rounded-2xl bg-white/95 p-3 shadow-xl ring-1 ring-black/5 backdrop-blur-md border border-white/40">
+                          {item.dropdown.map((subItem) => (
+                            <div key={subItem.name} className="relative group/sub">
+                              <Link
+                                href={subItem.href}
+                                className="flex items-center justify-between rounded-xl px-3 py-2 text-sm text-foreground/80 hover:bg-[#3fe2c5]/20 hover:text-slate-900 transition-colors"
+                              >
+                                <span>{subItem.name}</span>
+                                {subItem.subDropdown && (
+                                  <ChevronDown className="h-3 w-3 -rotate-90 opacity-50" />
+                                )}
+                              </Link>
+
+                              {/* Nested Sub-dropdown */}
+                              {subItem.subDropdown && (
+                                <div className="hidden group-hover/sub:block absolute left-full top-0 pl-2 w-64">
+                                  <div className="rounded-2xl bg-white/95 p-3 shadow-xl ring-1 ring-black/5 backdrop-blur-md border border-white/40">
                                     {subItem.subDropdown.map((nestedItem) => (
                                       <Link
                                         key={nestedItem.name}
                                         href={nestedItem.href}
-                                        className="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                                        className="block rounded-xl px-3 py-2 text-sm text-foreground/80 hover:bg-[#3fe2c5]/20 hover:text-slate-900 transition-colors"
                                       >
                                         {nestedItem.name}
                                       </Link>
                                     ))}
                                   </div>
                                 </div>
-                              </>
-                            ) : (
-                              <Link
-                                href={subItem.href || "#"}
-                                className="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
-                              >
-                                {subItem.name}
-                              </Link>
-                            )}
-                          </div>
-                        ))}
+                              )}
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
+                  </div>
+                );
+              }
+
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href || "#"}
+                  className={cn(
+                    "px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border shadow-sm",
+                    isActive
+                      ? "bg-[#3fe2c5] text-slate-900 border-[#3fe2c5] font-semibold"
+                      : "bg-white hover:bg-[#3fe2c5]/30 text-slate-800 border-white"
                   )}
-                </div>
+                >
+                  {item.name}
+                </Link>
               );
             })}
           </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-6 ml-auto">
+
+          {/* Extremo Direito: Botão Área de Membros / Perfil */}
+          <div className="hidden lg:flex items-center">
             {user ? (
-              <Link
-                href={userProfile?.role === "admin" ? "/admin" : userProfile?.role === "mentorada" ? "/egregora" : "/aluno"}
-                className="flex items-center gap-3 rounded-full bg-white/10 pl-3 pr-4 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20 transition-all duration-300 border border-white/10"
+              <div 
+                className="relative"
+                onMouseEnter={() => setActiveDropdown("user-menu")}
+                onMouseLeave={() => setActiveDropdown(null)}
               >
-                {user.photoURL ? (
-                  <img src={user.photoURL} alt="Perfil" className="h-8 w-8 rounded-full border border-white/20 object-cover" />
-                ) : (
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#165EA0] font-bold">
-                    {user.displayName?.charAt(0) || user.email?.charAt(0) || "U"}
+                <button
+                  className="flex items-center gap-2 rounded-full border border-white bg-white px-4 py-2 text-sm font-medium text-slate-800 shadow-sm hover:bg-[#3fe2c5]/30 transition-all duration-300"
+                >
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#2EBFA5] text-xs font-bold text-white uppercase">
+                    {userProfile?.displayName?.[0] || user.email?.[0] || "U"}
+                  </div>
+                  <span className="max-w-[120px] truncate">{userProfile?.displayName || "Minha Conta"}</span>
+                  <ChevronDown className="h-4 w-4 opacity-70" />
+                </button>
+
+                {activeDropdown === "user-menu" && (
+                  <div className="absolute right-0 top-full pt-2 w-56 z-50">
+                    <div className="rounded-2xl bg-white/95 p-2 shadow-xl ring-1 ring-black/5 backdrop-blur-md border border-white/40">
+                      <div className="px-3 py-2 border-b border-border/40 mb-1">
+                        <p className="text-xs text-muted-foreground">Conectado como</p>
+                        <p className="text-sm font-semibold truncate text-foreground">{user.email}</p>
+                      </div>
+                      
+                      {isAdmin && (
+                        <Link
+                          href="/admin"
+                          className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-foreground/80 hover:bg-primary-soft hover:text-primary transition-colors"
+                        >
+                          <Compass className="h-4 w-4" />
+                          Painel Admin
+                        </Link>
+                      )}
+                      
+                      <Link
+                        href="/aluno"
+                        className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-foreground/80 hover:bg-primary-soft hover:text-primary transition-colors"
+                      >
+                        <GraduationCap className="h-4 w-4" />
+                        Área do Aluno
+                      </Link>
+
+                      <button
+                        onClick={() => auth.signOut()}
+                        className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors mt-1 border-t border-border/40"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Sair
+                      </button>
+                    </div>
                   </div>
                 )}
-                <span>Membros</span>
-              </Link>
+              </div>
             ) : (
               <Link
                 href="/login"
-                className="rounded-full bg-white/20 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/30 border border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all duration-300 transform hover:-translate-y-0.5 whitespace-nowrap"
+                className={cn(
+                  "px-6 py-2.5 rounded-full text-sm font-semibold text-slate-900 transition-all duration-300 border shadow-sm",
+                  isMembrosActive
+                    ? "bg-[#3fe2c5] border-[#3fe2c5]"
+                    : "bg-white hover:bg-[#3fe2c5]/30 border-white"
+                )}
               >
                 Área de Membros
               </Link>
@@ -213,84 +304,128 @@ export default function Header() {
         </nav>
       </header>
 
-      {/* Mobile menu */}
+      {/* Menu Mobile Retrátil, Luminous & Clear */}
       <div className={cn("lg:hidden", mobileMenuOpen ? "fixed inset-0 z-[100]" : "hidden")}>
-        {/* Overlay para fechar ao clicar fora */}
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
+        <div className="fixed inset-0 bg-black/25 backdrop-blur-xs" onClick={() => setMobileMenuOpen(false)} />
         
-        <div className="fixed inset-y-0 right-0 z-[101] w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-foreground/10 shadow-2xl h-[100dvh]">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
-              <img src="/Instituto - LOGO nova.jpg" alt="Logo Fluir+" className="h-8 w-auto rounded-full" />
-              <span className="font-serif font-bold text-2xl text-primary tracking-tight">FLUIR+</span>
-            </Link>
+        <div className="fixed inset-y-0 right-0 z-[101] w-full overflow-y-auto bg-white/95 backdrop-blur-xl border-l border-white/60 px-6 py-6 sm:max-w-sm shadow-2xl h-[100dvh]">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-200">
+            <span className="font-serif font-bold text-2xl text-[#2EBFA5] tracking-tight">FLUIR+</span>
             <button
               type="button"
-              className="-m-2.5 rounded-md p-2.5 text-foreground"
+              className="-m-2.5 rounded-full p-2 text-slate-700 hover:bg-slate-100 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Fechar menu</span>
               <X className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
+          
           <div className="mt-6 flow-root pb-24">
-            <div className="-my-6 divide-y divide-foreground/10">
+            <div className="-my-6 divide-y divide-slate-100">
               <div className="space-y-2 py-6">
-                {navigation.map((item) => {
-                  const isActive = item.href ? pathname === item.href : false;
+                {allMobileNavigation.map((item) => {
+                  const isActive = item.href ? (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) : false;
+                  const isMenuExpanded = !!expandedMobileMenus[item.name];
+
                   return (
-                    <div key={item.name}>
+                    <div key={item.name} className="overflow-hidden">
                       {item.dropdown ? (
                         <>
-                          <Link
-                            href={item.href || "#"}
+                          <button
+                            type="button"
+                            onClick={() => toggleMobileMenu(item.name)}
                             className={cn(
-                              "flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-primary/5 transition-colors",
-                              isActive ? "text-primary bg-primary/5" : "text-foreground"
+                              "flex w-full items-center justify-between rounded-xl py-3 px-4 text-base font-semibold leading-7 transition-all duration-200 text-left",
+                              isActive || isMenuExpanded 
+                                ? "text-slate-900 bg-[#3fe2c5]/25 font-semibold" 
+                                : "text-slate-800 hover:bg-[#3fe2c5]/15"
                             )}
-                            onClick={() => setMobileMenuOpen(false)}
                           >
-                            {item.name}
-                            <ChevronDown className="h-5 w-5 flex-none" aria-hidden="true" />
-                          </Link>
-                          <div className="pl-4 space-y-1">
-                            {item.dropdown.map(subItem => (
-                              <div key={subItem.name}>
+                            <span>{item.name}</span>
+                            <ChevronDown 
+                              className={cn(
+                                "h-5 w-5 flex-none text-slate-600 transition-transform duration-300",
+                                isMenuExpanded ? "rotate-180 text-[#2EBFA5]" : ""
+                              )} 
+                              aria-hidden="true" 
+                            />
+                          </button>
+
+                          {/* Submenu Retrátil */}
+                          {isMenuExpanded && (
+                            <div className="pl-3 pr-2 py-2 space-y-1 bg-slate-50/70 rounded-xl mt-1.5 border border-slate-200/60 animate-in fade-in slide-in-from-top-2 duration-200">
+                              {/* Link para página raiz do menu */}
+                              {item.href && (
                                 <Link
-                                  href={subItem.href || "#"}
-                                  className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-primary-soft hover:text-primary transition-all duration-300"
-                                  onClick={() => {
-                                    if (!subItem.subDropdown) setMobileMenuOpen(false);
-                                  }}
+                                  href={item.href}
+                                  className="block rounded-lg px-3 py-2 text-xs font-bold uppercase tracking-wider text-[#2EBFA5] hover:bg-[#3fe2c5]/20 transition-all duration-200 mb-1 border-b border-slate-200/50"
+                                  onClick={() => setMobileMenuOpen(false)}
                                 >
-                                  {subItem.name}
+                                  Ver página principal →
                                 </Link>
-                                {subItem.subDropdown && (
-                                  <div className="pl-4 space-y-1 mt-1 border-l border-primary/20 ml-3">
-                                    {subItem.subDropdown.map((nestedItem) => (
-                                      <Link
-                                        key={nestedItem.name}
-                                        href={nestedItem.href}
-                                        className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-primary-soft hover:text-primary transition-all duration-300"
-                                        onClick={() => setMobileMenuOpen(false)}
+                              )}
+
+                              {item.dropdown.map(subItem => {
+                                const isSubExpanded = !!expandedMobileSubMenus[subItem.name];
+
+                                if (subItem.subDropdown) {
+                                  return (
+                                    <div key={subItem.name} className="overflow-hidden">
+                                      <button
+                                        type="button"
+                                        onClick={() => toggleMobileSubMenu(subItem.name)}
+                                        className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-[#3fe2c5]/20 hover:text-slate-900 font-medium transition-all duration-200 text-left"
                                       >
-                                        {nestedItem.name}
-                                      </Link>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                            ))}
-                          </div>
+                                        <span>{subItem.name}</span>
+                                        <ChevronDown 
+                                          className={cn(
+                                            "h-4 w-4 flex-none text-slate-500 transition-transform duration-300",
+                                            isSubExpanded ? "rotate-180 text-[#2EBFA5]" : ""
+                                          )} 
+                                        />
+                                      </button>
+
+                                      {isSubExpanded && (
+                                        <div className="pl-3 space-y-1 mt-1 border-l-2 border-[#2EBFA5]/40 ml-3 mb-2 animate-in fade-in slide-in-from-top-1 duration-150">
+                                          {subItem.subDropdown.map((nestedItem) => (
+                                            <Link
+                                              key={nestedItem.name}
+                                              href={nestedItem.href}
+                                              className="block rounded-lg px-3 py-1.5 text-xs text-slate-600 hover:bg-[#3fe2c5]/20 hover:text-slate-900 font-medium transition-all duration-200"
+                                              onClick={() => setMobileMenuOpen(false)}
+                                            >
+                                              {nestedItem.name}
+                                            </Link>
+                                          ))}
+                                        </div>
+                                      )}
+                                    </div>
+                                  );
+                                }
+
+                                return (
+                                  <Link
+                                    key={subItem.name}
+                                    href={subItem.href || "#"}
+                                    className="block rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-[#3fe2c5]/20 hover:text-slate-900 font-medium transition-all duration-200"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                  >
+                                    {subItem.name}
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          )}
                         </>
                       ) : (
                         <Link
                           href={item.href || "#"}
                           className={cn(
-                            "-mx-3 block rounded-lg px-3 py-2 text-base font-medium leading-7 transition-all duration-300",
+                            "block rounded-xl px-4 py-3 text-base font-medium leading-7 transition-all duration-200",
                             isActive
-                              ? "bg-primary/20 text-primary"
-                              : "text-foreground hover:bg-primary-soft hover:text-primary"
+                              ? "bg-[#3fe2c5]/30 text-slate-900 font-semibold"
+                              : "text-slate-800 hover:bg-[#3fe2c5]/15"
                           )}
                           onClick={() => setMobileMenuOpen(false)}
                         >
@@ -301,10 +436,11 @@ export default function Header() {
                   );
                 })}
               </div>
+
               <div className="py-6 flex flex-col gap-4">
                 <Link
                   href="/login"
-                  className="rounded-full bg-primary px-4 py-2.5 text-center text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
+                  className="rounded-full bg-[#2EBFA5] hover:bg-[#23A790] px-4 py-3.5 text-center text-sm font-bold text-white shadow-md transition-all"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Área de Membros

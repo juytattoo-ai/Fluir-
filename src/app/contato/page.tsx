@@ -28,11 +28,10 @@ export default function ContatoPage() {
 
         <div className="mt-16 mx-auto w-full max-w-2xl">
           <div className="glass-card p-8 md:p-12 flex flex-col items-center">
-            <div className="bg-green-100 p-4 rounded-full mb-6">
-              <Phone className="h-8 w-8 text-green-600" />
+            <div className="bg-[#3fe2c5]/20 p-4 rounded-full mb-6">
+              <Phone className="h-8 w-8 text-primary" />
             </div>
 
-            
             <form onSubmit={handleSendWhatsApp} className="w-full text-left">
               <div className="mb-6">
                 <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
@@ -52,7 +51,7 @@ export default function ContatoPage() {
               
               <button
                 type="submit"
-                className="w-full flex justify-center items-center gap-2 rounded-full bg-green-600 px-8 py-3.5 text-sm font-bold text-white shadow-sm hover:bg-green-700 transition-colors transform hover:-translate-y-0.5 duration-300"
+                className="w-full flex justify-center items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-bold text-white shadow-sm hover:bg-primary/90 transition-colors transform hover:-translate-y-0.5 duration-300"
               >
                 <Send className="h-4 w-4" />
                 Enviar para o WhatsApp

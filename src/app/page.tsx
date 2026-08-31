@@ -13,7 +13,7 @@ const courseCards = [
     id: "mentoria",
     title: "MENTORIA EM GRUPO FEMININO",
     description: "Acompanhamento e networking para superar bloqueios na escrita e pesquisa.",
-    href: "/mentorias"
+    href: "/mentorias/grupo-feminino"
   },
   {
     id: "yoga",
@@ -32,38 +32,59 @@ const courseCards = [
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
+      {/* Hero Section com filtro Laranja para Turquesa e imagem gota222.jpg */}
       <section 
-        className="relative flex flex-col justify-center overflow-hidden bg-background pt-24 pb-32 sm:pt-32 sm:pb-48 min-h-[85vh] bg-cover bg-[80%_top] md:bg-[75%_top] bg-no-repeat"
-        style={{ backgroundImage: "url('/gota222.png')" }}
+        className="relative flex flex-col justify-center overflow-hidden pt-28 sm:pt-32 pb-28 sm:pb-40 min-h-[90vh] bg-cover bg-[80%_top] md:bg-[75%_top] bg-no-repeat"
+        style={{ 
+          backgroundImage: "linear-gradient(135deg, rgba(255, 140, 75, 0.45) 0%, rgba(255, 175, 120, 0.25) 30%, rgba(63, 226, 197, 0.35) 70%, rgba(45, 205, 185, 0.6) 100%), url('/gota222.jpg')" 
+        }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent pointer-events-none"></div>
-        <div className="absolute inset-x-0 top-0 h-96 bg-gradient-to-b from-primary-soft/40 to-transparent"></div>
         <div className="w-full px-6 md:px-12 lg:px-24 xl:px-32 relative z-10">
-          <div className="max-w-3xl text-left">
-            <div className="mb-8 flex justify-start">
-              <span className="rounded-full bg-primary-soft/80 px-4 py-1.5 text-sm font-medium text-primary ring-1 ring-inset ring-primary/20 backdrop-blur-sm">
-                Lançamento da Área de membros!
-              </span>
+          <div className="max-w-4xl text-left">
+            
+            {/* Top row: Instituto Fluir+ no topo, com espaço seguro do menu em qualquer tamanho */}
+            <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 gap-3 mb-6 sm:mb-8 mt-4 sm:mt-0">
+              <h1 className="text-3xl font-serif font-bold tracking-tight text-slate-900 sm:text-5xl uppercase drop-shadow-sm shrink-0 mb-1 sm:mb-0">
+                Instituto Fluir+
+              </h1>
+              <p className="text-sm sm:text-base font-medium text-slate-800 drop-shadow-sm max-w-xl leading-snug">
+                Espaço coletivo feminino de qualidade de vida<br className="sm:hidden" /> na pesquisa e na ciência.
+              </p>
             </div>
-            <h1 className="text-4xl font-serif font-bold tracking-tight text-primary sm:text-6xl text-balance drop-shadow-sm uppercase">
-              Instituto Fluir+
-            </h1>
-            <p className="mt-8 text-2xl font-serif font-medium text-foreground drop-shadow-md sm:text-3xl max-w-3xl text-balance uppercase">
-              Temos um sonho, venha estar junto!
-            </p>
-            <p className="mt-6 text-lg leading-8 text-foreground font-medium drop-shadow-md max-w-2xl sm:text-xl">
-              Bem-estar na pesquisa e na ciência. para todas as mulheres na pós-graduação. Visualizamos as nossas pesquisas serem impulsos para profundas transformações na sociedade.
-            </p>
-            <div className="mt-10 flex items-center justify-start gap-x-6">
+
+            {/* Temos um sonho... bem mais para baixo */}
+            <div className="mt-16 sm:mt-24 lg:mt-28 space-y-8">
+              <p className="text-2xl font-serif font-semibold text-slate-900 drop-shadow-md sm:text-3xl max-w-3xl uppercase leading-snug">
+                Temos um sonho,<br className="sm:hidden" /> venha estar junto!
+              </p>
+              
+              {/* Espaço generoso entre as frases e quebras exatas no desktop e mobile */}
+              <p className="text-lg leading-8 text-slate-800 font-medium drop-shadow-md max-w-2xl sm:text-xl pt-2">
+                <span className="hidden sm:inline">
+                  Bem-estar na pesquisa e na ciência para<br />
+                  todas as mulheres na pós-graduação.<br />
+                  Visualizamos as nossas pesquisas serem impulsos<br />
+                  para profundas transformações na sociedade.
+                </span>
+                <span className="sm:hidden">
+                  Bem-estar na pesquisa e na ciência<br />
+                  para todas as mulheres<br />
+                  na pós-graduação.<br /><br />
+                  Visualizamos as nossas pesquisas serem impulsos para profundas transformações na sociedade.
+                </span>
+              </p>
+            </div>
+
+            {/* Botões de Ação */}
+            <div className="mt-14 sm:mt-16 flex flex-wrap items-center justify-start gap-4 sm:gap-x-6">
               <Link
                 href="/quem-somos"
-                className="rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary flex items-center gap-2"
+                className="rounded-full bg-[#2EBFA5] hover:bg-[#23A790] px-8 py-3.5 text-sm font-semibold text-white shadow-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary flex items-center gap-2 hover:scale-105"
               >
                 Conheça a Fluir+
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link href="/suporte#cursos" className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors flex items-center gap-2 font-medium bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm">
+              <Link href="/suporte#cursos" className="text-sm font-semibold leading-6 text-slate-900 hover:text-primary transition-all flex items-center gap-2 bg-white/60 hover:bg-white/80 px-5 py-2.5 rounded-full backdrop-blur-sm shadow-sm border border-white/50">
                 Explorar Cursos <span aria-hidden="true">→</span>
               </Link>
             </div>
@@ -71,8 +92,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* História Section */}
-      <section className="bg-white py-16 sm:py-20">
+      {/* História Section com fundo translúcido para deixar o gradiente laranja>turquesa transparecer */}
+      <section className="bg-white/60 backdrop-blur-sm py-16 sm:py-20 border-t border-[#3fe2c5]/20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-serif font-bold tracking-tight text-primary sm:text-4xl mb-6">
             Nossa História
@@ -84,16 +105,16 @@ export default function Home() {
       </section>
 
       {/* Cursos - Oficinas - Seminários Section */}
-      <section className="py-24 bg-[#fcf9f2]">
+      <section className="py-24 bg-white/40 backdrop-blur-sm border-t border-[#3fe2c5]/20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif font-bold tracking-tight text-foreground sm:text-5xl">Cursos, Oficinas e Seminários</h2>
-            <p className="mt-4 text-lg text-muted-foreground uppercase tracking-widest text-sm font-semibold">Escolha a sua experiência</p>
+            <p className="mt-4 text-muted-foreground uppercase tracking-widest text-sm font-semibold">Escolha a sua experiência</p>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {courseCards.map((card) => (
-              <Link key={card.id} href={card.href} className="group flex flex-col bg-white/60 backdrop-blur-sm rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-white/40 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 hover:bg-white transition-all duration-300 p-8 text-center h-full">
+              <Link key={card.id} href={card.href} className="group flex flex-col bg-white/75 backdrop-blur-sm rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-white/60 hover:shadow-[0_8px_30px_rgb(63,226,197,0.2)] hover:-translate-y-1 hover:bg-white transition-all duration-300 p-8 text-center h-full">
                 <h3 className="text-lg font-bold tracking-wide text-foreground group-hover:text-primary transition-colors">{card.title}</h3>
                 <div className="h-px w-12 bg-primary/20 mx-auto mt-4 mb-5 group-hover:w-16 group-hover:bg-primary/40 transition-all duration-300"></div>
                 <p className="text-muted-foreground text-sm leading-relaxed">{card.description}</p>
@@ -109,7 +130,7 @@ export default function Home() {
             </p>
             <Link
               href="/contato"
-              className="mt-4 inline-flex items-center justify-center bg-[#369c6f] px-8 py-3 text-sm font-bold tracking-wider text-white hover:bg-[#2d835d] transition-all duration-300 rounded shadow-md"
+              className="mt-4 inline-flex items-center justify-center bg-[#2EBFA5] hover:bg-[#23A790] px-8 py-3 text-sm font-bold tracking-wider text-white transition-all duration-300 rounded-full shadow-md hover:scale-105"
             >
               ENTRE EM CONTATO
             </Link>
@@ -118,7 +139,7 @@ export default function Home() {
       </section>
 
       {/* A nossa missão Section */}
-      <section className="bg-white py-16 sm:py-24">
+      <section className="bg-white/60 backdrop-blur-sm py-16 sm:py-24 border-t border-[#3fe2c5]/20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center mb-12">
             <h2 className="text-3xl font-serif font-bold text-foreground mb-4">Nossa Missão</h2>
@@ -128,7 +149,7 @@ export default function Home() {
           </div>
 
           <div className="mx-auto max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-primary-soft/10 rounded-2xl p-6 flex flex-col items-center text-center">
+            <div className="bg-white/80 border border-[#3fe2c5]/30 rounded-2xl p-6 flex flex-col items-center text-center shadow-sm">
               <div className="bg-white p-3 rounded-xl mb-4 shadow-sm">
                 <Target className="h-6 w-6 text-primary" />
               </div>
@@ -136,7 +157,7 @@ export default function Home() {
               <p className="text-sm text-muted-foreground">Democratizar o acesso a um acompanhamento de excelência, formando profissionais preparadas para os desafios de suas carreiras.</p>
             </div>
             
-            <div className="bg-primary-soft/10 rounded-2xl p-6 flex flex-col items-center text-center">
+            <div className="bg-white/80 border border-[#3fe2c5]/30 rounded-2xl p-6 flex flex-col items-center text-center shadow-sm">
               <div className="bg-white p-3 rounded-xl mb-4 shadow-sm">
                 <Heart className="h-6 w-6 text-primary" />
               </div>
@@ -144,7 +165,7 @@ export default function Home() {
               <p className="text-sm text-muted-foreground">Oferecer uma rede de apoio estruturada, onde cada mentoreada encontra espaço para ser ouvida, desenvolvida e respeitada.</p>
             </div>
 
-            <div className="bg-primary-soft/10 rounded-2xl p-6 flex flex-col items-center text-center">
+            <div className="bg-white/80 border border-[#3fe2c5]/30 rounded-2xl p-6 flex flex-col items-center text-center shadow-sm">
               <div className="bg-white p-3 rounded-xl mb-4 shadow-sm">
                 <Sparkles className="h-6 w-6 text-primary" />
               </div>
@@ -155,10 +176,8 @@ export default function Home() {
         </div>
       </section>
 
-
-
       {/* Feedbacks Section */}
-      <section className="bg-white">
+      <section className="border-t border-[#3fe2c5]/20">
         <ComentariosPage />
       </section>
     </div>

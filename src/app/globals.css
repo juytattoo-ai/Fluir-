@@ -1,57 +1,72 @@
 @import "tailwindcss";
 
 :root {
-  /* Cream / Off-White background */
-  --background: #FDFBF7;
+  /* Transparent background to allow global fixed gradient to show through */
+  --background: transparent;
   /* Dark text */
   --foreground: #2A2F2A;
   
-  /* Primary - Light Green matching the leaf */
-  --primary: #7BB369;
+  /* Primary - Vibrant Turquoise */
+  --primary: #2EBFA5;
   --primary-foreground: #FFFFFF;
   
-  /* Primary Soft - Creamy green for backgrounds */
-  --primary-soft: #E8F0E4;
+  /* Primary Soft - Soft pastel turquoise for cards and badges */
+  --primary-soft: rgba(224, 248, 244, 0.75);
   
-  /* Secondary - Soft Yellow/Gold from the gradient */
-  --secondary: #E3CE74;
-  --secondary-foreground: #2A2F2A;
+  /* Secondary - Bright Turquoise */
+  --secondary: #3FE2C5;
+  --secondary-foreground: #1E3A34;
   
-  /* Accent - Purple from the gradient */
+  /* Accent - Purple / Rose */
   --accent: #A45C94;
   
-  /* Muted - Creamy beige */
-  --muted: #F3EFE6;
-  --muted-foreground: #6B7268;
+  /* Muted - Soft pastel background tint */
+  --muted: rgba(238, 249, 246, 0.6);
+  --muted-foreground: #5B6A66;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary-soft: var(--primary-soft);
+  --color-primary: #2EBFA5;
+  --color-primary-foreground: #FFFFFF;
+  --color-primary-soft: rgba(224, 248, 244, 0.75);
   
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: #3FE2C5;
+  --color-secondary-foreground: #1E3A34;
   
-  --color-accent: var(--accent);
+  --color-accent: #A45C94;
   
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: rgba(238, 249, 246, 0.6);
+  --color-muted-foreground: #5B6A66;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
 }
 
-
-
 body {
-  background: var(--background);
+  background: linear-gradient(135deg, rgba(255, 175, 125, 0.45) 0%, rgba(255, 220, 190, 0.3) 25%, rgba(195, 248, 238, 0.35) 75%, rgba(63, 226, 197, 0.55) 100%);
+  background-attachment: fixed;
   color: var(--foreground);
   /* Smooth scrolling */
   scroll-behavior: smooth;
+  min-height: 100vh;
+}
+
+/* Forcing turquoise on all primary buttons and links */
+.bg-primary {
+  background-color: #2EBFA5 !important;
+  color: #FFFFFF !important;
+}
+.bg-primary:hover {
+  background-color: #23A790 !important;
+}
+.text-primary {
+  color: #2EBFA5 !important;
+}
+.border-primary {
+  border-color: #2EBFA5 !important;
 }
 
 /* Custom utilities */
@@ -61,6 +76,6 @@ body {
   }
   
   .glass-card {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm rounded-2xl;
+    @apply bg-white/75 backdrop-blur-md border border-white/40 shadow-sm rounded-2xl;
   }
 }
