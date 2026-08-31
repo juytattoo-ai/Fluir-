@@ -23,18 +23,6 @@ import { cn } from "@/lib/utils";
 const navigation = [
   { name: "Início", href: "/" },
   {
-    name: "Sobre nós",
-    href: "/quem-somos",
-    dropdown: [
-      { name: "Organograma Funcional", href: "/quem-somos#organograma" },
-      { name: "História", href: "/quem-somos#historia" },
-      { name: "Conselho do Instituto", href: "/quem-somos#conselho" },
-      { name: "Modelo de Governança", href: "/quem-somos#governanca" },
-      { name: "Participantes do Conselho", href: "/quem-somos#participantes" },
-      { name: "Apresentação da Mentora", href: "/quem-somos#mentora" },
-    ]
-  },
-  {
     name: "Apoio à Pesquisadora",
     href: "/suporte",
     dropdown: [
@@ -67,6 +55,18 @@ const navigation = [
   },
   { name: "Defesas e Publicações", href: "/defesas-publicacoes" },
   { name: "Depoimentos", href: "/comentarios" },
+  {
+    name: "Sobre nós",
+    href: "/quem-somos",
+    dropdown: [
+      { name: "Organograma Funcional", href: "/quem-somos#organograma" },
+      { name: "História", href: "/quem-somos#historia" },
+      { name: "Conselho do Instituto", href: "/quem-somos#conselho" },
+      { name: "Modelo de Governança", href: "/quem-somos#governanca" },
+      { name: "Participantes do Conselho", href: "/quem-somos#participantes" },
+      { name: "Apresentação da Mentora", href: "/quem-somos#mentora" },
+    ]
+  },
   { name: "Contato", href: "/contato" },
 ];
 
@@ -84,12 +84,12 @@ export default function Header() {
 
   const allNavigation = [
     ...navigation,
-    ...(isMember ? [{ name: "Comunidade Fluir+", href: "/egregora" }] : []),
+    ...(isMember ? [{ name: "Área de Membros", href: "/egregora" }] : []),
   ];
 
   const allMobileNavigation = [
     ...navigation,
-    ...(isMember ? [{ name: "Comunidade Fluir+", href: "/egregora" }] : []),
+    ...(isMember ? [{ name: "Área de Membros", href: "/egregora" }] : []),
   ];
 
   const toggleMobileMenu = (name: string) => {
@@ -137,7 +137,7 @@ export default function Header() {
           </div>
 
           {/* Botão Mobile Hamburger */}
-          <div className="flex lg:hidden">
+          <div className="flex xl:hidden">
             <button
               type="button"
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-slate-900 bg-white border border-white shadow-sm"
@@ -149,7 +149,7 @@ export default function Header() {
           </div>
 
           {/* Centro: Menus Centrais Agrupados em Pills Brancas 50% */}
-          <div className="hidden lg:flex items-center justify-center gap-x-3">
+          <div className="hidden xl:flex items-center justify-center gap-x-3">
             {middleLinks.map((item) => {
               const isActive = item.href ? (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) : false;
 
@@ -233,79 +233,24 @@ export default function Header() {
           </div>
 
           {/* Extremo Direito: Botão Área de Membros / Perfil */}
-          <div className="hidden lg:flex items-center">
-            {user ? (
-              <div 
-                className="relative"
-                onMouseEnter={() => setActiveDropdown("user-menu")}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                <button
-                  className="flex items-center gap-2 rounded-full border border-white bg-white px-4 py-2 text-sm font-medium text-slate-800 shadow-sm hover:bg-[#3fe2c5]/30 transition-all duration-300"
-                >
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#2EBFA5] text-xs font-bold text-white uppercase">
-                    {userProfile?.displayName?.[0] || user.email?.[0] || "U"}
-                  </div>
-                  <span className="max-w-[120px] truncate">{userProfile?.displayName || "Minha Conta"}</span>
-                  <ChevronDown className="h-4 w-4 opacity-70" />
-                </button>
-
-                {activeDropdown === "user-menu" && (
-                  <div className="absolute right-0 top-full pt-2 w-56 z-50">
-                    <div className="rounded-2xl bg-white/95 p-2 shadow-xl ring-1 ring-black/5 backdrop-blur-md border border-white/40">
-                      <div className="px-3 py-2 border-b border-border/40 mb-1">
-                        <p className="text-xs text-muted-foreground">Conectado como</p>
-                        <p className="text-sm font-semibold truncate text-foreground">{user.email}</p>
-                      </div>
-                      
-                      {isAdmin && (
-                        <Link
-                          href="/admin"
-                          className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-foreground/80 hover:bg-primary-soft hover:text-primary transition-colors"
-                        >
-                          <Compass className="h-4 w-4" />
-                          Painel Admin
-                        </Link>
-                      )}
-                      
-                      <Link
-                        href="/aluno"
-                        className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-foreground/80 hover:bg-primary-soft hover:text-primary transition-colors"
-                      >
-                        <GraduationCap className="h-4 w-4" />
-                        Área do Aluno
-                      </Link>
-
-                      <button
-                        onClick={() => auth.signOut()}
-                        className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors mt-1 border-t border-border/40"
-                      >
-                        <LogOut className="h-4 w-4" />
-                        Sair
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link
-                href="/login"
-                className={cn(
-                  "px-6 py-2.5 rounded-full text-sm font-semibold text-slate-900 transition-all duration-300 border shadow-sm",
-                  isMembrosActive
-                    ? "bg-[#3fe2c5] border-[#3fe2c5]"
-                    : "bg-white hover:bg-[#3fe2c5]/30 border-white"
-                )}
-              >
-                Área de Membros
-              </Link>
-            )}
+          <div className="hidden xl:flex items-center">
+            <Link
+              href={user ? "/aluno" : "/login"}
+              className={cn(
+                "px-6 py-2.5 rounded-full text-sm font-semibold text-slate-900 transition-all duration-300 border shadow-sm",
+                isMembrosActive
+                  ? "bg-[#3fe2c5] border-[#3fe2c5]"
+                  : "bg-white hover:bg-[#3fe2c5]/30 border-white"
+              )}
+            >
+              Área de Membros
+            </Link>
           </div>
         </nav>
       </header>
 
       {/* Menu Mobile Retrátil, Luminous & Clear */}
-      <div className={cn("lg:hidden", mobileMenuOpen ? "fixed inset-0 z-[100]" : "hidden")}>
+      <div className={cn("xl:hidden", mobileMenuOpen ? "fixed inset-0 z-[100]" : "hidden")}>
         <div className="fixed inset-0 bg-black/25 backdrop-blur-xs" onClick={() => setMobileMenuOpen(false)} />
         
         <div className="fixed inset-y-0 right-0 z-[101] w-full overflow-y-auto bg-white/95 backdrop-blur-xl border-l border-white/60 px-6 py-6 sm:max-w-sm shadow-2xl h-[100dvh]">

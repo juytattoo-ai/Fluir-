@@ -36,7 +36,7 @@ export default function Home() {
       <section 
         className="relative flex flex-col justify-center overflow-hidden pt-28 sm:pt-32 pb-28 sm:pb-40 min-h-[90vh] bg-cover bg-[80%_top] md:bg-[75%_top] bg-no-repeat"
         style={{ 
-          backgroundImage: "linear-gradient(135deg, rgba(255, 140, 75, 0.45) 0%, rgba(255, 175, 120, 0.25) 30%, rgba(63, 226, 197, 0.35) 70%, rgba(45, 205, 185, 0.6) 100%), url('/gota222.jpg')" 
+          backgroundImage: "linear-gradient(135deg, rgba(255, 140, 75, 0.45) 0%, rgba(255, 175, 120, 0.25) 30%, rgba(32, 226, 170, 0.5) 70%, rgba(12, 198, 140, 0.8) 100%), url('/gota222.jpg')" 
         }}
       >
         <div className="w-full px-6 md:px-12 lg:px-24 xl:px-32 relative z-10">
@@ -47,7 +47,7 @@ export default function Home() {
               <h1 className="text-3xl font-serif font-bold tracking-tight text-slate-900 sm:text-5xl uppercase drop-shadow-sm shrink-0 mb-1 sm:mb-0">
                 Instituto Fluir+
               </h1>
-              <p className="text-sm sm:text-base font-medium text-slate-800 drop-shadow-sm max-w-xl leading-snug">
+              <p className="text-sm sm:text-base font-medium text-slate-800 drop-shadow-sm max-w-xl leading-snug pt-1 sm:pt-2">
                 Espaço coletivo feminino de qualidade de vida<br className="sm:hidden" /> na pesquisa e na ciência.
               </p>
             </div>
