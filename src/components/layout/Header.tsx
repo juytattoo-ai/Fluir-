@@ -84,12 +84,12 @@ export default function Header() {
 
   const allNavigation = [
     ...navigation,
-    ...(isMember ? [{ name: "Área de Membros", href: "/egregora" }] : []),
+    { name: "Área de Membros", href: user ? "/aluno" : "/login" },
   ];
 
   const allMobileNavigation = [
     ...navigation,
-    ...(isMember ? [{ name: "Área de Membros", href: "/egregora" }] : []),
+    { name: "Área de Membros", href: user ? "/aluno" : "/login" },
   ];
 
   const toggleMobileMenu = (name: string) => {
@@ -137,7 +137,7 @@ export default function Header() {
           </div>
 
           {/* Botão Mobile Hamburger */}
-          <div className="flex xl:hidden">
+          <div className="flex 2xl:hidden">
             <button
               type="button"
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-slate-900 bg-white border border-white shadow-sm"
@@ -149,7 +149,7 @@ export default function Header() {
           </div>
 
           {/* Centro: Menus Centrais Agrupados em Pills Brancas 50% */}
-          <div className="hidden xl:flex items-center justify-center gap-x-3">
+          <div className="hidden 2xl:flex items-center justify-center gap-x-3">
             {middleLinks.map((item) => {
               const isActive = item.href ? (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) : false;
 
@@ -232,25 +232,12 @@ export default function Header() {
             })}
           </div>
 
-          {/* Extremo Direito: Botão Área de Membros / Perfil */}
-          <div className="hidden xl:flex items-center">
-            <Link
-              href={user ? "/aluno" : "/login"}
-              className={cn(
-                "px-6 py-2.5 rounded-full text-sm font-semibold text-slate-900 transition-all duration-300 border shadow-sm",
-                isMembrosActive
-                  ? "bg-[#3fe2c5] border-[#3fe2c5]"
-                  : "bg-white hover:bg-[#3fe2c5]/30 border-white"
-              )}
-            >
-              Área de Membros
-            </Link>
-          </div>
+          {/* Extremo Direito (removido) */}
         </nav>
       </header>
 
       {/* Menu Mobile Retrátil, Luminous & Clear */}
-      <div className={cn("xl:hidden", mobileMenuOpen ? "fixed inset-0 z-[100]" : "hidden")}>
+      <div className={cn("2xl:hidden", mobileMenuOpen ? "fixed inset-0 z-[100]" : "hidden")}>
         <div className="fixed inset-0 bg-black/25 backdrop-blur-xs" onClick={() => setMobileMenuOpen(false)} />
         
         <div className="fixed inset-y-0 right-0 z-[101] w-full overflow-y-auto bg-white/95 backdrop-blur-xl border-l border-white/60 px-6 py-6 sm:max-w-sm shadow-2xl h-[100dvh]">
@@ -382,15 +369,6 @@ export default function Header() {
                 })}
               </div>
 
-              <div className="py-6 flex flex-col gap-4">
-                <Link
-                  href="/login"
-                  className="rounded-full bg-[#2EBFA5] hover:bg-[#23A790] px-4 py-3.5 text-center text-sm font-bold text-white shadow-md transition-all"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Área de Membros
-                </Link>
-              </div>
             </div>
           </div>
         </div>
