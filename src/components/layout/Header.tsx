@@ -84,12 +84,10 @@ export default function Header() {
 
   const allNavigation = [
     ...navigation,
-    { name: "Área de Membros", href: user ? "/aluno" : "/login" },
   ];
 
   const allMobileNavigation = [
     ...navigation,
-    { name: "Área de Membros", href: user ? "/aluno" : "/login" },
   ];
 
   const toggleMobileMenu = (name: string) => {
@@ -232,7 +230,20 @@ export default function Header() {
             })}
           </div>
 
-          {/* Extremo Direito (removido) */}
+          {/* Extremo Direito: Botão Área de Membros */}
+          <div className="hidden 2xl:flex items-center">
+            <Link
+              href={user ? "/aluno" : "/login"}
+              className={cn(
+                "px-6 py-2.5 rounded-full text-sm font-semibold text-slate-900 transition-all duration-300 border shadow-sm",
+                isMembrosActive
+                  ? "bg-[#3fe2c5] border-[#3fe2c5]"
+                  : "bg-white hover:bg-[#3fe2c5]/30 border-white"
+              )}
+            >
+              Área de Membros
+            </Link>
+          </div>
         </nav>
       </header>
 
@@ -369,6 +380,15 @@ export default function Header() {
                 })}
               </div>
 
+            </div>
+            <div className="py-6 flex flex-col gap-4">
+              <Link
+                href={user ? "/aluno" : "/login"}
+                className="rounded-full bg-[#2EBFA5] hover:bg-[#23A790] px-4 py-3.5 text-center text-sm font-bold text-white shadow-md transition-all"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Área de Membros
+              </Link>
             </div>
           </div>
         </div>
