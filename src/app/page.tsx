@@ -34,35 +34,49 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section com filtro Laranja para Turquesa e imagem gota222.jpg */}
       <section 
-        className="relative flex flex-col justify-center overflow-hidden pt-28 sm:pt-32 pb-28 sm:pb-40 min-h-[90vh] bg-cover bg-[80%_top] md:bg-[75%_top] bg-no-repeat"
+        className="relative flex flex-col justify-center overflow-hidden pt-12 sm:pt-16 pb-28 sm:pb-40 min-h-[90vh] bg-cover bg-[80%_top] md:bg-[75%_top] bg-no-repeat"
         style={{ 
-          backgroundImage: "linear-gradient(135deg, rgba(255, 140, 75, 0.45) 0%, rgba(255, 175, 120, 0.25) 30%, rgba(32, 226, 170, 0.5) 70%, rgba(12, 198, 140, 0.8) 100%), url('/gota222.jpg')" 
+          backgroundImage: "linear-gradient(135deg, rgba(255, 140, 75, 0.15) 0%, rgba(255, 175, 120, 0.1) 30%, rgba(63, 226, 197, 0.15) 70%, rgba(63, 226, 197, 0.25) 100%), url('/gota222.jpg')" 
         }}
       >
-        <div className="w-full px-6 md:px-12 lg:px-24 xl:px-32 relative z-10">
-          <div className="max-w-4xl text-left">
+        <div className="w-full px-4 md:px-10 lg:px-20 xl:px-28 relative z-10">
+          <div className="text-left">
             
             {/* Top row: Instituto Fluir+ no topo, com espaço seguro do menu em qualquer tamanho */}
-            <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 gap-3 mb-6 sm:mb-8 mt-4 sm:mt-0">
-              <h1 className="text-3xl font-serif font-bold tracking-tight text-slate-900 sm:text-5xl uppercase drop-shadow-sm shrink-0 mb-1 sm:mb-0">
+            <div className="flex flex-col lg:flex-row lg:items-baseline lg:gap-8 gap-3 mb-6 sm:mb-8 mt-8 sm:mt-4">
+              <h1 className="text-4xl font-serif font-bold tracking-tight text-slate-900 lg:text-5xl uppercase drop-shadow-sm shrink-0 mb-1 sm:mb-0">
                 Instituto Fluir+
               </h1>
-              <p className="text-sm sm:text-base font-medium text-slate-800 drop-shadow-sm max-w-xl leading-snug pt-1 sm:pt-2">
-                Espaço coletivo feminino de qualidade de vida<br className="sm:hidden" /> na pesquisa e na ciência.
+              <p className="text-[22px] sm:text-2xl lg:text-[30px] xl:text-[32px] min-[1711px]:text-[34px] font-medium text-slate-800 drop-shadow-sm leading-snug min-[1711px]:whitespace-nowrap">
+                Espaço coletivo feminino <br className="min-[1711px]:hidden" />
+                de qualidade de vida <br className="min-[1711px]:hidden" />
+                na pesquisa e na ciência.
               </p>
             </div>
 
-            {/* Temos um sonho... bem mais para baixo */}
-            <div className="mt-16 sm:mt-24 lg:mt-28 space-y-8">
-              <p className="text-2xl font-serif font-semibold text-slate-900 drop-shadow-md sm:text-3xl max-w-3xl uppercase leading-snug">
-                Temos um sonho,<br className="sm:hidden" /> venha estar junto!
+            <div className="max-w-4xl">
+              {/* Temos um sonho... bem mais para baixo */}
+              <div className="mt-12 sm:mt-20 lg:mt-24 space-y-8">
+              <p 
+                className="text-3xl font-serif font-extrabold sm:text-4xl uppercase leading-snug text-black"
+                style={{
+                  filter: "drop-shadow(0px 2px 6px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.9))"
+                }}
+              >
+                Temos um sonho, <br className="sm:hidden" />
+                venha estar junto!
               </p>
               
               {/* Espaço generoso entre as frases e quebras exatas no desktop e mobile */}
-              <p className="text-lg leading-8 text-slate-800 font-medium drop-shadow-md max-w-2xl sm:text-xl pt-2">
+              <p 
+                className="text-xl leading-relaxed text-slate-800 font-medium max-w-3xl sm:text-3xl pt-2"
+                style={{
+                  filter: "drop-shadow(0px 2px 6px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.9))"
+                }}
+              >
                 <span className="hidden sm:inline">
                   Bem-estar na pesquisa e na ciência para<br />
-                  todas as mulheres na pós-graduação.<br />
+                  todas as mulheres na pós-graduação.<br /><br />
                   Visualizamos as nossas pesquisas serem impulsos<br />
                   para profundas transformações na sociedade.
                 </span>
@@ -79,14 +93,19 @@ export default function Home() {
             <div className="mt-14 sm:mt-16 flex flex-wrap items-center justify-start gap-4 sm:gap-x-6">
               <Link
                 href="/quem-somos"
-                className="rounded-full bg-[#2EBFA5] hover:bg-[#23A790] px-8 py-3.5 text-sm font-semibold text-white shadow-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary flex items-center gap-2 hover:scale-105"
+                className="rounded-full bg-white hover:bg-slate-50 px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-sm border border-slate-200 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary flex items-center gap-2 hover:scale-105"
               >
                 Conheça a Fluir+
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link href="/suporte#cursos" className="text-sm font-semibold leading-6 text-slate-900 hover:text-primary transition-all flex items-center gap-2 bg-white/60 hover:bg-white/80 px-5 py-2.5 rounded-full backdrop-blur-sm shadow-sm border border-white/50">
-                Explorar Cursos <span aria-hidden="true">→</span>
+              <Link
+                href="/suporte#cursos"
+                className="rounded-full bg-white hover:bg-slate-50 px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-sm border border-slate-200 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary flex items-center gap-2 hover:scale-105"
+              >
+                Explorar Cursos
+                <ArrowRight className="h-4 w-4" />
               </Link>
+            </div>
             </div>
           </div>
         </div>

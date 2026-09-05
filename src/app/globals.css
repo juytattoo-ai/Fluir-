@@ -41,17 +41,27 @@
   --color-muted: rgba(238, 249, 246, 0.6);
   --color-muted-foreground: #5B6A66;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
 }
 
 body {
-  background: linear-gradient(135deg, rgba(255, 175, 125, 0.45) 0%, rgba(255, 220, 190, 0.3) 25%, rgba(195, 248, 238, 0.35) 75%, rgba(63, 226, 197, 0.55) 100%);
-  background-attachment: fixed;
   color: var(--foreground);
   /* Smooth scrolling */
   scroll-behavior: smooth;
   min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: linear-gradient(135deg, rgba(255, 175, 125, 0.45) 0%, rgba(255, 220, 190, 0.3) 25%, rgba(195, 248, 238, 0.35) 75%, rgba(63, 226, 197, 0.3) 100%);
+  pointer-events: none;
 }
 
 /* Forcing turquoise on all primary buttons and links */
@@ -78,4 +88,20 @@ body {
   .glass-card {
     @apply bg-white/75 backdrop-blur-md border border-white/40 shadow-sm rounded-2xl;
   }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
+
+@media (max-width: 1535px) {
+  .mobile-slider-mask {
+    mask-image: linear-gradient(to right, transparent 0%, black 64px, black calc(100% - 64px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 64px, black calc(100% - 64px), transparent 100%);
+  }
+}
+

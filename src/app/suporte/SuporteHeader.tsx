@@ -19,14 +19,14 @@ export default function SuporteHeader() {
   return (
     <>
       <section 
-        className="relative flex flex-col justify-center overflow-hidden pt-6 pb-28 sm:pt-8 sm:pb-40 min-h-[90vh]"
+        className="relative flex flex-col justify-center overflow-hidden pt-12 sm:pt-16 pb-28 sm:pb-40 min-h-[90vh]"
       >
         {/* Imagem de Fundo da Torre via <img> com object-position deslocado bem para a direita no mobile (92%) */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img
             src="/torre.jpg"
             alt="Apoio à Pesquisadora"
-            className="w-full h-full object-cover object-[92%_top] sm:object-[82%_top] md:object-[75%_top]"
+            className="w-full h-full object-cover object-[65%_top] sm:object-[60%_top] md:object-[55%_top]"
             style={{ filter: "brightness(1.10)" }}
           />
         </div>
@@ -43,12 +43,14 @@ export default function SuporteHeader() {
           <div className="max-w-4xl text-left">
             
             {/* Top row: Apoio à Pesquisadora em preto, padronizado com o início e com espaço para baixo no mobile */}
-            <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 gap-3 sm:-mt-10 mb-4 sm:mb-0">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 gap-3 mt-4 sm:mt-0 mb-4 sm:mb-0">
               <h1 className="text-3xl font-serif font-bold tracking-tight text-slate-900 sm:text-5xl uppercase drop-shadow-sm shrink-0 mb-1 sm:mb-0">
                 Apoio à Pesquisadora
               </h1>
-              <p className="text-sm sm:text-base font-medium text-slate-800 drop-shadow-sm max-w-xl leading-snug">
-                Apoio completo para você transformar seu conhecimento em um legado na pesquisa acadêmica e científica.
+              <p className="text-lg sm:text-xl font-medium text-slate-800 drop-shadow-sm max-w-xl leading-snug">
+                Apoio completo para você transformar<br />
+                o seu conhecimento em um legado<br />
+                na pesquisa acadêmica e científica.
               </p>
             </div>
 
