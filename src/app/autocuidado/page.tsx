@@ -14,8 +14,8 @@ export default function AutocuidadoPage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="text-center lg:text-left lg:w-1/2">
-              <h1 className="text-4xl font-serif font-bold tracking-tight text-slate-900 sm:text-6xl mb-6">
-                Autocuidado
+              <h1 className="text-4xl font-serif font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl mb-6">
+                Qualidade de vida com metodologia de pesquisa
               </h1>
               <p className="text-2xl font-serif font-medium text-slate-800 mb-4">
                 Benefícios para o corpo, mente e espírito.
@@ -25,12 +25,8 @@ export default function AutocuidadoPage() {
               </p>
             </div>
             <div className="lg:w-1/2 w-full max-w-md lg:max-w-none mx-auto flex justify-center items-center">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/60 bg-white/30 inline-block p-1 backdrop-blur-sm">
-                <img
-                  src="/autocuidado.jpg"
-                  alt="Autocuidado - Benefícios para o corpo, mente e espírito"
-                  className="w-full h-auto max-h-[60vh] object-contain rounded-2xl hover:scale-105 transition-transform duration-700"
-                />
+              <div className="relative w-full max-w-[400px] aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(63,226,197,0.4)] border-4 border-white rotate-[2deg] hover:rotate-0 transition-transform duration-300">
+                <Image src="/5.jpg" alt="Qualidade de vida com metodologia de pesquisa" fill className="object-cover" />
               </div>
             </div>
           </div>

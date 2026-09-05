@@ -25,7 +25,7 @@ const courseCards = [
     id: "meditacao",
     title: "MEDITAÇÕES DAS FASES LUNARES",
     description: "Conecte-se com sua essência e renove suas energias em cada ciclo.",
-    href: "/suporte#autocuidado"
+    href: "/suporte#qualidade"
   }
 ];
 

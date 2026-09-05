@@ -7,10 +7,12 @@ import { ChevronRight, Play } from "lucide-react";
 const submenus = [
   { name: "Diagnóstico de pesquisa", id: "diagnostico" },
   { name: "Missão da pesquisa", id: "missao" },
-  { name: "Cursos e oficinas", id: "cursos" },
+  { name: "Cursos, oficinas e Seminários", id: "cursos" },
   { name: "Mentorias e Consultorias", id: "mentorias" },
-  { name: "Seminário TESE QUE FLUI", id: "seminario" },
-  { name: "Autocuidado", id: "autocuidado" },
+  { name: "Roda de conversa", id: "roda-de-conversa" },
+  { name: "Café com pesquisa", id: "cafe" },
+  { name: "Qualidade de vida com metodologia de pesquisa", id: "qualidade" },
+  { name: "Como contribuir", id: "como-contribuir" },
 ];
 
 export default function SuporteHeader() {

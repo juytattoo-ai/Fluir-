@@ -4,9 +4,9 @@ import { ClipboardList, Stethoscope, FileText, ArrowRight } from "lucide-react";
 
 export default function DiagnosticoPage() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col">
       {/* Hero Section transparente para o gradiente global */}
-      <section className="relative overflow-hidden pt-20 pb-24 sm:pt-28 sm:pb-32">
+      <section className="relative overflow-hidden">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 text-center">
           <div className="mb-6 flex justify-center">
             <span className="rounded-full bg-white/60 px-4 py-1.5 text-sm font-medium text-slate-800 ring-1 ring-inset ring-white/50 flex items-center gap-2 backdrop-blur-sm shadow-sm">

@@ -2,7 +2,7 @@ import { Target } from "lucide-react";
 
 export default function MissaoPage() {
   return (
-    <div className="flex flex-col py-24">
+    <div className="flex flex-col">
       <div className="mx-auto max-w-7xl px-6 lg:px-8 relative text-center">
         <div className="mb-6 flex justify-center">
           <span className="rounded-full bg-white/60 px-4 py-1.5 text-sm font-medium text-slate-800 ring-1 ring-inset ring-white/50 flex items-center gap-2 backdrop-blur-sm shadow-sm">

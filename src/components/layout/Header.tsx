@@ -69,6 +69,7 @@ const navigation: NavigationItem[] = [
 
 export default function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
@@ -134,7 +135,7 @@ export default function Header() {
           </div>
 
           {/* Centro: Menus Centrais Agrupados em Pills Brancas, com scroll horizontal no mobile */}
-          <div className="flex-1 2xl:flex-auto mx-1 md:mx-6 overflow-hidden 2xl:overflow-visible relative min-w-0 group/slider">
+          <div className="hidden md:block flex-1 2xl:flex-auto mx-1 md:mx-6 overflow-hidden 2xl:overflow-visible relative min-w-0 group/slider">
             
             {/* Botão de scroll Esquerdo */}
             <button
@@ -290,7 +291,62 @@ export default function Header() {
               Área de Membros
             </Link>
           </div>
+          {/* Botão Sanduíche (Apenas Celular) */}
+          <button 
+            className="md:hidden p-2.5 text-slate-800 bg-white/95 backdrop-blur-sm rounded-full shadow-md ml-auto border border-slate-100 flex items-center justify-center transition-all active:scale-95"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Menu"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </nav>
+
+        {/* Overlay do Menu Sanduíche (Apenas Celular) */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl shadow-2xl border-t border-slate-100 flex flex-col p-4 gap-1 z-40 max-h-[85vh] overflow-y-auto">
+            {allNavigation.map((item) => {
+              const isActive = item.href ? (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) : false;
+              
+              return (
+                <div key={item.name} className="flex flex-col">
+                  <Link
+                    href={item.href || "#"}
+                    className={cn(
+                      "px-4 py-3 rounded-2xl text-base font-semibold transition-all",
+                      isActive ? "bg-[#3fe2c5]/20 text-slate-900" : "text-slate-700 hover:bg-slate-50"
+                    )}
+                    onClick={() => !item.dropdown && setIsMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                  
+                  {item.dropdown && (
+                    <div className="pl-6 pr-2 py-1 flex flex-col gap-1 border-l-2 border-[#3fe2c5]/30 ml-6 mb-2">
+                      {item.dropdown.map(subItem => (
+                        <Link
+                          key={subItem.name}
+                          href={subItem.href}
+                          className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+            
+            <Link
+              href={user ? "/aluno" : "/login"}
+              className="mt-4 mx-2 px-4 py-3.5 rounded-full text-base font-bold text-center bg-[#3fe2c5] text-slate-900 shadow-md transition-all active:scale-95"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Área de Membros
+            </Link>
+          </div>
+        )}
       </header>
     </>
   );
