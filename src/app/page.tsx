@@ -2,30 +2,62 @@ import Link from "next/link";
 import { ArrowRight, Target, Heart, Sparkles } from "lucide-react";
 import ComentariosPage from "./comentarios/page";
 
-const courseCards = [
+const apoioCards = [
   {
-    id: "mestrado",
-    title: "PREPARATÓRIO PARA MESTRADO",
+    id: "sobre-o-pesquisar",
+    title: "SOBRE O PESQUISAR",
+    description: "Diagnóstico e missão da sua pesquisa acadêmica.",
+    href: "/suporte/sobre-o-pesquisar",
+    image: "/sobre-o-pesquisar.png"
+  },
+  {
+    id: "cursos",
+    title: "CURSOS, OFICINAS E SEMINÁRIOS",
     description: "Cursos estruturados para orientar sua jornada acadêmica de ponta a ponta.",
-    href: "/cursos/mestrado"
+    href: "/suporte/cursos",
+    image: "/cursos,-oficinas,seminarios.png"
   },
   {
-    id: "mentoria",
-    title: "MENTORIA EM GRUPO FEMININO",
+    id: "mentorias",
+    title: "MENTORIAS",
     description: "Acompanhamento e networking para superar bloqueios na escrita e pesquisa.",
-    href: "/mentorias/grupo-feminino"
+    href: "/suporte/mentorias",
+    image: "/mentorias-e-consultorias.png"
   },
   {
-    id: "yoga",
-    title: "OFICINA AULAS DE YOGA",
-    description: "Práticas de autocuidado voltadas para o alinhamento de corpo e mente.",
-    href: "/suporte#cursos"
+    id: "consultorias",
+    title: "CONSULTORIAS",
+    description: "Em breve",
+    href: "/suporte/consultorias",
+    image: "/mentorias-e-consultorias.png"
   },
   {
-    id: "meditacao",
-    title: "MEDITAÇÕES DAS FASES LUNARES",
-    description: "Conecte-se com sua essência e renove suas energias em cada ciclo.",
-    href: "/suporte#qualidade"
+    id: "roda-de-conversa",
+    title: "RODA DE CONVERSA",
+    description: "Espaço aberto para troca de experiências e vivências acadêmicas.",
+    href: "/suporte/roda-de-conversa",
+    image: "/roda-de-conversa.png"
+  },
+  {
+    id: "cafe",
+    title: "CAFÉ COM PESQUISA",
+    description: "Encontros online todo primeiro sábado do mês para reflexões em grupo.",
+    href: "/suporte/cafe",
+    image: "/cafe-com-pesquisa.png"
+  },
+  {
+    id: "qualidade",
+    title: "QUALIDADE DE VIDA COM METODOLOGIA",
+    description: "Práticas de autocuidado e bem-estar para o seu dia a dia.",
+    href: "/suporte/qualidade",
+    image: "/qualidade-de-vida-com-metodologia-de-pesquisa.png"
+  },
+  {
+    id: "como-contribuir",
+    title: "COMO CONTRIBUIR",
+    description: "Faça parte da nossa rede de apoio e contribua para o Instituto.",
+    href: "/suporte/como-contribuir",
+    image: "/como-contribuir.png"
   }
 ];
 
@@ -34,85 +66,83 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section com filtro Laranja para Turquesa e imagem gota222.jpg */}
       <section 
-        className="relative flex flex-col justify-center overflow-hidden pt-12 sm:pt-16 pb-28 sm:pb-40 min-h-[90vh] bg-cover bg-[80%_top] md:bg-[75%_top] bg-no-repeat"
+        className="relative flex flex-col justify-end overflow-hidden pt-32 sm:pt-40 pb-12 sm:pb-16 min-h-[75vh] bg-cover bg-no-repeat"
         style={{ 
-          backgroundImage: "linear-gradient(135deg, rgba(255, 140, 75, 0.15) 0%, rgba(255, 175, 120, 0.1) 30%, rgba(63, 226, 197, 0.15) 70%, rgba(63, 226, 197, 0.25) 100%), url('/gota222.jpg')" 
+          backgroundImage: "linear-gradient(135deg, rgba(255, 140, 75, 0.15) 0%, rgba(255, 175, 120, 0.1) 30%, rgba(63, 226, 197, 0.15) 70%, rgba(63, 226, 197, 0.25) 100%), url('/gota222.jpg')",
+          backgroundPosition: "80% 65%"
         }}
       >
-        <div className="w-full px-4 md:px-10 lg:px-20 xl:px-28 relative z-10">
+        <div className="w-full px-4 md:px-10 lg:px-20 xl:px-28 relative z-10 mt-auto">
           <div className="text-left">
             
-            {/* Top row: Instituto Fluir+ no topo, com espaço seguro do menu em qualquer tamanho */}
-            <div className="flex flex-col lg:flex-row lg:items-baseline lg:gap-8 gap-3 mb-6 sm:mb-8 mt-8 sm:mt-4">
-              <h1 className="text-4xl font-serif font-bold tracking-tight text-slate-900 lg:text-5xl uppercase drop-shadow-sm shrink-0 mb-1 sm:mb-0">
+            {/* Top row: Instituto Fluir+ e texto embaixo */}
+            <div className="flex flex-col gap-2 sm:gap-4 mb-6 sm:mb-8 mt-8 sm:mt-4">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold tracking-tight text-slate-900 uppercase drop-shadow-sm">
                 Instituto Fluir+
               </h1>
-              <p className="text-[22px] sm:text-2xl lg:text-[30px] xl:text-[32px] min-[1711px]:text-[34px] font-medium text-slate-800 drop-shadow-sm leading-snug min-[1711px]:whitespace-nowrap">
-                Espaço coletivo feminino <br className="min-[1711px]:hidden" />
-                de qualidade de vida <br className="min-[1711px]:hidden" />
+              <p 
+                className="text-2xl sm:text-[28px] lg:text-[32px] xl:text-[36px] font-semibold text-slate-800 leading-snug"
+                style={{
+                  filter: "drop-shadow(0px 2px 6px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.9))"
+                }}
+              >
+                Espaço coletivo feminino <br className="hidden sm:block lg:hidden" />
+                de qualidade de vida <br className="hidden sm:block lg:hidden" />
                 na pesquisa e na ciência.
               </p>
             </div>
 
             <div className="max-w-4xl">
-              {/* Temos um sonho... bem mais para baixo */}
-              <div className="mt-12 sm:mt-20 lg:mt-24 space-y-8">
-              <p 
-                className="text-3xl font-serif font-extrabold sm:text-4xl uppercase leading-snug text-black"
-                style={{
-                  filter: "drop-shadow(0px 2px 6px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.9))"
-                }}
-              >
-                Temos um sonho, <br className="sm:hidden" />
-                venha estar junto!
-              </p>
-              
-              {/* Espaço generoso entre as frases e quebras exatas no desktop e mobile */}
-              <p 
-                className="text-xl leading-relaxed text-slate-800 font-medium max-w-3xl sm:text-3xl pt-2"
-                style={{
-                  filter: "drop-shadow(0px 2px 6px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.9))"
-                }}
-              >
-                <span className="hidden sm:inline">
-                  Bem-estar na pesquisa e na ciência para<br />
-                  todas as mulheres na pós-graduação.<br /><br />
-                  Visualizamos as nossas pesquisas serem impulsos<br />
-                  para profundas transformações na sociedade.
-                </span>
-                <span className="sm:hidden">
-                  Bem-estar na pesquisa e na ciência<br />
-                  para todas as mulheres<br />
-                  na pós-graduação.<br /><br />
-                  Visualizamos as nossas pesquisas serem impulsos para profundas transformações na sociedade.
-                </span>
-              </p>
-            </div>
-
-            {/* Botões de Ação */}
-            <div className="mt-14 sm:mt-16 flex flex-wrap items-center justify-start gap-4 sm:gap-x-6">
-              <Link
-                href="/quem-somos"
-                className="rounded-full bg-white hover:bg-slate-50 px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-sm border border-slate-200 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary flex items-center gap-2 hover:scale-105"
-              >
-                Conheça a Fluir+
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/suporte#cursos"
-                className="rounded-full bg-white hover:bg-slate-50 px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-sm border border-slate-200 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary flex items-center gap-2 hover:scale-105"
-              >
-                Explorar Cursos
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+              {/* Botões de Ação na Hero */}
+              <div className="mt-8 sm:mt-12 flex flex-wrap items-center justify-start gap-4 sm:gap-x-6">
+                <Link
+                  href="#temos-um-sonho"
+                  className="rounded-full bg-white hover:bg-slate-50 px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-sm border border-slate-200 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary flex items-center gap-2 hover:scale-105"
+                >
+                  Leia mais
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/contato"
+                  className="rounded-full bg-[#3fe2c5] hover:bg-[#2EBFA5] px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary flex items-center gap-2 hover:scale-105"
+                >
+                  Contato
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Seção Temos um sonho */}
+      <section id="temos-um-sonho" className="bg-white/60 backdrop-blur-sm py-16 sm:py-24 border-t border-[#3fe2c5]/20 scroll-mt-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center flex flex-col items-center">
+          <p className="text-3xl font-serif font-extrabold sm:text-4xl uppercase leading-snug text-slate-900 mb-8">
+            Temos um sonho, <br className="sm:hidden" />
+            venha estar junto!
+          </p>
+          
+          <p className="text-xl leading-relaxed text-slate-800 font-medium max-w-3xl sm:text-3xl mb-12">
+            Bem-estar na pesquisa e na ciência para todas as mulheres na pós-graduação.
+            <br /><br />
+            Visualizamos as nossas pesquisas serem impulsos para profundas transformações na sociedade.
+          </p>
+          
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-x-6">
+            <Link
+              href="/quem-somos"
+              className="rounded-full bg-white hover:bg-slate-50 px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-sm border border-slate-200 transition-all flex items-center gap-2 hover:scale-105"
+            >
+              Conheça a Fluir+
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* História Section com fundo translúcido para deixar o gradiente laranja>turquesa transparecer */}
-      <section className="bg-white/60 backdrop-blur-sm py-16 sm:py-20 border-t border-[#3fe2c5]/20">
+      <section className="bg-white/40 backdrop-blur-sm py-16 sm:py-20 border-t border-[#3fe2c5]/20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-serif font-bold tracking-tight text-primary sm:text-4xl mb-6">
             Nossa História
@@ -123,18 +153,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Cursos - Oficinas - Seminários Section */}
-      <section className="py-24 bg-white/40 backdrop-blur-sm border-t border-[#3fe2c5]/20">
+      {/* Apoio à Pesquisadora (antigo Cursos - Oficinas) */}
+      <section id="apoio-pesquisadora" className="py-24 bg-white/40 backdrop-blur-sm border-t border-[#3fe2c5]/20 scroll-mt-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-serif font-bold tracking-tight text-foreground sm:text-5xl">Cursos, Oficinas e Seminários</h2>
-            <p className="mt-4 text-muted-foreground uppercase tracking-widest text-sm font-semibold">Escolha a sua experiência</p>
-          </div>
-          
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {courseCards.map((card) => (
-              <Link key={card.id} href={card.href} className="group flex flex-col bg-white/75 backdrop-blur-sm rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-white/60 hover:shadow-[0_8px_30px_rgb(63,226,197,0.2)] hover:-translate-y-1 hover:bg-white transition-all duration-300 p-8 text-center h-full">
-                <h3 className="text-lg font-bold tracking-wide text-foreground group-hover:text-primary transition-colors">{card.title}</h3>
+            {apoioCards.map((card) => (
+              <Link key={card.id} href={card.href} className="group flex flex-col items-center bg-white/75 backdrop-blur-sm rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-white/60 hover:shadow-[0_8px_30px_rgb(63,226,197,0.2)] hover:-translate-y-1 hover:bg-white transition-all duration-300 p-8 text-center h-full">
+                {card.image && (
+                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 mb-6 rounded-2xl overflow-hidden shadow-[0_5px_15px_-5px_rgba(63,226,197,0.4)] border-2 border-white rotate-[-2deg] group-hover:rotate-0 transition-transform duration-300">
+                    <img src={card.image} alt={card.title} className="w-full h-full object-cover" />
+                  </div>
+                )}
+                <h3 className="text-lg font-bold tracking-wide text-foreground group-hover:text-primary transition-colors mt-auto">{card.title}</h3>
                 <div className="h-px w-12 bg-primary/20 mx-auto mt-4 mb-5 group-hover:w-16 group-hover:bg-primary/40 transition-all duration-300"></div>
                 <p className="text-muted-foreground text-sm leading-relaxed">{card.description}</p>
               </Link>

@@ -23,14 +23,14 @@ export default function QuemSomosHeader() {
 
         <div className="pt-8 flex flex-wrap justify-center gap-3">
           {submenus.map((item) => (
-            <a 
+            <Link 
               key={item.id} 
-              href={`#${item.id}`}
+              href={`/quem-somos/${item.id}`}
               className="inline-flex items-center gap-1.5 px-4.5 py-2.5 rounded-full border border-white/60 bg-white/60 hover:bg-[#3fe2c5]/40 text-slate-800 text-sm font-medium transition-colors backdrop-blur-sm shadow-sm"
             >
               {item.name}
               <ChevronRight className="w-4 h-4 opacity-50" />
-            </a>
+            </Link>
           ))}
         </div>
 

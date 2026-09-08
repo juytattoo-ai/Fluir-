@@ -24,19 +24,13 @@ export default function CursosList() {
     <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 lg:mx-0 lg:max-w-none lg:grid-cols-2">
       {courses.map((course) => (
         <article key={course.id} className="flex flex-col items-start glass-card overflow-hidden group">
-          <div className="relative w-full h-64 overflow-hidden">
-            <img
-              src={course.imageUrl}
-              alt={course.title}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
-            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 text-xs font-semibold text-primary rounded-full">
+          <div className="relative w-full h-auto bg-primary/10 overflow-hidden flex flex-wrap items-center justify-between p-4 gap-4">
+            <div className="bg-white backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-primary rounded-full shadow-sm">
               {course.workload}
             </div>
             
             {/* Price Badge */}
-            <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 text-sm font-bold text-foreground rounded-full flex items-center gap-2">
+            <div className="bg-white backdrop-blur-sm px-4 py-2 text-sm font-bold text-foreground rounded-full flex items-center gap-2 shadow-sm">
               {isMentorada ? (
                 <>
                   <span className="line-through text-muted-foreground font-medium text-xs">

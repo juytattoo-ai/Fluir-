@@ -41,27 +41,36 @@ const navigation: NavigationItem[] = [
     name: "Apoio à Pesquisadora",
     href: "/suporte",
     dropdown: [
-      { name: "Sobre o pesquisar", href: "/suporte#sobre" },
-      { name: "Cursos, Oficinas e Seminários", href: "/suporte#cursos" },
-      { name: "Mentorias e Consultorias", href: "/suporte#mentorias" },
-      { name: "Qualidade de vida com metodologia de pesquisa", href: "/suporte#qualidade" },
-      { name: "Café com pesquisa", href: "/suporte#cafe" },
-      { name: "Roda de conversa", href: "/suporte#roda-de-conversa" },
-      { name: "Como contribuir", href: "/suporte#como-contribuir" },
+      { name: "Sobre o pesquisar", href: "/suporte/sobre-o-pesquisar" },
+      { name: "Cursos, Oficinas e Seminários", href: "/suporte/cursos" },
+      { name: "Mentorias", href: "/suporte/mentorias" },
+      { name: "Consultorias", href: "/suporte/consultorias" },
+      { name: "Roda de conversa", href: "/suporte/roda-de-conversa" },
+      { name: "Café com pesquisa", href: "/suporte/cafe" },
+      { name: "Qualidade de vida com metodologia de pesquisa", href: "/suporte/qualidade" },
+      { name: "Como contribuir", href: "/suporte/como-contribuir" },
     ]
   },
-  { name: "Defesas e Publicações", href: "/defesas-publicacoes" },
+  {
+    name: "Defesas e Publicações",
+    href: "/defesas-publicacoes",
+    dropdown: [
+      { name: "Defesas", href: "/defesas-publicacoes#defesas" },
+      { name: "Publicações", href: "/defesas-publicacoes#publicacoes" },
+      { name: "Lattes", href: "/defesas-publicacoes#lattes" }
+    ]
+  },
   { name: "Depoimentos", href: "/comentarios" },
   {
     name: "Sobre nós",
     href: "/quem-somos",
     dropdown: [
-      { name: "Organograma Funcional", href: "/quem-somos#organograma" },
-      { name: "História", href: "/quem-somos#historia" },
-      { name: "Conselho do Instituto", href: "/quem-somos#conselho" },
-      { name: "Modelo de Governança", href: "/quem-somos#governanca" },
-      { name: "Participantes do Conselho", href: "/quem-somos#participantes" },
-      { name: "Apresentação da Mentora", href: "/quem-somos#mentora" },
+      { name: "Organograma Funcional", href: "/quem-somos/organograma" },
+      { name: "História", href: "/quem-somos/historia" },
+      { name: "Conselho do Instituto", href: "/quem-somos/conselho" },
+      { name: "Modelo de Governança", href: "/quem-somos/governanca" },
+      { name: "Participantes do Conselho", href: "/quem-somos/participantes" },
+      { name: "Apresentação da Mentora", href: "/quem-somos/mentora" },
     ]
   },
   { name: "Contato", href: "/contato" },
@@ -101,20 +110,23 @@ export default function Header() {
   return (
     <>
       <header 
-        className="sticky top-0 z-50 w-full shadow-md bg-cover bg-center bg-no-repeat transition-all duration-300 min-h-[78px] lg:min-h-[88px] py-4 lg:py-5 flex items-center border-b-4 border-white"
+        className="sticky top-0 z-50 w-full shadow-md bg-cover bg-center bg-no-repeat transition-all duration-300 h-[110px] lg:h-[126px] flex items-center border-b-4 border-white"
         style={{ backgroundImage: "url('/menuflor.jpg')" }}
       >
-        <nav className="w-full px-2 sm:px-4 md:px-8 lg:px-12 flex items-center justify-between">
+        <nav className="w-full px-2 sm:px-4 md:px-8 lg:px-12 flex items-center justify-between h-full">
           
           {/* Extremo Esquerdo: Logo e Botão Início (desktop) */}
-          <div className="flex items-center shrink-0 2xl:flex-1">
-            <div className="relative z-10 flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-lg bg-white flex items-center justify-center">
+          <div className="flex items-center shrink-0 2xl:flex-1 relative h-full">
+            <div className="absolute top-1/2 -translate-y-1/2 left-0 z-20 flex-shrink-0 w-28 h-28 sm:w-32 sm:h-32 md:w-44 md:h-44 rounded-full overflow-hidden border-4 border-white shadow-lg bg-white flex items-center justify-center">
               <img 
                 src="/Instituto - LOGO nova.jpg" 
                 alt="Instituto Fluir+ Logo" 
                 className="w-full h-full object-cover scale-[1.25]"
               />
             </div>
+            
+            {/* Espaçador invisível para a logo */}
+            <div className="w-28 sm:w-32 md:w-44 shrink-0"></div>
 
             {/* Espaço flexível para centralizar o botão Início entre a Logo e o Menu Central */}
             <div className="hidden 2xl:flex flex-1 justify-center">
@@ -135,7 +147,7 @@ export default function Header() {
           </div>
 
           {/* Centro: Menus Centrais Agrupados em Pills Brancas, com scroll horizontal no mobile */}
-          <div className="hidden md:block flex-1 2xl:flex-auto mx-1 md:mx-6 overflow-hidden 2xl:overflow-visible relative min-w-0 group/slider">
+          <div className="hidden md:block flex-1 lg:flex-auto mx-1 md:mx-6 overflow-hidden lg:overflow-visible relative min-w-0 group/slider">
             
             {/* Botão de scroll Esquerdo */}
             <button
@@ -148,7 +160,7 @@ export default function Header() {
 
             <div 
               ref={scrollContainerRef}
-              className="flex items-center gap-x-2 md:gap-x-3 overflow-x-auto 2xl:overflow-x-visible no-scrollbar py-2 w-full 2xl:justify-center mobile-slider-mask"
+              className="flex items-center gap-x-2 md:gap-x-3 overflow-x-auto lg:overflow-visible no-scrollbar py-2 w-full lg:justify-center mobile-slider-mask"
             >
               {/* Espaçador para a máscara funcionar no início */}
               <div className="2xl:hidden shrink-0 w-12 md:w-16"></div>
