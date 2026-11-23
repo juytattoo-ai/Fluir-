@@ -52,7 +52,7 @@ export default function SeminarioPage() {
                   <Flower2 className="w-6 h-6 text-pink-400" />
                 </div>
                 <p className="text-lg font-medium text-slate-800">
-                  Estamos muito animadas em ver você avançando sem sofrências :)
+                  Estamos muito animadas em ver você avançando com qualidade de vida em sua jornada acadêmica.
                 </p>
               </div>
             </div>

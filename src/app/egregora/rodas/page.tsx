@@ -161,7 +161,8 @@ export default function RodasDeConversaPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
         {/* Menu Lateral de Salas */}
         <div className="lg:col-span-1 space-y-2 lg:sticky lg:top-24">
-          <h3 className="font-serif font-semibold text-lg text-foreground mb-4 px-2">Salas Temáticas</h3>
+          <h3 className="font-serif font-semibold text-lg text-foreground mb-1 px-2">Salas Temáticas</h3>
+          <p className="font-serif font-semibold text-lg text-foreground mb-4 px-2">Exemplos:</p>
           {TOPICS.map((topic) => (
             <button
               key={topic.id}

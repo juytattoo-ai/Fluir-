@@ -37,10 +37,10 @@ export default function DiagnosticoPage() {
                   Diagnóstico da sua pesquisa, em forma de <strong>anamnese</strong> para verificar o que atualmente está travando ou bloqueando o tranquilo andamento da sua jornada acadêmica.
                 </p>
                 <p>
-                  Análise dos déficits e &quot;pontos cegos&quot;, esclarecendo, organizando e propondo estratégias para o destrave. Estas estratégias poderão ser aplicadas por você mesma, bem como através de consultoria ou acompanhamento próximo na mentoria.
+                  Análise dos déficits e &quot;pontos cegos&quot;, esclarecendo, organizando e propondo estratégias para o destrave. Estas estratégias poderão ser aplicadas por você mesma. Porém geralmente fica bem mais fácil tendo um acompanhamento próximo, como através de consultoria ou em grupo feminino de mentoria, aonde o destrave acontece durante o processo coletivo.
                 </p>
                 <p>
-                  Caso você opte por um acompanhamento próximo para facilitar a caminhada, isto poderá ser avaliado conjuntamente após o diagnóstico feito e antes de você decidir.
+                  Caso você optar por um acompanhamento próximo para facilitar a caminhada, antes de você decidir faremos o diagnóstico norteador sobre sua pesquisa.
                 </p>
               </div>
             </div>
@@ -83,17 +83,20 @@ export default function DiagnosticoPage() {
               </div>
             </div>
 
-            <div className="flex justify-center mt-12">
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSdAAw9-maEFX4oFeaKY8-OYWvDaPY8LooPjQOMOhJFW-HVl_A/viewform"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-3 rounded-full bg-[#2EBFA5] hover:bg-[#23A790] px-8 py-4 text-lg font-semibold text-white shadow-xl transition-all hover:scale-105"
+
+            <div className="flex flex-wrap justify-center gap-4 mt-12">
+              <Link
+                href="/diagnostico/saiba-mais"
+                className="rounded-full bg-primary px-8 py-3 text-sm font-bold text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all duration-300 transform hover:-translate-y-0.5"
               >
-                <FileText className="w-5 h-5" />
-                Preencher Formulário de Agendamento
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
+                Saiba mais
+              </Link>
+              <Link
+                href="/contato"
+                className="rounded-full bg-white px-8 py-3 text-sm font-bold text-primary shadow-sm ring-1 ring-inset ring-primary/20 hover:bg-gray-50 transition-all duration-300 transform hover:-translate-y-0.5"
+              >
+                Entre em contato
+              </Link>
             </div>
 
           </div>

@@ -1,18 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail, sendEmailVerification, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail, sendEmailVerification, signOut, updateProfile } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { createUserProfileDocument } from "@/services/userService";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 
+// Fase inicial de testes: novas contas recebem acesso automático à área de membros
+const AUTO_APPROVE_NEW_MEMBERS = true;
+
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [hasMentoria, setHasMentoria] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -39,6 +45,8 @@ export default function LoginPage() {
         }
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(userCredential.user, { displayName: name });
+        await createUserProfileDocument(userCredential.user, { mentoriaRequested: hasMentoria, displayName: name });
         await sendEmailVerification(userCredential.user);
         await signOut(auth);
         setError("Conta criada! Enviamos um link de verificação para o seu e-mail.");
@@ -72,6 +80,7 @@ export default function LoginPage() {
         setLoading(false);
         return;
       }
+      await createUserProfileDocument(userCredential.user);
       router.push("/egregora");
     } catch (err: any) {
       setError("Erro ao autenticar com o Google.");
@@ -114,6 +123,25 @@ export default function LoginPage() {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm glass-card p-8">
         <form className="space-y-6" onSubmit={handleAuth}>
+          {!isLogin && (
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium leading-6 text-foreground">
+                Nome completo
+              </label>
+              <div className="mt-2">
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required={!isLogin}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="block w-full rounded-md border-0 py-1.5 px-3 text-foreground shadow-sm ring-1 ring-inset ring-foreground/10 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-white/50"
+                />
+              </div>
+            </div>
+          )}
+
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-foreground">
               E-mail
@@ -169,27 +197,49 @@ export default function LoginPage() {
           {error && <p className="text-sm text-red-500 font-medium text-center">{error}</p>}
 
           {!isLogin && (
-            <div className="flex items-start">
-              <div className="flex h-6 items-center">
-                <input
-                  id="terms"
-                  name="terms"
-                  type="checkbox"
-                  required
-                  checked={agreedToTerms}
-                  onChange={(e) => setAgreedToTerms(e.target.checked)}
-                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                />
+            <div className="space-y-4">
+              <div className="flex items-start">
+                <div className="flex h-6 items-center">
+                  <input
+                    id="terms"
+                    name="terms"
+                    type="checkbox"
+                    required
+                    checked={agreedToTerms}
+                    onChange={(e) => setAgreedToTerms(e.target.checked)}
+                    className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                  />
+                </div>
+                <div className="ml-3 text-sm leading-6">
+                  <label htmlFor="terms" className="text-muted-foreground">
+                    Eu concordo com os{" "}
+                    <Link href="/privacidade" className="font-semibold text-primary hover:text-primary/80" target="_blank">
+                      Termos de Uso e Política de Privacidade
+                    </Link>
+                    .
+                  </label>
+                </div>
               </div>
-              <div className="ml-3 text-sm leading-6">
-                <label htmlFor="terms" className="text-muted-foreground">
-                  Eu concordo com os{" "}
-                  <Link href="/privacidade" className="font-semibold text-primary hover:text-primary/80" target="_blank">
-                    Termos de Uso e Política de Privacidade
-                  </Link>
-                  .
-                </label>
-              </div>
+              
+              {!AUTO_APPROVE_NEW_MEMBERS && (
+                <div className="flex items-start">
+                  <div className="flex h-6 items-center">
+                    <input
+                      id="mentoria"
+                      name="mentoria"
+                      type="checkbox"
+                      checked={hasMentoria}
+                      onChange={(e) => setHasMentoria(e.target.checked)}
+                      className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                    />
+                  </div>
+                  <div className="ml-3 text-sm leading-6">
+                    <label htmlFor="mentoria" className="text-muted-foreground">
+                      Já participei de um dos grupos femininos de Mentoria Fluir+ e quero solicitar o meu acesso à área de membros (Comunidade das Pesquisadoras Fluir+)
+                    </label>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

@@ -10,6 +10,7 @@
     "test": "firebase emulators:exec --only firestore \"jest tests/security.test.ts\""
   },
   "dependencies": {
+    "@next/third-parties": "^16.3.6",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
     "firebase": "^12.15.0",

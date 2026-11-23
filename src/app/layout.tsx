@@ -20,6 +20,8 @@ export const metadata: Metadata = {
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/contexts/AuthContext";
+import CookieBanner from "@/components/CookieBanner";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 
 export default function RootLayout({
   children,
@@ -45,6 +47,9 @@ export default function RootLayout({
           </main>
           <Footer />
         </AuthProvider>
+        <CookieBanner />
+        {/* Você pode preencher o gaId (Google Analytics ID) quando criar a conta lá */}
+        <AnalyticsTracker gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
       </body>
     </html>
   );

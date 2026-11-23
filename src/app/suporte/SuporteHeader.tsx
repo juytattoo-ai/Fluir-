@@ -5,8 +5,7 @@ import Link from "next/link";
 import { ChevronRight, Play } from "lucide-react";
 
 const submenus = [
-  { name: "Diagnóstico", id: "sobre-o-pesquisar#diagnostico" },
-  { name: "Missão", id: "sobre-o-pesquisar#missao" },
+  { name: "Sobre o pesquisar", id: "sobre-o-pesquisar#conteudo" },
   { name: "Cursos, oficinas e Seminários", id: "cursos#conteudo" },
   { name: "Mentorias", id: "mentorias#conteudo" },
   { name: "Consultorias", id: "consultorias#conteudo" },
@@ -22,7 +21,7 @@ export default function SuporteHeader() {
   return (
     <>
       <section 
-        className="relative flex flex-col justify-center overflow-hidden pt-12 sm:pt-16 pb-28 sm:pb-40 min-h-[90vh]"
+        className="relative flex flex-col justify-center overflow-hidden pt-48 sm:pt-56 pb-28 sm:pb-40 min-h-[90vh]"
       >
         {/* Imagem de Fundo da Torre via <img> com object-position deslocado bem para a direita no mobile (92%) */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -63,24 +62,34 @@ export default function SuporteHeader() {
                 
                 <div className="pt-2 flex flex-wrap justify-start gap-3 flex-1 max-w-4xl">
                   {submenus.map((item) => (
-                    <Link 
+                    <a 
                       key={item.id} 
                       href={`/suporte/${item.id}`}
                       className="inline-flex items-center gap-1.5 px-4.5 py-2.5 rounded-full border border-white/50 bg-white/50 hover:bg-[#3fe2c5]/40 text-slate-800 text-sm font-medium transition-colors backdrop-blur-sm shadow-sm"
                     >
                       {item.name}
                       <ChevronRight className="w-4 h-4 opacity-50" />
-                    </Link>
+                    </a>
                   ))}
                 </div>
 
                 <div className="shrink-0 xl:ml-auto">
                   <button 
-                    onClick={() => setShowVideo(!showVideo)}
-                    className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#2EBFA5] hover:bg-[#23A790] text-white font-bold text-lg shadow-xl transition-all hover:scale-105"
+                    onClick={() => {
+                      setShowVideo(!showVideo);
+                      if (!showVideo) {
+                        setTimeout(() => {
+                          document.getElementById('torre-video')?.scrollIntoView({ behavior: 'smooth' });
+                        }, 100);
+                      }
+                    }}
+                    className="inline-flex items-center gap-4 px-10 py-4 rounded-full bg-[#2EBFA5] hover:bg-[#23A790] text-white shadow-xl transition-all hover:scale-105 text-left"
                   >
-                    <Play className="w-6 h-6 fill-current" />
-                    &quot;Torre de marfim&quot;, o que é?
+                    <Play className="w-6 h-6 fill-current shrink-0" />
+                    <span className="flex flex-col">
+                      <span className="font-bold text-lg">&quot;Torre de marfim&quot;,</span>
+                      <span className="text-base font-medium opacity-90">o que é?</span>
+                    </span>
                   </button>
                 </div>
 
@@ -92,7 +101,7 @@ export default function SuporteHeader() {
       </section>
 
       {showVideo && (
-        <section className="w-full max-w-5xl mx-auto py-16 px-4 sm:px-6 lg:px-8 animate-in fade-in slide-in-from-top-8 duration-500">
+        <section id="torre-video" className="w-full max-w-5xl mx-auto py-16 px-4 sm:px-6 lg:px-8 animate-in fade-in slide-in-from-top-8 duration-500 scroll-mt-20">
           <div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5">
             <video 
               className="w-full h-full object-cover"

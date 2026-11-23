@@ -114,35 +114,20 @@ export default function CursoMestradoClient() {
         </div>
 
         {/* CTA */}
-        <div className="glass-card p-8 md:p-12 text-center bg-primary-soft/10 border-primary/20 mt-12 rounded-3xl">
-          {isMentorada ? (
-            <>
-              <h2 className="text-2xl font-serif font-bold text-foreground mb-4">Você já tem acesso a este curso!</h2>
-              <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-                Como parte da Egrégora, sua vaga já está garantida sem custos adicionais. Os links para as aulas ao vivo ficarão disponíveis na sua área de estudos.
-              </p>
-              <Link
-                href="/aluno"
-                className="inline-flex rounded-full bg-primary px-8 py-4 text-base font-bold text-primary-foreground shadow-sm hover:bg-primary/90 transition-transform hover:scale-105"
-              >
-                Acessar Área da Aluna
-              </Link>
-            </>
-          ) : (
-            <>
-              <h2 className="text-2xl font-serif font-bold text-foreground mb-4">Pronta para conquistar sua vaga?</h2>
-              <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-                Garanta sua participação no ciclo completo por apenas R$ 197 ou compre módulos avulsos de acordo com a sua necessidade.
-              </p>
-              <Link
-                href="/cursos/mestrado/inscricao"
-                className="inline-flex rounded-full bg-primary px-8 py-4 text-base font-bold text-primary-foreground shadow-sm hover:bg-primary/90 transition-transform hover:scale-105"
-              >
-                Ver Planos de Inscrição
-              </Link>
-            </>
-          )}
-        </div>
+        {!isMentorada && (
+          <div className="glass-card p-8 md:p-12 text-center bg-primary-soft/10 border-primary/20 mt-12 rounded-3xl">
+            <h2 className="text-2xl font-serif font-bold text-foreground mb-4">Pronta para conquistar sua vaga?</h2>
+            <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
+              Garanta sua participação no ciclo completo por apenas R$ 197 ou compre módulos avulsos de acordo com a sua necessidade.
+            </p>
+            <Link
+              href="/cursos/mestrado/inscricao"
+              className="inline-flex rounded-full bg-primary px-8 py-4 text-base font-bold text-primary-foreground shadow-sm hover:bg-primary/90 transition-transform hover:scale-105"
+            >
+              Ver Planos de Inscrição
+            </Link>
+          </div>
+        )}
 
       </div>
     </div>

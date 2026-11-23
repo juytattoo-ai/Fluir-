@@ -2,24 +2,51 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
 
 const courses = [
   {
+    id: "linguagem-simples",
+    title: "Linguagem simples na pesquisa",
+    description:
+      "Curso em 3 módulos ministrado pela professora Claudia, voltado para tornar a comunicação da sua pesquisa mais clara, acessível e conectada com a sociedade.",
+    workload: "3 Módulos • Datas a definir",
+    teacher: "Professora Claudia",
+    modules: [
+      { title: "Módulo 1", date: "Data a definir" },
+      { title: "Módulo 2", date: "Data a definir" },
+      { title: "Módulo 3", date: "Data a definir" },
+    ],
+    contentLabel: "Conferir conteúdo",
+    enrollLabel: "Inscrever-se",
+    enrollHref: "/contato",
+  },
+  {
     id: "mestrado",
     title: "Preparatório para Mestrado (Para Mulheres)",
-    description: "Um programa completo para você entender cada etapa do processo e conquistar sua vaga na pós-graduação.",
+    description:
+      "Um programa completo para você entender cada etapa do processo e conquistar sua vaga na pós-graduação.",
     workload: "6 Aulas ao Vivo",
-    imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800",
-    price: 197.00,
-    linkEduzz: "/cursos/mestrado/inscricao"
-  }
+    teacher: "Evelyn Hartoch e Eveline Araujo",
+    modules: undefined,
+    contentLabel: "Conferir conteúdo",
+    enrollLabel: "Inscrever-se",
+    enrollHref: "/cursos/mestrado/inscricao",
+  },
+  {
+    id: "tese-que-flui",
+    title: "Seminário TESE QUE FLUI, online, ao vivo e gratuito.",
+    description:
+      "Acontece uma vez por semestre, apresentando em sintese os conteúdos da Mentoria Acadêmica Fluir+ e entregando as ferramentas para seguir na pesquisa com qualidade de vida. Imagine-se redescobrindo sua paixão pela pesquisa, equipada com a coragem, competência e força para avançar! Você se tornando a verdadeira força motriz por trás do sucesso de sua pesquisa. Vamos juntas fazer sua tese fluir. Estamos muito animadas em ver você avançando com qualidade de vida.",
+    workload: "Online ao vivo, interativo",
+    teacher: undefined,
+    modules: undefined,
+    contentLabel: "Saiba mais",
+    enrollLabel: "Entre em contato",
+    enrollHref: "/contato",
+  },
 ];
 
 export default function CursosList() {
-  const { userProfile } = useAuth();
-  const isMentorada = userProfile?.role === "mentorada" || userProfile?.role === "admin";
-
   return (
     <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 lg:mx-0 lg:max-w-none lg:grid-cols-2">
       {courses.map((course) => (
@@ -28,20 +55,11 @@ export default function CursosList() {
             <div className="bg-white backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-primary rounded-full shadow-sm">
               {course.workload}
             </div>
-            
-            {/* Price Badge */}
-            <div className="bg-white backdrop-blur-sm px-4 py-2 text-sm font-bold text-foreground rounded-full flex items-center gap-2 shadow-sm">
-              {isMentorada ? (
-                <>
-                  <span className="line-through text-muted-foreground font-medium text-xs">
-                    R$ {course.price.toFixed(2).replace('.', ',')}
-                  </span>
-                  <span className="text-[#2EBFA5] font-bold uppercase tracking-wide">Grátis</span>
-                </>
-              ) : (
-                <span>R$ {course.price.toFixed(2).replace('.', ',')}</span>
-              )}
-            </div>
+            {course.teacher && (
+              <div className="bg-white/80 backdrop-blur-sm px-3 py-1.5 text-xs font-medium text-foreground rounded-full shadow-sm">
+                {course.teacher}
+              </div>
+            )}
           </div>
           <div className="p-8 w-full flex-1 flex flex-col">
             <h3 className="text-2xl font-serif font-semibold text-foreground group-hover:text-primary transition-colors">
@@ -50,22 +68,33 @@ export default function CursosList() {
             <p className="mt-4 text-base leading-6 text-muted-foreground flex-1">
               {course.description}
             </p>
-            <div className="mt-8 flex items-center justify-between gap-4">
-              <Link 
-                href={`/cursos/${course.id}`} 
+            {course.modules && (
+              <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {course.modules.map((mod) => (
+                  <div
+                    key={mod.title}
+                    className="rounded-lg border border-primary/15 bg-primary/5 px-3 py-2 text-center"
+                  >
+                    <span className="block text-xs font-bold text-foreground">{mod.title}</span>
+                    <span className="block text-[11px] text-muted-foreground">{mod.date}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+              <Link
+                href={`/cursos/${course.id}`}
                 className="rounded-full px-6 py-2.5 text-sm font-semibold border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
               >
-                Saiba mais
+                {course.contentLabel}
               </Link>
-              <a
-                href={isMentorada ? "/aluno" : course.linkEduzz}
-                target={isMentorada ? "_self" : "_blank"}
-                rel="noopener noreferrer"
+              <Link
+                href={course.enrollHref}
                 className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors flex items-center gap-2"
               >
-                {isMentorada ? "Acessar Curso" : "Inscrever-se"}
+                {course.enrollLabel}
                 <ArrowUpRight className="h-4 w-4" />
-              </a>
+              </Link>
             </div>
           </div>
         </article>

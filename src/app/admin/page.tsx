@@ -140,7 +140,14 @@ export default function AdminPage() {
                           </div>
                         )}
                         <div>
-                          <div className="font-medium text-foreground">{person.displayName || "Sem Nome"}</div>
+                          <div className="font-medium text-foreground flex items-center gap-2">
+                            {person.displayName || "Sem Nome"}
+                            {person.mentoriaRequested && person.role !== "mentorada" && person.role !== "admin" && (
+                              <span className="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 ring-1 ring-inset ring-amber-600/20">
+                                Pede Mentoria
+                              </span>
+                            )}
+                          </div>
                           <div className="text-muted-foreground text-xs">{person.email}</div>
                         </div>
                       </div>
@@ -164,16 +171,29 @@ export default function AdminPage() {
                       </label>
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <select
-                        value={person.role}
-                        disabled={updatingId === person.uid}
-                        onChange={(e) => handleRoleChange(person.uid, e.target.value as any)}
-                        className="rounded-md border-0 py-1.5 pl-3 pr-8 text-foreground shadow-sm ring-1 ring-inset ring-foreground/10 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-white cursor-pointer disabled:opacity-50"
-                      >
-                        <option value="aluno">Apenas Aluna</option>
-                        <option value="mentorada">Mentorada (Egrégora)</option>
-                        <option value="admin">Administradora</option>
-                      </select>
+                      <div className="flex flex-col items-end gap-2">
+                        {person.mentoriaRequested && person.role === "aluno" ? (
+                          <button
+                            onClick={() => handleRoleChange(person.uid, "mentorada")}
+                            disabled={updatingId === person.uid}
+                            className="inline-flex items-center justify-center gap-1.5 rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all disabled:opacity-50"
+                          >
+                            <CheckCircle2 className="h-3.5 w-3.5" />
+                            Aprovar Acesso à Egrégora
+                          </button>
+                        ) : null}
+                        
+                        <select
+                          value={person.role}
+                          disabled={updatingId === person.uid}
+                          onChange={(e) => handleRoleChange(person.uid, e.target.value as any)}
+                          className="rounded-md border-0 py-1.5 pl-3 pr-8 text-foreground shadow-sm ring-1 ring-inset ring-foreground/10 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-white cursor-pointer disabled:opacity-50"
+                        >
+                          <option value="aluno">Apenas Aluna</option>
+                          <option value="mentorada">Mentorada (Egrégora)</option>
+                          <option value="admin">Administradora</option>
+                        </select>
+                      </div>
                     </td>
                   </tr>
                 ))

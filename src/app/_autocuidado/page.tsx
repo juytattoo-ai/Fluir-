@@ -121,9 +121,14 @@ export default function AutocuidadoPage() {
                   <p className="text-sm font-medium text-[#2EBFA5] mb-5 bg-[#3fe2c5]/20 px-3 py-1 rounded-full">
                     Gratuito para mentoradas da Egrégora
                   </p>
-                  <button className="w-full py-3 bg-[#2EBFA5] hover:bg-[#23A790] text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                  <a 
+                    href="https://wa.me/5521972875302?text=Ol%C3%A1%21%20Gostaria%20de%20me%20inscrever%20na%20Oficina%20Aulas%20de%20Yoga."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full block text-center py-3 bg-[#2EBFA5] hover:bg-[#23A790] text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
+                  >
                     Quero me inscrever
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>

@@ -14,23 +14,28 @@ import {
   PlayCircle, 
   FolderOpen, 
   GraduationCap, 
-  User
+  User,
+  Search,
+  Heart,
+  Settings
 } from "lucide-react";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { cn } from "@/lib/utils";
 
 const egregoraNavigation = [
+  { name: "Nossa História", href: "/egregora/historia", icon: Heart },
   { name: "Jornada Acadêmica", href: "/egregora/jornada", icon: BookOpen },
   { name: "Rodas de Conversa", href: "/egregora/rodas", icon: MessageSquare },
-  { name: "Parcerias", href: "/egregora/parcerias", icon: Handshake },
+  { name: "Parcerias e Publicações", href: "/egregora/parcerias", icon: Handshake },
   { name: "Suas Ofertas", href: "/egregora/ofertas", icon: Target },
   { name: "Missão da Pesquisa", href: "/egregora/missao", icon: Target },
+  { name: "SOS Lacunas Acadêmicas", href: "/egregora/lacunas", icon: Search },
   { name: "SOS Situações Delicadas", href: "/egregora/sos", icon: LifeBuoy },
 ];
 
 const alunoNavigation = [
-  { name: "Cursos, oficinas, e aulas", href: "/aluno", icon: PlayCircle },
+  { name: "Cursos, oficinas, e aulas", href: "/aluno/aulas", icon: PlayCircle },
   { name: "Materiais", href: "/aluno/materiais", icon: FolderOpen },
   { name: "Certificados", href: "/aluno/certificados", icon: GraduationCap },
   { name: "Minha Conta", href: "/aluno/conta", icon: User },
@@ -42,6 +47,7 @@ export default function Sidebar() {
   const { userProfile } = useAuth();
   
   const isMentorada = userProfile?.role === "mentorada" || userProfile?.role === "admin";
+  const isAdmin = userProfile?.role === "admin";
 
   const handleLogout = async () => {
     try {
@@ -57,8 +63,8 @@ export default function Sidebar() {
       <ul role="list" className="-mx-2 space-y-2">
         {items.map((item) => {
           const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/aluno" && item.href !== "/aluno/conta");
-          // Exact match for /aluno because /aluno/materiais would otherwise match
-          const isExactActive = item.href === "/aluno" ? pathname === "/aluno" : isActive;
+          // Exact match for /aluno or /aluno/aulas
+          const isExactActive = (item.href === "/aluno" || item.href === "/aluno/aulas") ? pathname === item.href : isActive;
           
           return (
             <li key={item.name}>
@@ -94,17 +100,21 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-primary/10 bg-background/50 backdrop-blur-md px-6 pb-4">
-      <div className="flex h-20 shrink-0 items-center mt-4">
-        <span className="font-serif font-bold text-2xl text-primary tracking-tight">FLUIR+</span>
-      </div>
-      <nav className="flex flex-1 flex-col justify-between">
+    <div className="flex h-full flex-col border-r border-primary/10 bg-background/50 backdrop-blur-md">
+      {/* Espaço para a logo não sobrepor o menu */}
+      <div className="shrink-0 h-48 lg:h-56 w-full border-b border-primary/5" />
+      
+      {/* Área do menu */}
+      <div className="flex-1 px-6 pb-4 flex flex-col gap-y-5">
+        <div className="flex h-12 shrink-0 items-center mt-6 mb-2">
+          <Link href="/aluno" className="font-serif font-bold text-2xl text-primary tracking-tight hover:opacity-80 transition-opacity cursor-pointer">
+            FLUIR+
+          </Link>
+        </div>
+      <nav className="flex flex-1 flex-col justify-between mt-2">
         <div className="flex flex-1 flex-col gap-y-7">
           {isMentorada && (
             <div>
-              <div className="text-xs font-semibold leading-6 text-muted-foreground uppercase tracking-wider mb-2">
-                A Egrégora
-              </div>
               {renderNavGroup(egregoraNavigation)}
             </div>
           )}
@@ -120,7 +130,16 @@ export default function Sidebar() {
           </div>
         </div>
         
-        <div className="mt-auto pt-8">
+        <div className="mt-8 pt-8">
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className="group flex w-full gap-x-3 rounded-md p-2 text-sm font-medium leading-6 text-foreground/80 hover:bg-primary-soft hover:text-primary transition-colors mb-2"
+            >
+              <Settings className="h-6 w-6 shrink-0 text-muted-foreground group-hover:text-primary" aria-hidden="true" />
+              Painel de Administração
+            </Link>
+          )}
           <button
             onClick={handleLogout}
             className="group flex w-full gap-x-3 rounded-md p-2 text-sm font-medium leading-6 text-foreground/80 hover:bg-red-50 hover:text-red-600 transition-colors"
@@ -130,6 +149,7 @@ export default function Sidebar() {
           </button>
         </div>
       </nav>
+      </div>
     </div>
   );
 }

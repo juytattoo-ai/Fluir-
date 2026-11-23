@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { updateUserProfileData, uploadProfilePicture } from "@/services/userService";
 import { Camera, Mail, ShieldCheck, User as UserIcon, GraduationCap, Loader2, CheckCircle2 } from "lucide-react";
-import { updateProfile, deleteUser } from "firebase/auth";
+import { updateProfile, deleteUser, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
@@ -19,6 +19,8 @@ export default function MinhaContaPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -132,6 +134,32 @@ export default function MinhaContaPage() {
     }
   };
 
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+    if (newPassword.length < 6) {
+      alert("A nova senha deve ter no mínimo 6 caracteres.");
+      return;
+    }
+    
+    setIsUpdatingPassword(true);
+    try {
+      await updatePassword(user, newPassword);
+      setSuccessMessage("Senha atualizada com sucesso!");
+      setNewPassword("");
+      setTimeout(() => setSuccessMessage(""), 3000);
+    } catch (error: any) {
+      console.error("Erro ao atualizar senha:", error);
+      if (error.code === "auth/requires-recent-login") {
+        alert("Por motivos de segurança, você precisa fazer o Login novamente antes de alterar sua senha. Saia e entre de novo.");
+      } else {
+        alert("Ocorreu um erro ao atualizar a senha. Tente novamente.");
+      }
+    } finally {
+      setIsUpdatingPassword(false);
+    }
+  };
+
   const getRoleBadge = (role?: string) => {
     switch (role) {
       case "admin":
@@ -234,11 +262,8 @@ export default function MinhaContaPage() {
             <div className="space-y-2 pt-2 border-t border-primary/10">
               <label className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <GraduationCap className="h-4 w-4 text-primary" />
-                Objetivo Acadêmico ou Tema de Pesquisa
+                Área de atuação
               </label>
-              <p className="text-xs text-muted-foreground mb-2">
-                Ex: Mestrado em Educação, Pesquisa sobre Mulheres na Ciência, Doutorado em Psicologia...
-              </p>
               <input
                 type="text"
                 value={academicGoal}
@@ -271,10 +296,46 @@ export default function MinhaContaPage() {
               </button>
             </div>
           </form>
+
+          {/* Change Password Form */}
+          <form onSubmit={handleUpdatePassword} className="space-y-4 mt-8 pt-8 border-t border-primary/10">
+            <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+              <ShieldCheck className="h-5 w-5 text-primary" />
+              Alterar Senha
+            </h3>
+            <div className="flex flex-col sm:flex-row gap-4 items-end">
+              <div className="w-full sm:flex-1 space-y-2">
+                <label className="text-sm font-semibold text-foreground">
+                  Nova Senha
+                </label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Mínimo 6 caracteres"
+                  className="w-full rounded-lg border-primary/20 bg-white/50 px-4 py-2.5 text-foreground focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={isUpdatingPassword || newPassword.length < 6}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50 transition-all h-[46px]"
+              >
+                {isUpdatingPassword ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Atualizando...
+                  </>
+                ) : (
+                  "Atualizar Senha"
+                )}
+              </button>
+            </div>
+          </form>
           
           {/* Danger Zone */}
           <div className="mt-12 pt-8 border-t border-red-100">
-            <h3 className="text-lg font-semibold text-red-600 mb-2">Zona de Perigo (LGPD)</h3>
+            <h3 className="text-lg font-semibold text-red-600 mb-2">Zona de Perigo (LGPD - Lei Geral de Proteção de Dados Pessoais)</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Ao excluir sua conta, seu perfil, foto e informações de acesso serão permanentemente apagados do sistema. Suas mensagens na Egrégora serão mantidas anonimamente para não quebrar o contexto da discussão.
             </p>

@@ -192,22 +192,12 @@ export default function MentoriaGrupoFemininoPage() {
         {/* CTA */}
         <div className="text-center space-y-8 pt-8">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSdAAw9-maEFX4oFeaKY8-OYWvDaPY8LooPjQOMOhJFW-HVl_A/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/contato"
               className="inline-flex rounded-full bg-primary px-10 py-5 text-lg font-bold text-primary-foreground shadow-xl hover:bg-primary/90 transition-transform hover:scale-105"
             >
-              Diagnóstico
-            </a>
-            <a
-              href={isMentorada ? "/aluno" : mentoriaUrl}
-              target={isMentorada ? "_self" : "_blank"}
-              rel="noopener noreferrer"
-              className="inline-flex rounded-full bg-primary px-10 py-5 text-lg font-bold text-primary-foreground shadow-xl hover:bg-primary/90 transition-transform hover:scale-105 disabled:opacity-50"
-            >
-              {isMentorada ? "Acessar Área da Aluna" : (loading ? "Carregando..." : "Quero Garantir Minha Vaga")}
-            </a>
+              Entre em contato
+            </Link>
           </div>
           
           <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground pt-4">

@@ -118,9 +118,8 @@ export default function OrganogramaPage() {
               rel="noopener noreferrer"
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              2026: Orgonograma Funcional Instituto Fluir+
+              Organograma Funcional do Instituto Fluir+
             </a>
-            <span className="text-sm text-muted-foreground"> de Evelyn</span>
           </div>
         </div>
       </div>

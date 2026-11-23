@@ -15,9 +15,14 @@ export default function SosPage() {
           <li>• Contatos de redes de apoio</li>
         </ul>
         <div className="mt-8">
-          <button className="rounded-full bg-red-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 transition-colors">
+          <a
+            href="https://wa.me/558499852295"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block rounded-full bg-red-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 transition-colors"
+          >
             Solicitar Orientação Confidencial
-          </button>
+          </a>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
@@ -41,14 +41,14 @@ const navigation: NavigationItem[] = [
     name: "Apoio à Pesquisadora",
     href: "/suporte",
     dropdown: [
-      { name: "Sobre o pesquisar", href: "/suporte/sobre-o-pesquisar" },
-      { name: "Cursos, Oficinas e Seminários", href: "/suporte/cursos" },
-      { name: "Mentorias", href: "/suporte/mentorias" },
-      { name: "Consultorias", href: "/suporte/consultorias" },
-      { name: "Roda de conversa", href: "/suporte/roda-de-conversa" },
-      { name: "Café com pesquisa", href: "/suporte/cafe" },
-      { name: "Qualidade de vida com metodologia de pesquisa", href: "/suporte/qualidade" },
-      { name: "Como contribuir", href: "/suporte/como-contribuir" },
+      { name: "Sobre o pesquisar", href: "/suporte/sobre-o-pesquisar#conteudo" },
+      { name: "Cursos, Oficinas e Seminários", href: "/suporte/cursos#conteudo" },
+      { name: "Mentorias", href: "/suporte/mentorias#conteudo" },
+      { name: "Consultorias", href: "/suporte/consultorias#conteudo" },
+      { name: "Roda de conversa", href: "/suporte/roda-de-conversa#conteudo" },
+      { name: "Café com pesquisa", href: "/suporte/cafe#conteudo" },
+      { name: "Qualidade de vida com metodologia de pesquisa", href: "/suporte/qualidade#conteudo" },
+      { name: "Como contribuir", href: "/suporte/como-contribuir#conteudo" },
     ]
   },
   {
@@ -66,11 +66,8 @@ const navigation: NavigationItem[] = [
     href: "/quem-somos",
     dropdown: [
       { name: "Organograma Funcional", href: "/quem-somos/organograma" },
-      { name: "História", href: "/quem-somos/historia" },
-      { name: "Conselho do Instituto", href: "/quem-somos/conselho" },
       { name: "Modelo de Governança", href: "/quem-somos/governanca" },
-      { name: "Participantes do Conselho", href: "/quem-somos/participantes" },
-      { name: "Apresentação da Mentora", href: "/quem-somos/mentora" },
+      { name: "Conselho do Instituto Fluir+", href: "/quem-somos/conselho" },
     ]
   },
   { name: "Contato", href: "/contato" },
@@ -78,8 +75,38 @@ const navigation: NavigationItem[] = [
 
 export default function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [dropdownPos, setDropdownPos] = useState({ left: 0 });
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [expandedMobileMenus, setExpandedMobileMenus] = useState<string[]>([]);
+  
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const handleMouseEnter = (e: React.MouseEvent, name: string) => {
+    clearTimeout(timeoutRef.current);
+    const rect = e.currentTarget.getBoundingClientRect();
+    const headerRect = e.currentTarget.closest('header')?.getBoundingClientRect();
+    if (headerRect) {
+      setDropdownPos({ left: rect.left - headerRect.left + rect.width / 2 });
+    }
+    setActiveDropdown(name);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
+  };
+
+  const toggleMobileMenu = (name: string) => {
+    setExpandedMobileMenus(prev => 
+      prev.includes(name) ? prev.filter(n => n !== name) : [...prev, name]
+    );
+  };
 
   const pathname = usePathname();
   const { user, userProfile } = useAuth();
@@ -107,17 +134,31 @@ export default function Header() {
     }
   };
 
+  const checkScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener('resize', checkScroll);
+    return () => window.removeEventListener('resize', checkScroll);
+  }, []);
+
   return (
     <>
       <header 
-        className="sticky top-0 z-50 w-full shadow-md bg-cover bg-center bg-no-repeat transition-all duration-300 h-[110px] lg:h-[126px] flex items-center border-b-4 border-white"
+        className="relative z-50 w-full shadow-md bg-cover bg-center bg-no-repeat transition-all duration-300 h-[110px] lg:h-[126px] flex items-center border-b-4 border-white"
         style={{ backgroundImage: "url('/menuflor.jpg')" }}
       >
         <nav className="w-full px-2 sm:px-4 md:px-8 lg:px-12 flex items-center justify-between h-full">
           
           {/* Extremo Esquerdo: Logo e Botão Início (desktop) */}
           <div className="flex items-center shrink-0 2xl:flex-1 relative h-full">
-            <div className="absolute top-1/2 -translate-y-1/2 left-0 z-20 flex-shrink-0 w-28 h-28 sm:w-32 sm:h-32 md:w-44 md:h-44 rounded-full overflow-hidden border-4 border-white shadow-lg bg-white flex items-center justify-center">
+            <div className="absolute top-[125px] sm:top-[135px] lg:top-[150px] left-2 sm:left-4 z-20 flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-lg bg-white flex items-center justify-center">
               <img 
                 src="/Instituto - LOGO nova.jpg" 
                 alt="Instituto Fluir+ Logo" 
@@ -126,7 +167,7 @@ export default function Header() {
             </div>
             
             {/* Espaçador invisível para a logo */}
-            <div className="w-28 sm:w-32 md:w-44 shrink-0"></div>
+            <div className="w-24 sm:w-28 md:w-36 shrink-0"></div>
 
             {/* Espaço flexível para centralizar o botão Início entre a Logo e o Menu Central */}
             <div className="hidden 2xl:flex flex-1 justify-center">
@@ -158,10 +199,12 @@ export default function Header() {
               <ChevronLeft className="w-5 h-5" />
             </button>
 
-            <div 
-              ref={scrollContainerRef}
-              className="flex items-center gap-x-2 md:gap-x-3 overflow-x-auto lg:overflow-visible no-scrollbar py-2 w-full lg:justify-center mobile-slider-mask"
-            >
+            <div className="w-full h-full transition-all">
+              <div 
+                ref={scrollContainerRef}
+                onScroll={checkScroll}
+                className="flex items-center gap-x-2 md:gap-x-3 overflow-x-auto lg:overflow-visible no-scrollbar py-2 w-full lg:justify-center"
+              >
               {/* Espaçador para a máscara funcionar no início */}
               <div className="2xl:hidden shrink-0 w-12 md:w-16"></div>
 
@@ -190,8 +233,8 @@ export default function Header() {
                   <div 
                     key={item.name} 
                     className="relative"
-                    onMouseEnter={() => setActiveDropdown(item.name)}
-                    onMouseLeave={() => setActiveDropdown(null)}
+                    onMouseEnter={(e) => handleMouseEnter(e, item.name)}
+                    onMouseLeave={handleMouseLeave}
                   >
                     <Link
                       href={item.href || "#"}
@@ -205,44 +248,6 @@ export default function Header() {
                       {item.name}
                       <ChevronDown className="h-4 w-4 opacity-70" />
                     </Link>
-
-                    {/* Dropdown Menu */}
-                    {activeDropdown === item.name && (
-                      <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-72 z-50">
-                        <div className="rounded-2xl bg-white/95 p-3 shadow-xl ring-1 ring-black/5 backdrop-blur-md border border-white/40">
-                          {item.dropdown.map((subItem) => (
-                            <div key={subItem.name} className="relative group/sub">
-                              <Link
-                                href={subItem.href}
-                                className="flex items-center justify-between rounded-xl px-3 py-2 text-sm text-foreground/80 hover:bg-[#3fe2c5]/20 hover:text-slate-900 transition-colors"
-                              >
-                                <span>{subItem.name}</span>
-                                {subItem.subDropdown && (
-                                  <ChevronDown className="h-3 w-3 -rotate-90 opacity-50" />
-                                )}
-                              </Link>
-
-                              {/* Nested Sub-dropdown */}
-                              {subItem.subDropdown && (
-                                <div className="hidden group-hover/sub:block absolute left-full top-0 pl-2 w-64">
-                                  <div className="rounded-2xl bg-white/95 p-3 shadow-xl ring-1 ring-black/5 backdrop-blur-md border border-white/40">
-                                    {subItem.subDropdown.map((nestedItem) => (
-                                      <Link
-                                        key={nestedItem.name}
-                                        href={nestedItem.href}
-                                        className="block rounded-xl px-3 py-2 text-sm text-foreground/80 hover:bg-[#3fe2c5]/20 hover:text-slate-900 transition-colors"
-                                      >
-                                        {nestedItem.name}
-                                      </Link>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </div>
                 );
               }
@@ -278,6 +283,7 @@ export default function Header() {
               {/* Espaçador para a máscara funcionar no final */}
               <div className="2xl:hidden shrink-0 w-12 md:w-16"></div>
             </div>
+            </div>
 
             {/* Botão de scroll Direito */}
             <button
@@ -303,6 +309,31 @@ export default function Header() {
               Área de Membros
             </Link>
           </div>
+
+          {/* Render Global Desktop Dropdowns */}
+          {activeDropdown && allNavigation.find(i => i.name === activeDropdown)?.dropdown && (
+            <div 
+              className="hidden md:block absolute top-full pt-4 w-72 z-50 -translate-x-1/2"
+              style={{ left: dropdownPos.left }}
+              onMouseEnter={() => clearTimeout(timeoutRef.current)}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="rounded-2xl bg-white/95 p-3 shadow-xl ring-1 ring-black/5 backdrop-blur-md border border-white/40">
+                {allNavigation.find(i => i.name === activeDropdown)!.dropdown!.map((subItem) => (
+                  <div key={subItem.name} className="relative group/sub">
+                    <Link
+                      href={subItem.href}
+                      className="flex items-center justify-between rounded-xl px-3 py-2 text-sm text-foreground/80 hover:bg-[#3fe2c5]/20 hover:text-slate-900 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                    >
+                      <span>{subItem.name}</span>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Botão Sanduíche (Apenas Celular) */}
           <button 
             className="md:hidden p-2.5 text-slate-800 bg-white/95 backdrop-blur-sm rounded-full shadow-md ml-auto border border-slate-100 flex items-center justify-center transition-all active:scale-95"
@@ -321,18 +352,44 @@ export default function Header() {
               
               return (
                 <div key={item.name} className="flex flex-col">
-                  <Link
-                    href={item.href || "#"}
-                    className={cn(
-                      "px-4 py-3 rounded-2xl text-base font-semibold transition-all",
-                      isActive ? "bg-[#3fe2c5]/20 text-slate-900" : "text-slate-700 hover:bg-slate-50"
+                  <div className="flex items-center justify-between">
+                    {item.dropdown ? (
+                      <button
+                        onClick={() => toggleMobileMenu(item.name)}
+                        className={cn(
+                          "flex-1 text-left px-4 py-3 rounded-l-2xl text-base font-semibold transition-all",
+                          isActive ? "bg-[#3fe2c5]/20 text-slate-900" : "text-slate-700 hover:bg-slate-50"
+                        )}
+                      >
+                        {item.name}
+                      </button>
+                    ) : (
+                      <Link
+                        href={item.href || "#"}
+                        className={cn(
+                          "flex-1 px-4 py-3 rounded-l-2xl text-base font-semibold transition-all",
+                          isActive ? "bg-[#3fe2c5]/20 text-slate-900" : "text-slate-700 hover:bg-slate-50"
+                        )}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
                     )}
-                    onClick={() => !item.dropdown && setIsMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
+                    {item.dropdown && (
+                      <button 
+                        onClick={() => toggleMobileMenu(item.name)}
+                        className={cn(
+                          "px-4 py-3 rounded-r-2xl transition-all flex items-center justify-center",
+                          isActive ? "bg-[#3fe2c5]/20 text-slate-900" : "text-slate-700 hover:bg-slate-50"
+                        )}
+                        aria-label={`Expandir ${item.name}`}
+                      >
+                        <ChevronDown className={cn("w-5 h-5 transition-transform", expandedMobileMenus.includes(item.name) && "rotate-180")} />
+                      </button>
+                    )}
+                  </div>
                   
-                  {item.dropdown && (
+                  {item.dropdown && expandedMobileMenus.includes(item.name) && (
                     <div className="pl-6 pr-2 py-1 flex flex-col gap-1 border-l-2 border-[#3fe2c5]/30 ml-6 mb-2">
                       {item.dropdown.map(subItem => (
                         <Link

@@ -47,7 +47,7 @@ export default function DiagnosticoPage() {
 
             <div className="grid md:grid-cols-2 gap-8 items-center bg-white/70 backdrop-blur-md rounded-3xl p-8 border border-white/60 shadow-sm mb-12">
               <div>
-                <h3 className="text-2xl font-serif font-bold text-slate-900 mb-4">Como funciona?</h3>
+                <h3 id="como-funciona" className="text-2xl font-serif font-bold text-slate-900 mb-4 scroll-mt-24">Como funciona?</h3>
                 <p className="text-slate-700 mb-6">
                   Para agendar o diagnóstico da sua pesquisa, favor preencher o formulário. A equipe de suporte irá agendar uma <strong>chamada individual de meia hora</strong> com a mentora.
                 </p>
@@ -83,17 +83,20 @@ export default function DiagnosticoPage() {
               </div>
             </div>
 
-            <div className="flex justify-center mt-12">
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSdAAw9-maEFX4oFeaKY8-OYWvDaPY8LooPjQOMOhJFW-HVl_A/viewform"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-3 rounded-full bg-[#2EBFA5] hover:bg-[#23A790] px-8 py-4 text-lg font-semibold text-white shadow-xl transition-all hover:scale-105"
+
+            <div className="flex flex-wrap justify-center gap-4 mt-12">
+              <Link
+                href="/diagnostico/saiba-mais"
+                className="rounded-full bg-primary px-8 py-3 text-sm font-bold text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all duration-300 transform hover:-translate-y-0.5"
               >
-                <FileText className="w-5 h-5" />
-                Preencher Formulário de Agendamento
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
+                Saiba mais
+              </Link>
+              <Link
+                href="/contato"
+                className="rounded-full bg-white px-8 py-3 text-sm font-bold text-primary shadow-sm ring-1 ring-inset ring-primary/20 hover:bg-gray-50 transition-all duration-300 transform hover:-translate-y-0.5"
+              >
+                Entre em contato
+              </Link>
             </div>
 
           </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Users, Sparkles, Leaf, Droplets, Flower2 } from "lucide-react";
+import { ArrowUpRight, Users, Sparkles, Leaf, Droplets, Flower2, Quote } from "lucide-react";
 import Image from "next/image";
 import { getPaymentLinks } from "@/services/paymentService";
 
@@ -41,11 +41,11 @@ export default function MentoriasPage() {
         
         <div className="flex justify-center mt-10 mb-8 px-4">
           <div className="relative w-full max-w-[350px] aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(63,226,197,0.4)] border-4 border-white rotate-[2deg] hover:rotate-0 transition-transform duration-300">
-             <Image src="/mentorias-e-consultorias.png" alt="Mentorias e Consultorias" fill className="object-cover" />
+             <Image src="/m.jpg" alt="Mentorias e Consultorias" fill className="object-cover" />
           </div>
         </div>
         
-        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-2">
+        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-2 lg:items-start">
           {mentorias.map((item) => (
             <div key={item.id} className="flex flex-col glass-card p-10 group hover:border-primary/50 transition-colors">
               <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 group-hover:bg-primary transition-colors mb-6">
@@ -58,7 +58,7 @@ export default function MentoriasPage() {
                 {item.description}
               </p>
               <div className="mt-8 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 w-full">
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3 w-full">
                   <Link 
                     href={`/mentorias/${item.id}-feminino`} 
                     className="inline-flex rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors items-center justify-center text-center"
@@ -66,27 +66,52 @@ export default function MentoriasPage() {
                     Saiba mais
                   </Link>
                   <a 
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSdAAw9-maEFX4oFeaKY8-OYWvDaPY8LooPjQOMOhJFW-HVl_A/viewform" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors items-center justify-center text-center"
+                    href="/contato" 
+                    className="inline-flex rounded-full bg-white px-8 py-2.5 text-sm font-semibold text-primary shadow-sm ring-1 ring-inset ring-primary/20 hover:bg-gray-50 transition-all duration-300 transform hover:-translate-y-0.5"
                   >
-                    Diagnóstico
+                    Entre em contato
                   </a>
                 </div>
-                <a
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-full xl:w-auto rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors items-center justify-center text-center gap-2 disabled:opacity-50"
-                  aria-disabled={loading}
-                >
-                  {loading ? "Carregando..." : "Quero participar"}
-                  {!loading && <ArrowUpRight className="h-4 w-4" />}
-                </a>
               </div>
             </div>
           ))}
+
+          {/* Card de Depoimento */}
+          <div className="flex flex-col glass-card p-8 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+              <Quote className="w-32 h-32 text-primary" />
+            </div>
+            <div className="relative z-10 flex flex-col h-full">
+              <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary mb-4 w-max border border-primary/20">Depoimento</span>
+              <h4 className="text-[15px] font-bold text-slate-800 mb-6 leading-snug">
+                Encantador feedback de uma das participantes do último grupo feminino de mentoria, ou seja, do grupo do segundo semestre de 2026.
+              </h4>
+              <div className="text-[15px] text-slate-700 leading-relaxed space-y-4 italic font-medium">
+                <p>
+                  "Uma mentoria<br />
+                  Dois ciclos<br />
+                  Três horas, por manhã<br />
+                  Quatro luas, 4 reinos<br />
+                  Seis mulheres<br />
+                  Oito encontros e<br />
+                  Um infinito de possibilidades para fluir na vida com leveza, inteireza e presença.
+                </p>
+                <p>
+                  Assim sinto, vejo e eternizo numa imagem afetiva, em meu coração, esta experiência tão especial.
+                </p>
+                <p>
+                  Gratidão a cada uma e a todas vocês, companheiras de jornada, pela oportunidade de unir nossos infinitos particulares nesta egrégora poderosa e abundante que encerra uma forma hoje para desabrochar na primavera das amizades profundas e belas, oferecida pela vida quando estamos prontas para cultivá-las..."
+                </p>
+              </div>
+              <div className="mt-auto pt-6 border-t border-primary/10 flex items-center justify-between">
+                <div>
+                  <p className="font-serif font-bold text-slate-900">Namastê</p>
+                  <p className="font-bold text-primary">Carla Vanessa</p>
+                </div>
+                <span className="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-1 rounded-md">03.10.26</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Conteúdo de Tese que flui (migrado) */}
@@ -121,7 +146,7 @@ export default function MentoriasPage() {
                   <Flower2 className="w-6 h-6 text-pink-400" />
                 </div>
                 <p className="text-lg font-medium text-slate-800">
-                  Estamos muito animadas em ver você avançando sem sofrências :)
+                  Estamos muito animadas em ver você avançando com qualidade de vida em sua jornada acadêmica.
                 </p>
               </div>
             </div>

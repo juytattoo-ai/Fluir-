@@ -1,5 +1,6 @@
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import Sidebar from "@/components/layout/Sidebar";
+import FeedAtualizacoes from "@/components/layout/FeedAtualizacoes";
 import { Menu } from "lucide-react";
 
 export const metadata = {
@@ -13,7 +14,7 @@ export default function AlunoLayout({
 }) {
   return (
     <ProtectedRoute allowedRoles={["aluno", "mentorada", "admin"]}>
-      <div className="flex h-[calc(100vh-64px)] overflow-hidden bg-zinc-50/50">
+      <div className="flex min-h-[calc(100vh-126px)] bg-zinc-50/50">
         <div className="hidden lg:flex lg:w-72 lg:flex-col">
           <Sidebar />
         </div>
@@ -24,10 +25,15 @@ export default function AlunoLayout({
         </div>
 
         <main className="flex-1 overflow-y-auto">
-          <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="pt-20 pb-8 lg:pt-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto h-full">
             {children}
           </div>
         </main>
+        
+        {/* Right Sidebar: Feed de Atualizações */}
+        <div className="hidden xl:flex xl:w-80 xl:flex-col">
+          <FeedAtualizacoes />
+        </div>
       </div>
     </ProtectedRoute>
   );

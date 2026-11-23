@@ -1,14 +1,7 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
-const submenus = [
-  { name: "Organograma Funcional", id: "organograma" },
-  { name: "História", id: "historia" },
-  { name: "Conselho do Instituto", id: "conselho" },
-  { name: "Modelo de Governança", id: "governanca" },
-  { name: "Participantes do Conselho", id: "participantes" },
-  { name: "Apresentação da Mentora", id: "mentora" },
-];
+
 
 export default function QuemSomosHeader() {
   return (
@@ -19,19 +12,6 @@ export default function QuemSomosHeader() {
           <p className="mt-6 text-lg leading-8 text-muted-foreground max-w-3xl mx-auto">
             O Instituto Fluir+ é um espaço coletivo de pesquisadoras que acreditam ser possível fazer pesquisa e ciência com qualidade de vida, sob a ótica de uma cosmovisão integrativa e a partir de profunda transformação das estruturas patriarcais tóxicas na academia, em direção a ambientes de respeito e dignidade, condizentes com as ciclicidades femininas.
           </p>
-        </div>
-
-        <div className="pt-8 flex flex-wrap justify-center gap-3">
-          {submenus.map((item) => (
-            <Link 
-              key={item.id} 
-              href={`/quem-somos/${item.id}`}
-              className="inline-flex items-center gap-1.5 px-4.5 py-2.5 rounded-full border border-white/60 bg-white/60 hover:bg-[#3fe2c5]/40 text-slate-800 text-sm font-medium transition-colors backdrop-blur-sm shadow-sm"
-            >
-              {item.name}
-              <ChevronRight className="w-4 h-4 opacity-50" />
-            </Link>
-          ))}
         </div>
 
         <div className="space-y-6 pt-12 border-t border-[#3fe2c5]/20">

@@ -7,56 +7,56 @@ const apoioCards = [
     id: "sobre-o-pesquisar",
     title: "SOBRE O PESQUISAR",
     description: "Diagnóstico e missão da sua pesquisa acadêmica.",
-    href: "/suporte/sobre-o-pesquisar",
+    href: "/suporte/sobre-o-pesquisar#conteudo",
     image: "/sobre-o-pesquisar.png"
   },
   {
     id: "cursos",
     title: "CURSOS, OFICINAS E SEMINÁRIOS",
     description: "Cursos estruturados para orientar sua jornada acadêmica de ponta a ponta.",
-    href: "/suporte/cursos",
+    href: "/suporte/cursos#conteudo",
     image: "/cursos,-oficinas,seminarios.png"
   },
   {
     id: "mentorias",
     title: "MENTORIAS",
     description: "Acompanhamento e networking para superar bloqueios na escrita e pesquisa.",
-    href: "/suporte/mentorias",
-    image: "/mentorias-e-consultorias.png"
+    href: "/suporte/mentorias#conteudo",
+    image: "/m.jpg"
   },
   {
     id: "consultorias",
     title: "CONSULTORIAS",
     description: "Em breve",
-    href: "/suporte/consultorias",
+    href: "/suporte/consultorias#conteudo",
     image: "/mentorias-e-consultorias.png"
   },
   {
     id: "roda-de-conversa",
     title: "RODA DE CONVERSA",
     description: "Espaço aberto para troca de experiências e vivências acadêmicas.",
-    href: "/suporte/roda-de-conversa",
+    href: "/suporte/roda-de-conversa#conteudo",
     image: "/roda-de-conversa.png"
   },
   {
     id: "cafe",
     title: "CAFÉ COM PESQUISA",
     description: "Encontros online todo primeiro sábado do mês para reflexões em grupo.",
-    href: "/suporte/cafe",
+    href: "/suporte/cafe#conteudo",
     image: "/cafe-com-pesquisa.png"
   },
   {
     id: "qualidade",
     title: "QUALIDADE DE VIDA COM METODOLOGIA",
     description: "Práticas de autocuidado e bem-estar para o seu dia a dia.",
-    href: "/suporte/qualidade",
+    href: "/suporte/qualidade#conteudo",
     image: "/qualidade-de-vida-com-metodologia-de-pesquisa.png"
   },
   {
     id: "como-contribuir",
     title: "COMO CONTRIBUIR",
     description: "Faça parte da nossa rede de apoio e contribua para o Instituto.",
-    href: "/suporte/como-contribuir",
+    href: "/suporte/como-contribuir#conteudo",
     image: "/como-contribuir.png"
   }
 ];
@@ -95,13 +95,13 @@ export default function Home() {
             <div className="max-w-4xl">
               {/* Botões de Ação na Hero */}
               <div className="mt-8 sm:mt-12 flex flex-wrap items-center justify-start gap-4 sm:gap-x-6">
-                <Link
+                <a
                   href="#temos-um-sonho"
                   className="rounded-full bg-white hover:bg-slate-50 px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-sm border border-slate-200 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary flex items-center gap-2 hover:scale-105"
                 >
                   Leia mais
                   <ArrowRight className="h-4 w-4" />
-                </Link>
+                </a>
                 <Link
                   href="/contato"
                   className="rounded-full bg-[#3fe2c5] hover:bg-[#2EBFA5] px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary flex items-center gap-2 hover:scale-105"
@@ -117,27 +117,49 @@ export default function Home() {
 
       {/* Seção Temos um sonho */}
       <section id="temos-um-sonho" className="bg-white/60 backdrop-blur-sm py-16 sm:py-24 border-t border-[#3fe2c5]/20 scroll-mt-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center flex flex-col items-center">
-          <p className="text-3xl font-serif font-extrabold sm:text-4xl uppercase leading-snug text-slate-900 mb-8">
-            Temos um sonho, <br className="sm:hidden" />
-            venha estar junto!
-          </p>
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12">
           
-          <p className="text-xl leading-relaxed text-slate-800 font-medium max-w-3xl sm:text-3xl mb-12">
-            Bem-estar na pesquisa e na ciência para todas as mulheres na pós-graduação.
-            <br /><br />
-            Visualizamos as nossas pesquisas serem impulsos para profundas transformações na sociedade.
-          </p>
-          
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-x-6">
-            <Link
-              href="/quem-somos"
-              className="rounded-full bg-white hover:bg-slate-50 px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-sm border border-slate-200 transition-all flex items-center gap-2 hover:scale-105"
-            >
-              Conheça a Fluir+
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+          {/* Video na Esquerda */}
+          <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
+            <h3 className="text-2xl font-serif font-bold text-slate-900 mb-4 text-center lg:text-left">
+              Perfeição de processos invisíveis
+            </h3>
+            <div className="relative aspect-[9/16] w-full max-w-[280px] sm:max-w-xs mx-auto lg:mx-0 rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5">
+              <video 
+                className="w-full h-full object-cover"
+                controls
+                preload="metadata"
+                src="/lotus.mp4"
+              >
+                Seu navegador não suporta a tag de vídeo.
+              </video>
+            </div>
           </div>
+
+          {/* Textos na Direita */}
+          <div className="w-full lg:w-1/2 text-center lg:text-left flex flex-col items-center lg:items-start">
+            <p className="text-3xl font-serif font-extrabold sm:text-4xl uppercase leading-snug text-slate-900 mb-8">
+              Temos um sonho, <br className="sm:hidden lg:block" />
+              venha estar junto!
+            </p>
+            
+            <p className="text-xl leading-relaxed text-slate-800 font-medium max-w-3xl sm:text-3xl mb-12">
+              Bem-estar na pesquisa e na ciência para todas as mulheres na pós-graduação.
+              <br /><br />
+              Visualizamos as nossas pesquisas serem impulsos para profundas transformações na sociedade.
+            </p>
+            
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-x-6">
+              <Link
+                href="/quem-somos"
+                className="rounded-full bg-white hover:bg-slate-50 px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-sm border border-slate-200 transition-all flex items-center gap-2 hover:scale-105"
+              >
+                Conheça o instituto Fluir+
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -158,25 +180,28 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {apoioCards.map((card) => (
-              <Link key={card.id} href={card.href} className="group flex flex-col items-center bg-white/75 backdrop-blur-sm rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-white/60 hover:shadow-[0_8px_30px_rgb(63,226,197,0.2)] hover:-translate-y-1 hover:bg-white transition-all duration-300 p-8 text-center h-full">
-                {card.image && (
-                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 mb-6 rounded-2xl overflow-hidden shadow-[0_5px_15px_-5px_rgba(63,226,197,0.4)] border-2 border-white rotate-[-2deg] group-hover:rotate-0 transition-transform duration-300">
-                    <img src={card.image} alt={card.title} className="w-full h-full object-cover" />
-                  </div>
-                )}
-                <h3 className="text-lg font-bold tracking-wide text-foreground group-hover:text-primary transition-colors mt-auto">{card.title}</h3>
-                <div className="h-px w-12 bg-primary/20 mx-auto mt-4 mb-5 group-hover:w-16 group-hover:bg-primary/40 transition-all duration-300"></div>
-                <p className="text-muted-foreground text-sm leading-relaxed">{card.description}</p>
+              <Link key={card.id} href={card.href} className="group flex flex-col bg-white/75 backdrop-blur-sm rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-white/60 hover:shadow-[0_8px_30px_rgb(63,226,197,0.2)] hover:-translate-y-1 hover:bg-white transition-all duration-300 p-8 text-center h-full">
+                
+                {/* Top section for image, fixed height so titles align */}
+                <div className="h-32 flex items-end justify-center mb-6">
+                  {card.image && (
+                    <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden shadow-[0_5px_15px_-5px_rgba(63,226,197,0.4)] border-2 border-white rotate-0 group-hover:-rotate-2 transition-transform duration-300">
+                      <img src={card.image} alt={card.title} className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                </div>
+
+                {/* Bottom section for text, starts at the same vertical position across all cards */}
+                <div className="flex flex-col flex-1 items-center">
+                  <h3 className="text-lg font-bold tracking-wide text-foreground group-hover:text-primary transition-colors">{card.title}</h3>
+                  <div className="h-px w-12 bg-primary/20 mx-auto mt-4 mb-5 group-hover:w-16 group-hover:bg-primary/40 transition-all duration-300"></div>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{card.description}</p>
+                </div>
               </Link>
             ))}
           </div>
 
           <div className="mt-24 text-center flex flex-col items-center gap-6">
-            <h3 className="text-4xl font-serif font-bold text-foreground">Planeje a sua jornada</h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              Se você preferir planejar o seu próprio desenvolvimento personalizado, entre em contato conosco. 
-              Podemos oferecer uma experiência inesquecível para você. Também é possível combinar e adaptar as atividades dos cursos acima.
-            </p>
             <Link
               href="/contato"
               className="mt-4 inline-flex items-center justify-center bg-[#2EBFA5] hover:bg-[#23A790] px-8 py-3 text-sm font-bold tracking-wider text-white transition-all duration-300 rounded-full shadow-md hover:scale-105"

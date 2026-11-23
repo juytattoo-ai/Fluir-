@@ -9,9 +9,9 @@ import { Quote } from "lucide-react";
 const carouselComments = [
   {
     id: 1,
-    title: "Lugar mágico e sossegado",
-    text: "A experiência com a Fluir+ foi linda, única e inigualável. Nos sentimos em casa, o ambiente é mágico e sossegado. Foi uma experiência muito enriquecedora compartilhar com todos e aprender nas relações estabelecidas. Sem dúvida, uma experiência que recomendo de coração.",
-    author: "Daniela, Lilah e Maya",
+    title: "Uma nova visão",
+    text: "A experiência de mentoria com a Fluir+ foi linda, única e inigualável. O ambiente é acolhedor e seguro. Foi uma experiência muito enriquecedora compartilhar com todos e aprender nas relações estabelecidas para a nossa jornada de pesquisa. Sem dúvida, recomendo de coração.",
+    author: "Daniela",
     date: "Outubro 2023",
   },
   {
@@ -30,24 +30,7 @@ const carouselComments = [
   },
 ];
 
-// Mock data for the grid below
-const gridComments = [
-  {
-    id: 1,
-    title: "Retiro de duas semanas",
-    text: "Apenas gratidão por esse tempo investido. Esse espaço é um pequeno paraíso onde você pode estar em contato com sua própria essência e focar naquilo que realmente importa. Senti o amor e o cuidado em cada detalhe.",
-  },
-  {
-    id: 2,
-    title: "Um retiro na natureza bom para a alma",
-    text: "Este é um espaço lindo e acolhedor. Aproveitei muito a minha estadia e amei a companhia de todas as pessoas envolvidas, que têm personalidades únicas e nos fazem sentir especiais e capazes de alcançar nossos objetivos.",
-  },
-  {
-    id: 3,
-    title: "Entrando em contato com a essência",
-    text: "Vim para focar no meu projeto e acabei me reconectando comigo mesma. Tive dias maravilhosos de muita produtividade, mas também de reflexão e paz interior. A metodologia aplicada faz toda a diferença.",
-  },
-];
+// Mock data for the grid below is removed as requested
 
 export default function ComentariosPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -123,21 +106,7 @@ export default function ComentariosPage() {
         </div>
       </section>
 
-      {/* Grid Comments Section */}
-      <section className="py-16 md:py-24 px-4 max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
-          {gridComments.map((comment) => (
-            <div key={comment.id} className="flex flex-col text-center items-center">
-              <h3 className="text-xl md:text-2xl font-serif italic text-foreground mb-4">
-                &quot;{comment.title}&quot;
-              </h3>
-              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-                {comment.text}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Grid Comments Section removed as requested */}
 
     </div>
   );

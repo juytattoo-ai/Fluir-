@@ -11,11 +11,13 @@ export interface UserProfile {
   enrolledCourses?: string[];
   academicGoal?: string;
   createdAt: any;
+  mentoriaRequested?: boolean;
 }
 
 /**
  * Creates or updates a user profile in Firestore after authentication.
- * Defaults new users to the 'aluno' role.
+ * Temporariamente libera novas contas automaticamente como 'mentorada' (acesso à área de membros)
+ * para a fase inicial de testes com convidadas.
  */
 export async function createUserProfileDocument(user: User, additionalData?: any): Promise<UserProfile | null> {
   if (!user) return null;
@@ -33,7 +35,7 @@ export async function createUserProfileDocument(user: User, additionalData?: any
         email,
         displayName,
         photoURL,
-        role: "aluno", // Default role
+        role: "mentorada", // Liberação automática para a área de membros na fase inicial
         createdAt,
         ...additionalData,
       });

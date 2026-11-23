@@ -36,12 +36,17 @@ export default function AdminSidebar() {
   };
 
   return (
-    <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-primary/10 bg-background/50 backdrop-blur-md px-6 pb-4">
-      <div className="flex h-20 shrink-0 items-center mt-4 flex-col justify-center items-start">
-        <span className="font-serif font-bold text-2xl text-primary tracking-tight">FLUIR+</span>
-        <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase mt-1">Admin Panel</span>
-      </div>
-      <nav className="flex flex-1 flex-col justify-between mt-4">
+    <div className="flex h-full flex-col border-r border-primary/10 bg-background/50 backdrop-blur-md">
+      {/* Espaço para a logo não sobrepor o menu */}
+      <div className="shrink-0 h-48 lg:h-56 w-full border-b border-primary/5" />
+      
+      {/* Área do menu */}
+      <div className="flex-1 px-6 pb-4 flex flex-col gap-y-5">
+        <div className="flex shrink-0 mt-6 mb-2 flex-col justify-center items-start">
+          <span className="font-serif font-bold text-2xl text-primary tracking-tight">FLUIR+</span>
+          <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase mt-1">Admin Panel</span>
+        </div>
+        <nav className="flex flex-1 flex-col justify-between mt-4">
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
           <li>
             <ul role="list" className="-mx-2 space-y-2">
@@ -97,6 +102,7 @@ export default function AdminSidebar() {
           </li>
         </ul>
       </nav>
+    </div>
     </div>
   );
 }

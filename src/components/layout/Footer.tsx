@@ -8,9 +8,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           
           <div className="md:col-span-1 space-y-6">
-            <div className="flex items-center gap-2">
-              <img src="/Instituto - LOGO nova.jpg" alt="Logo Fluir+" className="h-8 w-auto rounded-full" />
-              <span className="font-serif font-bold text-2xl text-primary tracking-tight">FLUIR+</span>
+            <div>
+              <h3 className="text-sm font-semibold leading-6 text-primary tracking-wider uppercase">Instituto Fluir+ &copy;</h3>
+              <img src="/Instituto - LOGO nova.jpg" alt="Logo Fluir+" className="h-10 w-auto rounded-full shadow-sm mt-4" />
             </div>
             <div className="flex flex-col gap-y-4">
               <a href="https://www.instagram.com/tese.que.flui?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
@@ -85,12 +85,22 @@ export default function Footer() {
                   WhatsApp: (71) 98817-2711
                 </a>
               </li>
+              <li>
+                <a href="mailto:admin@mentoriafluir.com" className="text-sm leading-6 text-foreground/80 hover:text-primary transition-colors">
+                  E-mail: admin@mentoriafluir.com
+                </a>
+              </li>
             </ul>
           </div>
         </div>
-        <div className="mt-16 border-t border-primary/10 pt-8 sm:mt-20 lg:mt-24">
-          <p className="text-xs leading-5 text-muted-foreground text-center">
-            &copy; {new Date().getFullYear()} FLUIR+. Todos os direitos reservados.
+        <div className="mt-16 border-t border-primary/10 pt-8 sm:mt-20 lg:mt-24 text-center">
+          <p className="text-xs leading-5 text-muted-foreground mb-4 max-w-3xl mx-auto">
+            Dados pessoais e todas as informações recebidas serão tratados de acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018) e utilizadas unicamente para melhor atender às suas solicitações.
+            <br />
+            <a href="mailto:admin@mentoriafluir.com" className="hover:text-primary transition-colors mt-2 inline-block">admin@mentoriafluir.com</a>
+          </p>
+          <p className="text-xs leading-5 text-muted-foreground">
+            &copy; {new Date().getFullYear()} Instituto Fluir+ Todos os direitos reservados.
           </p>
         </div>
       </div>
